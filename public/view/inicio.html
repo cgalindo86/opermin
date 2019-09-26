@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,7 +37,6 @@
 	<script src="assets/js/app.js"></script>
 	<script src="global_assets/js/demo_pages/dashboard.js"></script>-->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="/resources/demos/style.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="application/javascript">
@@ -83,239 +82,9 @@
     </script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
-	<script src="/socket.io/socket.io.js"></script>
-	<script type="application/javascript"></script>
+    
+	<script type="application/javascript" src="../controler/inicio.js"></script>
 	
-	<script>
-		window.onload = function(){
-			$("#mgif").hide();
-			Ocultar();
-
-		}
-		
-function Ocultar(){
-	$("#campoAsistencias").hide();
-	$("#campoBeneficios").hide();
-	$("#cuerpoBeneficios").hide();
-	$("#cuerpoBeneficios2").hide();
-	$("#campoBoletas").hide();
-	$("#campoConvocatorias").hide();
-	$("#campoFuncion").hide();
-	$("#campoPerfil").hide();
-	$("#campoUsuarios").hide();
-	$("#campoOpcion").hide();
-	$("#campoParametros").hide();
-	console.log("ocultar");
-}
-
-function GuardaBeneficios(){
-	$.post("../controler/usuario.php", {
-		accion: "3",
-		codigo: $("#bcodigo").val(),
-		empresa: $("#bempresa").val(),
-		detalle: $("#bdetalle").val(),
-		descuento_p: $("#bdescuento_p").val(),
-		descuento_m: $("#bdescuento_m").val(),
-		condiciones: $("#bcondiciones").val(),
-		caducidad: $("#bfecha").val()
-    }, function(htmlexterno){
-		Beneficios();
-    });
-}
-
-function GuardaConvocatorias(){
-	$.post("../controler/usuario.php", {
-		accion: "8",
-		costos: $("#ccostos").val(),
-		unidad: $("#cunidad").val(),
-		puesto: $("#cpuesto").val(),
-		descripcion: $("#cdescripcion").val(),
-		requisitos: $("#crequisitos").val(),
-		salario: $("#csalario").val()
-		
-    }, function(htmlexterno){
-		Convocatorias();
-    });
-}
-
-function GuardaEditarBeneficios(){
-	if($("#bfecha2").val()!=""){
-		$caducidad = $("#bfecha2").val();
-	} else {
-		$caducidad = caducidadi;
-	}
-	$.post("../controler/usuario.php", {
-		accion: "6",
-		id: $mid,
-		codigo: $("#bcodigo2").val(),
-		empresa: $("#bempresa2").val(),
-		detalle: $("#bdetalle2").val(),
-		descuento_p: $("#bdescuento_p2").val(),
-		descuento_m: $("#bdescuento_m2").val(),
-		condiciones: $("#bcondiciones2").val(),
-		caducidad: $caducidad
-    }, function(htmlexterno){
-		Beneficios();
-    });
-}
-
-function GuardaEditarConvocatorias(){
-	
-	$.post("../controler/usuario.php", {
-		accion: "10",
-		id: $mid,
-		costos: $("#ccostos2").val(),
-		unidad: $("#cunidad2").val(),
-		puesto: $("#cpuesto2").val(),
-		descripcion: $("#cdescripcion2").val(),
-		requisitos: $("#crequisitos2").val(),
-		salario: $("#csalario2").val()
-    }, function(htmlexterno){
-		Convocatorias();
-    });
-}
-
-function EditarBeneficios($id){
-	$mid = $id;
-	$.post("../controler/usuario.php", {
-        accion: "5", id:$id
-    }, function(htmlexterno){
-		$("#cuerpoBeneficios2").show();
-		$("#cuerpoBeneficios").hide();
-		console.log(htmlexterno);
-		var txt;
-		txt = htmlexterno.split("#");
-		caducidadi = txt[6];
-		console.log(txt[0]+"-"+txt[1]+"-"+txt[2]+"-"+txt[3]+"-"+txt[4]+"-"+txt[5]+"-"+txt[6]);
-        document.getElementById("bcodigo2").value = txt[0];
-		document.getElementById("bempresa2").value = txt[1];
-		document.getElementById("bdetalle2").innerHTML = txt[2];
-		document.getElementById("bdescuento_p2").value = txt[3];
-		document.getElementById("bdescuento_m2").value = txt[4];
-		document.getElementById("bcondiciones2").innerHTML = txt[5];
-		document.getElementById("nfecha2").innerHTML = 'Actual: '+txt[6]+'<br><input name="datepicker" type="date" id="bfecha2" style="width:150px;" value="'+txt[6]+'" />';
-		
-    });
-}
-
-function EditarConvocatorias($id){
-	$mid = $id;
-	$.post("../controler/usuario.php", {
-        accion: "9", id:$id
-    }, function(htmlexterno){
-		$("#cuerpoConvocatorias2").show();
-		$("#cuerpoConvocatorias").hide();
-		console.log(htmlexterno);
-		var txt;
-		txt = htmlexterno.split("#");
-		//console.log(txt[0]+"-"+txt[1]+"-"+txt[2]+"-"+txt[3]+"-"+txt[4]+"-"+txt[5]+"-"+txt[6]);
-        document.getElementById("ccostos2").value = txt[0];
-		document.getElementById("cunidad2").value = txt[1];
-		document.getElementById("cpuesto2").value = txt[2];
-		document.getElementById("cdescripcion2").innerHTML = txt[3];
-		document.getElementById("crequisitos2").innerHTML = txt[4];
-		document.getElementById("csalario2").value = txt[5];
-		
-    });
-}
-function Asistencias(){
-	Ocultar();
-	$("#campoAsistencias").show();
-	
-	document.getElementById("asistencia").style.background = "#273156";
-	document.getElementById("beneficios").style.background = "transparent";
-	document.getElementById("boletas").style.background = "transparent";
-	document.getElementById("convocatorias").style.background = "transparent";
-	document.getElementById("descanso").style.background = "transparent";
-	
-	$.post("../controler/usuario.php", {
-        accion: "1"
-    }, function(htmlexterno){
-		console.log("1");
-		$("#cuerpoAsistencias").html(htmlexterno);
-        console.log(htmlexterno+"");
-    });
-}
-
-function Beneficios(){
-	Ocultar();
-	$("#campoBeneficios").show();
-	$("#cuerpoBeneficios").show();
-	$("#cuerpoBeneficios2").hide();
-	document.getElementById("beneficios").style.background = "#273156";
-	document.getElementById("asistencia").style.background = "transparent";
-	document.getElementById("boletas").style.background = "transparent";
-	document.getElementById("convocatorias").style.background = "transparent";
-	document.getElementById("descanso").style.background = "transparent";
-	
-	$.post("../controler/usuario.php", {
-        accion: "2"
-    }, function(htmlexterno){
-		console.log("2");
-		$("#cuerpoBeneficios").html(htmlexterno);
-        console.log(htmlexterno+"");
-    });
-}
-
-function Boletas(){
-	Ocultar();
-	$("#campoBoletas").show();
-
-	document.getElementById("boletas").style.background = "#273156";
-	document.getElementById("beneficios").style.background = "transparent";
-	document.getElementById("asistencia").style.background = "transparent";
-	document.getElementById("convocatorias").style.background = "transparent";
-	document.getElementById("descanso").style.background = "transparent";
-
-}
-
-function CargarBoletas(){
-	document.getElementById("cuerpoBoletas").innerHTML = '<iframe src="cargar.php" style="width:80%; height:300px;"></iframe><br>';
-}
-
-function VerBoletas(){
-	$.post("../controler/usuario.php", {
-        accion: "4"
-    }, function(htmlexterno){
-		$("#cuerpoBoletas").html(htmlexterno);
-        
-    });
-}
-
-function Convocatorias(){
-	Ocultar();
-	$("#campoConvocatorias").show();
-	$("#cuerpoConvocatorias").show();
-	$("#cuerpoConvocatorias2").hide();
-	
-	document.getElementById("convocatorias").style.background = "#273156";
-	document.getElementById("beneficios").style.background = "transparent";
-	document.getElementById("boletas").style.background = "transparent";
-	document.getElementById("asistencia").style.background = "transparent";
-	document.getElementById("descanso").style.background = "transparent";
-	
-	$.post("../controler/usuario.php", {
-        accion: "7"
-    }, function(htmlexterno){
-		
-		$("#cuerpoConvocatorias").html(htmlexterno);
-        console.log(htmlexterno+"");
-    });
-}
-
-function Descanso(){
-	Ocultar();
-	//$("#campoUsuarios").show();
-	document.getElementById("descanso").style.background = "#273156";
-	document.getElementById("beneficios").style.background = "transparent";
-	document.getElementById("boletas").style.background = "transparent";
-	document.getElementById("convocatorias").style.background = "transparent";
-	document.getElementById("asistencia").style.background = "transparent";
-	
-}
-	</script>
-
 </head>
 
 <body>
@@ -701,17 +470,18 @@ function Descanso(){
 								
 							</ul>
 						</li>
-						<!--<li class="nav-item nav-item-submenu">
-							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>REPORTES</span></a>
+						<li class="nav-item nav-item-submenu">
+							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>ADMINISTRACION</span></a>
 
 							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
-								<li class="nav-item"><div id="costoMes" onclick="CostoMes()" class="nav-link">COSTO POR MES</div></li>
-								<li class="nav-item"><div id="costoProyectado" onclick="CostoProyectado()" class="nav-link">COSTO PROYECTADO</div></li>
-								<li class="nav-item"><div id="EmpleadosReporte" onclick="EmpleadosReporte()" class="nav-link">EMPLEADOS</div></li>
-								<li class="nav-item"><div id="IncidenciasReporte" onclick="IncidenciasReporte()" class="nav-link">INCIDENCIAS</div></li>
+								<li class="nav-item"><div id="empresas" onclick="Empresas()" class="nav-link">EMPRESAS</div></li>
+								<li class="nav-item"><div id="usuarios" onclick="Usuarios()" class="nav-link">USUARIOS</div></li>
+								<li class="nav-item"><div id="centroCostos" onclick="CentroCostos()" class="nav-link">CENTRO COSTOS</div></li>
+								<li class="nav-item"><div id="unidad" onclick="Unidad()" class="nav-link">UNIDAD</div></li>
+								<li class="nav-item"><div id="configuracion" onclick="Configuracion()" class="nav-link">CONFIGURACION</div></li>
 							</ul>
 						</li>
-						<li class="nav-item nav-item-submenu">
+						<!--<li class="nav-item nav-item-submenu">
 							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>CONFIGURACIÓN</span></a>
 
 							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
@@ -804,7 +574,6 @@ function Descanso(){
 					<div id="contenidos" style="margin-left: 10%; align-content: center; width:100%; justify-items: center;">
 						<div id="contenidop"></div>
 						<div id="campoAsistencias" style="align-content: center; width:100%; justify-items: center;">
-							
 							<div id="cuerpoAsistencias"></div>
 						</div>
 						<div id="campoBeneficios" style="align-content: center; width:100%; justify-items: center;">
@@ -970,50 +739,67 @@ function Descanso(){
 								</div>
 							</div>
 						</div>
-						<!--<div id="campoFuncion">
-							<div id="cabeceraFuncion">
-								<button id="ibotonAgregarFuncion" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_funcion">NUEVO</button>
+						<div id="campoDescanso">
+							<div id="cabeceraDescanso">
+								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_descanso">NUEVO</button>
 							</div><br>
-							<div id="cuerpoFuncion"></div>
-							<div id="cuerpoFuncion2" style="width:100%; justify-content: center; align-items: center;">
+							<div id="cuerpoDescanso"></div>
+							<div id="cuerpoDescanso2" style="width:100%; justify-content: center; align-items: center;">
 								<div style="width:100%;">
 									<div style="justify-content: center; align-items: center;">
 										<table>
 											<tr>
 												<td>
-													<label>CODIGO: </label>
+													<label>DOCUMENTO EMPLEADO: </label>
 												</td>
 												<td>
-													<input id="fcodigo2" type="text" style="width:200px;">
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label>DESCRIPCION: </label>
-												</td>
-												<td>
-													<input id="fnombre2" type="text" style="width:200px;">
+													<input id="ddocumento2" type="text" style="width:200px;">
 												</td>
 											</tr>
 											<tr>
 												<td>
-													<label>ESTADO: </label>
+													<label>FECHA INICIO: </label>
 												</td>
 												<td>
-													<select id="festado2">
-														<option value="1">ACTIVO</option>
-														<option value="0">INACTIVO</option>
-													</select>
+														<div class="form-group">
+																<div class="input-group">
+																	<span class="input-group-prepend">
+																		<span class="input-group-text">
+																					
+																			<i class="icon-calendar22"></i>
+																		</span>
+																	</span>
+																	<div id="nfechaInicio2"></div>
+																</div>
+															</div>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<label>FECHA FIN: </label>
+												</td>
+												<td>
+														<div class="form-group">
+																<div class="input-group">
+																	<span class="input-group-prepend">
+																		<span class="input-group-text">
+																					
+																			<i class="icon-calendar22"></i>
+																		</span>
+																	</span>
+																	<div id="nfechaFin2"></div>
+																</div>
+															</div>
 												</td>
 											</tr>
 										</table>
 										<br><br>
-										<button id="ibotonEditarFuncion" onclick="EditFuncion2()" type="button" class="btn btn-danger">GUARDAR</button>
+										<button onclick="EditDescanso()" type="button" class="btn btn-danger">GUARDAR</button>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div id="campoPerfil">
+						<!--<div id="campoPerfil">
 							<div id="cabeceraPerfil"></div>
 							<div id="cuerpoPerfil"></div>
 						</div>
@@ -1034,9 +820,64 @@ function Descanso(){
 				</div>
 			</div>
 			<!-- /content area -->
+				<div id="modal_descanso" class="modal fade" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">AGREGAR DESCANSO MEDICO</h5>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
 
-			<!-- Basic modal -->
-			<div id="modal_beneficios" class="modal fade" tabindex="-1">
+							<div class="modal-body">
+								<h6 class="font-weight-semibold">DATOS</h6>
+								<div class="form-group row">
+									<div style="justify-content: center; align-items: center;">
+										EMPLEADO: <div style="display:inline-block; margin-left:25px;"><input id="ddocumento" type="text" style="width:200px;" placeholder="DOCUMENTO EMPLEADO"></div>
+										<br><br>
+										<div style="margin-right:5px;">
+											<div class="form-group">
+													<div class="input-group">
+															<span class="input-group-prepend">
+																<span class="input-group-text">
+																	FECHA INICIO:
+																	<i class="icon-calendar22"></i>
+																</span>
+															</span>
+															<div style="display:inline-block; margin-left:25px;"><input name="datepicker" type="date" id="dfechaInicio" style="width:150px;" /></div>
+													</div>
+												</div>
+											<div class="form-group">
+														<div class="input-group">
+																<span class="input-group-prepend">
+																	<span class="input-group-text">
+																		FECHA FINAL:
+																		<i class="icon-calendar22"></i>
+																	</span>
+																</span>
+																<div style="display:inline-block; margin-left:25px;"><input name="datepicker" type="date" id="dfechaFin" style="width:150px;" /></div>
+														</div>
+													</div>
+										</div>
+										<button id="agregarArchDescanso" onclick="AgregarArchDescanso()" class="btn bg-primary" >AGREGAR ARCHIVO</button>
+										<br>
+										<div id="archDescanso"></div>
+									</div>
+								</div>
+
+								<hr>
+								
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+								<button type="button" onclick="GuardaDescanso()" class="btn bg-primary" data-dismiss="modal">Save changes</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Basic modal -->
+				<div id="modal_beneficios" class="modal fade" tabindex="-1">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
