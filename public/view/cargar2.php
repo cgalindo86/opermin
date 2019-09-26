@@ -28,7 +28,7 @@
             var formData = new FormData($(".formulario")[0]);
             var message = "";
             
-            var miurl = 'upload.php';
+            var miurl = 'upload2.php';
             //alert(miurl);
             $.ajax({
                 url: miurl,
@@ -83,7 +83,7 @@
     {
         switch(extension.toLowerCase()) 
         {
-            case 'xls': case 'xlsx': 
+            case 'png': case 'jpg': case 'doc': case 'docx': case 'pdf': 
                 return true;
             break;
             default:
@@ -98,6 +98,14 @@
 <body>
         
     <form enctype="multipart/form-data" class="formulario">
+        <?php
+            $doc = $_GET['doc'];
+            $fini = $_GET['fini'];
+            $ffin = $_GET['ffin'];
+
+            echo '<input name="datos" type="text" value="'.$doc."#".$fini."#".$ffin.'">';
+        ?>
+        <br><br>
         <label>Subir un archivo</label><br />
         
         <br>

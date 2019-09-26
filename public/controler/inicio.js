@@ -244,6 +244,6 @@ function AgregarArchDescanso(){
 
 	$enlace = "cargar2.php?doc="+$doc+"&fini="+$fini+"&ffin="+$ffin;
 	console.log("enlace",$enlace);
-	document.getElementById("archDescanso").innerHTML = '<iframe src="'+$enlace+'" style="width:80%; height:300px;"></iframe><br>';
+	document.getElementById("archDescanso").innerHTML = '<iframe src="'+$enlace+'" style="width:400px; height:200px;"></iframe><br>';
 }
 
