@@ -234,10 +234,10 @@ class Usuario{
     	return $tabla;
 	}
 
-	function Convocatorias2(){
+	function Convocatorias2($id){
 		include('conexion.php');
     
-        $query = "SELECT * FROM convocatorias ";
+        $query = "SELECT * FROM convocatorias WHERE id='$id'";
         mysqli_set_charset($mysqli, 'utf8'); 
     	$result = mysqli_query($mysqli, $query);
 		
@@ -302,6 +302,45 @@ class Usuario{
     	    
     	}
 	}
+
+	function Descansos(){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM descansos ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>EMPLEADO</td><td>FECHA INICIO</td><td>FECHA FIN</td>';
+		$tabla = $tabla . '<td>DOCUMENTO</td><td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			$direccion = '<a href="files/'.$row['direccion'].'" target="_blank">'.$row['direccion'].'</a>';
+			$tabla = $tabla . '<tr><td>'.$row['empleado'].'</td><td>'.$row['fecha_inicio'].'</td>';
+			$tabla = $tabla . '<td>'.$row['fecha_fin'].'</td><td>'.$direccion.'</td>';
+			$tabla = $tabla . '<td><img onclick="EditarDescanso('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+    	}
+    	$tabla = $tabla . '</tbody></table>';
+    	return $tabla;
+	}
+
+	function Descansos2($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM descansos WHERE id='$id' ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		while ($row = $result->fetch_array()){
+			$direccion = '<a href="files/'.$row['direccion'].'" target="_blank">'.$row['direccion'].'</a>';
+			$tabla = $tabla . $row['empleado'].'#';
+			$tabla = $tabla . $row['fecha_inicio'].'#'.$row['fecha_fin'].'#';
+			$tabla = $tabla . $direccion.'#';
+			
+    	}
+    	return $tabla;
+	}
+
 }
 
 ?>

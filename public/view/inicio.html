@@ -467,6 +467,11 @@
 								<li class="nav-item"><div id="boletas" onclick="Boletas()" class="nav-link">BOLETAS</div></li>
 								<li class="nav-item"><div id="convocatorias" onclick="Convocatorias()" class="nav-link">CONVOCATORIAS</div></li>
 								<li class="nav-item"><div id="descanso" onclick="Descanso()" class="nav-link">DESCANSO MEDICO</div></li>
+								<li class="nav-item"><div id="frases" onclick="Frases()" class="nav-link">FRASES</div></li>
+								<li class="nav-item"><div id="notificaciones" onclick="Notificaciones()" class="nav-link">NOTIFICACIONES</div></li>
+								<li class="nav-item"><div id="reglamentos" onclick="Reglamentos()" class="nav-link">REGLAMENTOS</div></li>
+								<li class="nav-item"><div id="interes" onclick="Interes()" class="nav-link">TEMAS DE INTERES</div></li>
+								<li class="nav-item"><div id="usuarios" onclick="Usuarios()" class="nav-link">USUARIOS</div></li>
 								
 							</ul>
 						</li>
@@ -792,29 +797,70 @@
 															</div>
 												</td>
 											</tr>
+											<tr>
+													<td>
+														<label>ARCHIVO: </label>
+													</td>
+													<td>
+														<div id="ddireccion2"></div>
+													</td>
+												</tr>
 										</table>
-										<br><br>
+										<button id="agregarArchDescanso" onclick="AgregarArchDescanso2()" class="btn bg-primary" >AGREGAR ARCHIVO</button>
+										<br>
+										<div id="archDescanso2"></div>
+										<br>
 										<button onclick="EditDescanso()" type="button" class="btn btn-danger">GUARDAR</button>
 									</div>
 								</div>
 							</div>
 						</div>
-						<!--<div id="campoPerfil">
-							<div id="cabeceraPerfil"></div>
-							<div id="cuerpoPerfil"></div>
+						<div id="campoFrases">
+								<div id="cabeceraFrases">
+									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_frase">NUEVO</button>
+								</div><br>
+								<div id="cuerpoFrases"></div>
+								<div id="cuerpoFrases2" style="width:100%; justify-content: center; align-items: center;">
+									<div style="width:100%;">
+										<div style="justify-content: center; align-items: center;">
+											<table>
+												<tr>
+													<td>
+														<label>TEXTO: </label>
+													</td>
+													<td>
+														<input id="ftexto2" type="text" style="width:200px;">
+													</td>
+												</tr>
+												
+											</table>
+											<br><br>
+											<button onclick="EditFrase()" type="button" class="btn btn-danger">GUARDAR</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						<div id="campoNotificaciones">
+							<div id="cabeceraNotificaciones"></div>
+							<div id="cuerpoNotificaciones"></div>
+							<div id="cuerpoNotificaciones2"></div>
+						</div>
+						<div id="campoReglamentos">
+							<div id="cabeceraReglamentos"></div>
+							<div id="cuerpoReglamentos"></div>
+							<div id="cuerpoReglamentos2"></div>
+						</div>
+						<div id="campoInteres">
+							<div id="cabeceraInteres"></div>
+							<div id="cuerpoInteres"></div>
+							<div id="cuerpoInteres2"></div>
 						</div>
 						<div id="campoUsuarios">
 							<div id="cabeceraUsuarios"></div>
 							<div id="cuerpoUsuarios"></div>
+							<div id="cuerpoUsuarios2"></div>
 						</div>
-						<div id="campoOpcion">
-							<div id="cabeceraOpcion"></div>
-							<div id="cuerpoOpcion"></div>
-						</div>
-						<div id="campoParametros">
-							<div id="cabeceraParametros"></div>
-							<div id="cuerpoParametros"></div>
-						</div>-->
 
 					</div>
 				</div>

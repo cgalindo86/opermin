@@ -22,11 +22,12 @@ function Ocultar(){
 	$("#cuerpoBeneficios2").hide();
 	$("#campoBoletas").hide();
 	$("#campoConvocatorias").hide();
-	$("#campoFuncion").hide();
-	$("#campoPerfil").hide();
-	$("#campoUsuarios").hide();
-	$("#campoOpcion").hide();
-	$("#campoParametros").hide();
+	$("#campoDescanso").hide();
+	$("#campoFrases").hide();
+	$("#campoNotificaciones").hide();
+	$("#campoReglamentos").hide();
+	$("#campoInteres").hide();
+	$("#campoUsuarios").hide();	
 	console.log("ocultar");
 }
 
@@ -141,6 +142,25 @@ function EditarConvocatorias($id){
 	});
 }
 
+function EditarDescanso($id){
+	$mid = $id;
+	$.post("../controler/usuario.php", {
+		accion: "12", id:$id
+	}, function(htmlexterno){
+		$("#cuerpoDescanso2").show();
+		$("#cuerpoDescanso").hide();
+		console.log(htmlexterno);
+		var txt;
+		txt = htmlexterno.split("#");
+		//console.log(txt[0]+"-"+txt[1]+"-"+txt[2]+"-"+txt[3]+"-"+txt[4]+"-"+txt[5]+"-"+txt[6]);
+		document.getElementById("ddocumento2").value = txt[0];
+		document.getElementById("nfechaInicio2").innerHTML = 'Actual: '+txt[1]+'<br><input name="datepicker" type="date" id="dfechaInicio2" style="width:150px;" value="'+txt[1]+'" />';
+		document.getElementById("nfechaFin2").innerHTML = 'Actual: '+txt[2]+'<br><input name="datepicker" type="date" id="dfechaFin2" style="width:150px;" value="'+txt[2]+'" />';
+		document.getElementById("ddireccion2").innerHTML = txt[3];
+		
+	});
+}
+
 function Asistencias(){
 	Ocultar();
 	$("#campoAsistencias").show();
@@ -150,6 +170,11 @@ function Asistencias(){
 	document.getElementById("boletas").style.background = "transparent";
 	document.getElementById("convocatorias").style.background = "transparent";
 	document.getElementById("descanso").style.background = "transparent";
+	document.getElementById("frases").style.background = "transparent";
+	document.getElementById("notificaciones").style.background = "transparent";
+	document.getElementById("reglamentos").style.background = "transparent";
+	document.getElementById("interes").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";
 
 	$.post("../controler/usuario.php", {
 		accion: "1"
@@ -170,6 +195,11 @@ function Beneficios(){
 	document.getElementById("boletas").style.background = "transparent";
 	document.getElementById("convocatorias").style.background = "transparent";
 	document.getElementById("descanso").style.background = "transparent";
+	document.getElementById("frases").style.background = "transparent";
+	document.getElementById("notificaciones").style.background = "transparent";
+	document.getElementById("reglamentos").style.background = "transparent";
+	document.getElementById("interes").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";
 
 	$.post("../controler/usuario.php", {
 		accion: "2"
@@ -189,6 +219,11 @@ function Boletas(){
 	document.getElementById("asistencia").style.background = "transparent";
 	document.getElementById("convocatorias").style.background = "transparent";
 	document.getElementById("descanso").style.background = "transparent";
+	document.getElementById("frases").style.background = "transparent";
+	document.getElementById("notificaciones").style.background = "transparent";
+	document.getElementById("reglamentos").style.background = "transparent";
+	document.getElementById("interes").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";
 
 }
 
@@ -216,6 +251,11 @@ function Convocatorias(){
 	document.getElementById("boletas").style.background = "transparent";
 	document.getElementById("asistencia").style.background = "transparent";
 	document.getElementById("descanso").style.background = "transparent";
+	document.getElementById("frases").style.background = "transparent";
+	document.getElementById("notificaciones").style.background = "transparent";
+	document.getElementById("reglamentos").style.background = "transparent";
+	document.getElementById("interes").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";
 
 	$.post("../controler/usuario.php", {
 		accion: "7"
@@ -228,13 +268,29 @@ function Convocatorias(){
 
 function Descanso(){
 	Ocultar();
-	//$("#campoUsuarios").show();
+	
+	$("#campoDescanso").show();
+	$("#cuerpoDescanso").show();
+	$("#cuerpoDescanso2").hide();
+
 	document.getElementById("descanso").style.background = "#273156";
 	document.getElementById("beneficios").style.background = "transparent";
 	document.getElementById("boletas").style.background = "transparent";
 	document.getElementById("convocatorias").style.background = "transparent";
 	document.getElementById("asistencia").style.background = "transparent";
+	document.getElementById("frases").style.background = "transparent";
+	document.getElementById("notificaciones").style.background = "transparent";
+	document.getElementById("reglamentos").style.background = "transparent";
+	document.getElementById("interes").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";
 
+	$.post("../controler/usuario.php", {
+		accion: "11"
+	}, function(htmlexterno){
+
+	$("#cuerpoDescanso").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
 }
 
 function AgregarArchDescanso(){
@@ -242,8 +298,153 @@ function AgregarArchDescanso(){
 	$fini = $("#dfechaInicio").val();
 	$ffin = $("#dfechaFin").val();
 
-	$enlace = "cargar2.php?doc="+$doc+"&fini="+$fini+"&ffin="+$ffin;
+	$enlace = "cargar2.php?doc="+$doc+"&fini="+$fini+"&ffin="+$ffin+"&filtro=descanso";
 	console.log("enlace",$enlace);
 	document.getElementById("archDescanso").innerHTML = '<iframe src="'+$enlace+'" style="width:400px; height:200px;"></iframe><br>';
+}
+
+function AgregarArchDescanso2(){
+	$doc = $("#ddocumento2").val();
+	$fini = $("#dfechaInicio2").val();
+	$ffin = $("#dfechaFin2").val();
+
+	$enlace = "cargar2.php?doc="+$doc+"&fini="+$fini+"&ffin="+$ffin+"&filtro=descanso";
+	console.log("enlace",$enlace);
+	document.getElementById("archDescanso2").innerHTML = '<iframe src="'+$enlace+'" style="width:400px; height:200px;"></iframe><br>';
+}
+
+function Frases(){
+	Ocultar();
+	
+	$("#campoFrases").show();
+	$("#cuerpoFrases").show();
+	$("#cuerpoFrases2").hide();
+
+	document.getElementById("frases").style.background = "#273156";
+	document.getElementById("beneficios").style.background = "transparent";
+	document.getElementById("boletas").style.background = "transparent";
+	document.getElementById("convocatorias").style.background = "transparent";
+	document.getElementById("asistencia").style.background = "transparent";
+	document.getElementById("descanso").style.background = "transparent";
+	document.getElementById("notificaciones").style.background = "transparent";
+	document.getElementById("reglamentos").style.background = "transparent";
+	document.getElementById("interes").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";
+
+	$.post("../controler/usuario.php", {
+		accion: "11"
+	}, function(htmlexterno){
+
+	$("#cuerpoFrases").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
+function Notificaciones(){
+	Ocultar();
+	
+	$("#campoNotificaciones").show();
+	$("#cuerpoNotificaciones").show();
+	$("#cuerpoNotificaciones2").hide();
+
+	document.getElementById("notificaciones").style.background = "#273156";
+	document.getElementById("beneficios").style.background = "transparent";
+	document.getElementById("boletas").style.background = "transparent";
+	document.getElementById("convocatorias").style.background = "transparent";
+	document.getElementById("asistencia").style.background = "transparent";
+	document.getElementById("descanso").style.background = "transparent";
+	document.getElementById("frases").style.background = "transparent";
+	document.getElementById("reglamentos").style.background = "transparent";
+	document.getElementById("interes").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";
+
+	$.post("../controler/usuario.php", {
+		accion: "11"
+	}, function(htmlexterno){
+
+	$("#cuerpoNotificaciones").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
+function Reglamentos(){
+	Ocultar();
+	
+	$("#campoReglamentos").show();
+	$("#cuerpoReglamentos").show();
+	$("#cuerpoReglamentos2").hide();
+
+	document.getElementById("reglamentos").style.background = "#273156";
+	document.getElementById("beneficios").style.background = "transparent";
+	document.getElementById("boletas").style.background = "transparent";
+	document.getElementById("convocatorias").style.background = "transparent";
+	document.getElementById("asistencia").style.background = "transparent";
+	document.getElementById("descanso").style.background = "transparent";
+	document.getElementById("frases").style.background = "transparent";
+	document.getElementById("notificaciones").style.background = "transparent";
+	document.getElementById("interes").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";
+
+	$.post("../controler/usuario.php", {
+		accion: "11"
+	}, function(htmlexterno){
+
+	$("#cuerpoReglamentos").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
+function Interes(){
+	Ocultar();
+	
+	$("#campoInteres").show();
+	$("#cuerpoInteres").show();
+	$("#cuerpoInteres2").hide();
+
+	document.getElementById("interes").style.background = "#273156";
+	document.getElementById("beneficios").style.background = "transparent";
+	document.getElementById("boletas").style.background = "transparent";
+	document.getElementById("convocatorias").style.background = "transparent";
+	document.getElementById("asistencia").style.background = "transparent";
+	document.getElementById("descanso").style.background = "transparent";
+	document.getElementById("frases").style.background = "transparent";
+	document.getElementById("notificaciones").style.background = "transparent";
+	document.getElementById("reglamentos").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";
+
+	$.post("../controler/usuario.php", {
+		accion: "11"
+	}, function(htmlexterno){
+
+	$("#cuerpoInteres").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
+function Usuarios(){
+	Ocultar();
+	
+	$("#campoUsuarios").show();
+	$("#cuerpoUsuarios").show();
+	$("#cuerpoUsuarios2").hide();
+
+	document.getElementById("usuarios").style.background = "#273156";
+	document.getElementById("beneficios").style.background = "transparent";
+	document.getElementById("boletas").style.background = "transparent";
+	document.getElementById("convocatorias").style.background = "transparent";
+	document.getElementById("asistencia").style.background = "transparent";
+	document.getElementById("descanso").style.background = "transparent";
+	document.getElementById("frases").style.background = "transparent";
+	document.getElementById("notificaciones").style.background = "transparent";
+	document.getElementById("reglamentos").style.background = "transparent";
+	document.getElementById("interes").style.background = "transparent";
+
+	$.post("../controler/usuario.php", {
+		accion: "11"
+	}, function(htmlexterno){
+
+	$("#cuerpoUsuarios").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
 }
 

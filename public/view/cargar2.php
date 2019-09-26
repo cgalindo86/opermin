@@ -102,8 +102,9 @@
             $doc = $_GET['doc'];
             $fini = $_GET['fini'];
             $ffin = $_GET['ffin'];
+            $filtro = $_GET['filtro'];
 
-            echo '<input name="datos" type="text" value="'.$doc."#".$fini."#".$ffin.'">';
+            echo '<input name="datos" type="text" value="'.$doc."#".$fini."#".$ffin."#".$filtro.'">';
         ?>
         <br><br>
         <label>Subir un archivo</label><br />

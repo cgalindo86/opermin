@@ -43,6 +43,10 @@
         echo $miprod -> Convocatorias2($id);
     } else if($accion=="10"){
         echo $miprod -> GuardaConvocatorias2($id,$costos,$unidad,$puesto,$descripcion,$requisitos,$salario);
+    } else if($accion=="11"){
+        echo $miprod -> Descansos();
+    } else if($accion=="12"){
+        echo $miprod -> Descansos2($id);
     }
     
 ?>

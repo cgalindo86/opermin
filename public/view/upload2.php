@@ -27,38 +27,60 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         $empleado = $d[0];
         $fechaI = $d[1];
         $fechaF = $d[2];
+        $filtro = $d[3];
     
-    $mysqli = new mysqli('localhost', 'root', '', 'opermin');
+        if($filtro=="descanso"){
+            $mysqli = new mysqli('localhost', 'root', '', 'opermin');
     
-    $query = "SELECT * FROM descansos WHERE empleado='$empleado' AND fecha_inicio='$fechaI' AND fecha_fin ='$fechaF' ";
-    mysqli_set_charset($mysqli, 'utf8'); 
-    $result = mysqli_query($mysqli, $query);
-    $dat="";
-    while ($row = $result->fetch_array()){
-    	$dat = $row['id'];
+            $query = "SELECT * FROM descansos WHERE empleado='$empleado' AND fecha_inicio='$fechaI' AND fecha_fin ='$fechaF' ";
+            mysqli_set_charset($mysqli, 'utf8'); 
+            $result = mysqli_query($mysqli, $query);
+            $dat="";
+            while ($row = $result->fetch_array()){
+                $dat = $row['id'];
+            }
+            
+            //echo $dat."#";
+            
+            if($dat==""){
+                $sql = "INSERT INTO descansos (EMPLEADO,FECHA_INICIO,FECHA_FIN,DIRECCION) VALUES ('$empleado','$fechaI','$fechaF','$nom_arch')";
+                
+                if (!$resultado = $mysqli->query($sql)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    echo 'EXITO';
+                }
+            } else {
+                $sql = "UPDATE descansos SET empleado='$empleado', fecha_inicio='$fechaI', fecha_fin='$fechaF', direccion='$nom_arch' WHERE id='$dat'";
+                
+                if (!$resultado = $mysqli->query($sql)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    echo 'EXITO2';
+                } 
+            }
+                
+            echo "Documento subido correctamente";
+            
+        } else if($filtro="frase"){
+
+        }
     }
     
-    //echo $dat."#";
-    
-    if($dat==""){
-        $sql = "INSERT INTO descansos (EMPLEADO,FECHA_INICIO,FECHA_FIN) VALUES ('$empleado','$fechaI','$fechaF')";
-        
-        if (!$resultado = $mysqli->query($sql)) {
-    	    
-    	    echo "Lo sentimos, este sitio web está experimentando problemas.";
-    	    echo "Error: La ejecución de la consulta falló debido a: \n";
-    	    echo "Query: " . $sql . "\n";
-    	    echo "Errno: " . $mysqli->errno . "\n";
-    	    echo "Error: " . $mysqli->error . "\n";
-    	    
-    	    exit;
-    	} else {
-    		echo 'EXITO';
-    	}
-    }
-        //echo $datos.'<br>';
-        echo "Documento subido correctamente";
-    }
 }else{
     throw new Exception("Error Processing Request", 1);   
 }
