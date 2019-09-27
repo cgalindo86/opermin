@@ -77,7 +77,51 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             echo "Documento subido correctamente";
             
         } else if($filtro="frase"){
-
+            $mysqli = new mysqli('localhost', 'root', '', 'opermin');
+    
+            $query = "SELECT * FROM frases WHERE detalle='$empleado' OR imagen='$nom_arch' ";
+            mysqli_set_charset($mysqli, 'utf8'); 
+            $result = mysqli_query($mysqli, $query);
+            $dat="";
+            while ($row = $result->fetch_array()){
+                $dat = $row['id'];
+            }
+            
+            //echo $dat."#";
+            
+            if($dat==""){
+                $sql = "INSERT INTO frases (DETALLE,IMAGEN) VALUES ('$empleado','$nom_arch')";
+                
+                if (!$resultado = $mysqli->query($sql)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    echo 'EXITO';
+                }
+            } else {
+                $sql = "UPDATE frases SET detalle='$empleado', imagen='$nom_arch' WHERE id='$dat'";
+                
+                if (!$resultado = $mysqli->query($sql)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    echo 'EXITO2';
+                } 
+            }
+                
+            echo "Documento subido correctamente";
         }
     }
     

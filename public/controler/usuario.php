@@ -47,6 +47,14 @@
         echo $miprod -> Descansos();
     } else if($accion=="12"){
         echo $miprod -> Descansos2($id);
+    } else if($accion=="13"){
+        echo $miprod -> GuardaFrase($detalle);
+    } else if($accion=="14"){
+        echo $miprod -> Frases();
+    } else if($accion=="15"){
+        echo $miprod -> Unidad($id);
+    } else if($accion=="16"){
+        echo $miprod -> CentroCostos();
     }
     
 ?>

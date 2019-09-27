@@ -61,6 +61,16 @@ function GuardaConvocatorias(){
 	});
 }
 
+function GuardaFrase(){
+	$.post("../controler/usuario.php", {
+		accion: "13",
+		detalle: $("#fdetalle").val()
+
+	}, function(htmlexterno){
+		Frases();
+	});
+}
+
 function GuardaEditarBeneficios(){
 	if($("#bfecha2").val()!=""){
 		$caducidad = $("#bfecha2").val();
@@ -332,12 +342,51 @@ function Frases(){
 	document.getElementById("usuarios").style.background = "transparent";
 
 	$.post("../controler/usuario.php", {
-		accion: "11"
+		accion: "14"
 	}, function(htmlexterno){
 
 	$("#cuerpoFrases").html(htmlexterno);
 		console.log(htmlexterno+"");
 	});
+}
+
+function EditarFrase($id){
+	$mid = $id;
+	$.post("../controler/usuario.php", {
+		accion: "12", id:$id
+	}, function(htmlexterno){
+		$("#cuerpoFrase2").show();
+		$("#cuerpoFrase").hide();
+		console.log(htmlexterno);
+		var txt;
+		txt = htmlexterno.split("#");
+		//console.log(txt[0]+"-"+txt[1]+"-"+txt[2]+"-"+txt[3]+"-"+txt[4]+"-"+txt[5]+"-"+txt[6]);
+		document.getElementById("fdetalle2").value = txt[0];
+		/*document.getElementById("nfechaInicio2").innerHTML = 'Actual: '+txt[1]+'<br><input name="datepicker" type="date" id="dfechaInicio2" style="width:150px;" value="'+txt[1]+'" />';
+		document.getElementById("nfechaFin2").innerHTML = 'Actual: '+txt[2]+'<br><input name="datepicker" type="date" id="dfechaFin2" style="width:150px;" value="'+txt[2]+'" />';
+		document.getElementById("ddireccion2").innerHTML = txt[3];*/
+		
+	});
+}
+
+function AgregarArchFrase(){
+	$doc = $("#fdetalle").val();
+	$fini = "";
+	$ffin = "";
+
+	$enlace = "cargar2.php?doc="+$doc+"&fini="+$fini+"&ffin="+$ffin+"&filtro=frase";
+	console.log("enlace",$enlace);
+	document.getElementById("archFrase").innerHTML = '<iframe src="'+$enlace+'" style="width:400px; height:200px;"></iframe><br>';
+}
+
+function AgregarArchFrase2(){
+	$doc = $("#fdetalle2").val();
+	$fini = "";
+	$ffin = "";
+
+	$enlace = "cargar2.php?doc="+$doc+"&fini="+$fini+"&ffin="+$ffin+"&filtro=frase";
+	console.log("enlace",$enlace);
+	document.getElementById("archFrase2").innerHTML = '<iframe src="'+$enlace+'" style="width:400px; height:200px;"></iframe><br>';
 }
 
 function Notificaciones(){
@@ -358,13 +407,13 @@ function Notificaciones(){
 	document.getElementById("interes").style.background = "transparent";
 	document.getElementById("usuarios").style.background = "transparent";
 
-	$.post("../controler/usuario.php", {
+	/*$.post("../controler/usuario.php", {
 		accion: "11"
 	}, function(htmlexterno){
 
 	$("#cuerpoNotificaciones").html(htmlexterno);
 		console.log(htmlexterno+"");
-	});
+	});*/
 }
 
 function Reglamentos(){
@@ -386,11 +435,25 @@ function Reglamentos(){
 	document.getElementById("usuarios").style.background = "transparent";
 
 	$.post("../controler/usuario.php", {
-		accion: "11"
+		accion: "16"
 	}, function(htmlexterno){
+		$("#rcostos").html(htmlexterno);
+		$("#rcostos2").html(htmlexterno);
+		console.log("c16 "+htmlexterno+"");
+	});
 
-	$("#cuerpoReglamentos").html(htmlexterno);
-		console.log(htmlexterno+"");
+}
+
+function CambioCentroCostos(){
+	var $v = document.getElementById("icostos").value;
+	console.log("c15 "+$v+"");
+	$.post("../controler/usuario.php", {
+		accion: "15",
+		id: $v
+	}, function(htmlexterno){
+		$("#runidad").html(htmlexterno);
+		$("#runidad2").html(htmlexterno);
+		console.log("c15 "+htmlexterno+"");
 	});
 }
 

@@ -826,15 +826,18 @@
 											<table>
 												<tr>
 													<td>
-														<label>TEXTO: </label>
+														<label>DETALLE: </label>
 													</td>
 													<td>
-														<input id="ftexto2" type="text" style="width:200px;">
+														<textarea id="fdetalle2" type="text" style="width:200px;"></textarea>
 													</td>
 												</tr>
 												
 											</table>
-											<br><br>
+											<button id="agregarArchFrase" onclick="AgregarArchFrase2()" class="btn bg-primary" >AGREGAR ARCHIVO</button>
+											<br>
+											<div id="archFrase2"></div>
+											<br>
 											<button onclick="EditFrase()" type="button" class="btn btn-danger">GUARDAR</button>
 										</div>
 									</div>
@@ -847,9 +850,39 @@
 							<div id="cuerpoNotificaciones2"></div>
 						</div>
 						<div id="campoReglamentos">
-							<div id="cabeceraReglamentos"></div>
+							<div id="cabeceraReglamentos">
+								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_reglamentos">NUEVO</button>
+							</div>
 							<div id="cuerpoReglamentos"></div>
-							<div id="cuerpoReglamentos2"></div>
+							<div id="cuerpoReglamentos2" style="width:100%; justify-content: center; align-items: center;">
+									<div style="width:100%;">
+										<div style="justify-content: center; align-items: center;">
+											<table>
+												<tr>
+													<td>
+														<label>CENTRO DE COSTOS: </label>
+													</td>
+													<td>
+														<div id="rcostos2"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label>UNIDAD: </label>
+													</td>
+													<td>
+														<div id="runidad2"></div>
+													</td>
+												</tr>
+											</table>
+											<button id="agregarArchReglamentos" onclick="AgregarArchReglamentos2()" class="btn bg-primary" >AGREGAR ARCHIVO</button>
+											<br>
+											<div id="archReglamentos2"></div>
+											<br>
+											<button onclick="EditReglamentos()" type="button" class="btn btn-danger">GUARDAR</button>
+										</div>
+									</div>
+								</div>
 						</div>
 						<div id="campoInteres">
 							<div id="cabeceraInteres"></div>
@@ -866,6 +899,84 @@
 				</div>
 			</div>
 			<!-- /content area -->
+				<div id="modal_reglamentos" class="modal fade" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">AGREGAR FRASE MOTIVADORA</h5>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+
+							<div class="modal-body">
+								<h6 class="font-weight-semibold">DATOS</h6>
+								<table>
+										
+										<tr>
+											<td>
+												<label>CENTRO DE COSTOS: </label>
+											</td>
+											<td>
+												<div id="rcostos"></div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<label>UNIDAD: </label>
+											</td>
+											<td>
+												<div id="runidad"></div>
+											</td>
+										</tr>
+									</table>
+									<button id="agregarArchReglamentos" onclick="AgregarArchReglamentos()" class="btn bg-primary" >AGREGAR ARCHIVO</button>
+									<br>
+									<div id="archReglamentos"></div>
+									<br>
+
+								<hr>
+								
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+								<button type="button" onclick="GuardaFrase()" class="btn bg-primary" data-dismiss="modal">Save changes</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="modal_frase" class="modal fade" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">AGREGAR FRASE MOTIVADORA</h5>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+
+							<div class="modal-body">
+								<h6 class="font-weight-semibold">DATOS</h6>
+								<div class="form-group row">
+									<div style="justify-content: center; align-items: center;">
+										<div style="margin-right:5px;"><textarea id="fdetalle" type="text" style="width:405px;" placeholder="DETALLE"></textarea></div>
+										<br><br>
+										
+										<button id="agregarArchFrase" onclick="AgregarArchFrase()" class="btn bg-primary" >AGREGAR ARCHIVO</button>
+										<br>
+										<div id="archFrase" style="width:200px; height:200px;"></div>
+									</div>
+								</div>
+
+								<hr>
+								
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+								<button type="button" onclick="GuardaFrase()" class="btn bg-primary" data-dismiss="modal">Save changes</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<div id="modal_descanso" class="modal fade" tabindex="-1">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -916,7 +1027,7 @@
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-								<button type="button" onclick="GuardaDescanso()" class="btn bg-primary" data-dismiss="modal">Save changes</button>
+								<!--<button type="button" onclick="GuardaDescanso()" class="btn bg-primary" data-dismiss="modal">Save changes</button>-->
 							</div>
 						</div>
 					</div>

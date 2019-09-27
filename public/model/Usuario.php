@@ -341,6 +341,84 @@ class Usuario{
     	return $tabla;
 	}
 
+	function GuardaFrase($detalle){
+		include('conexion.php');
+    								
+        $sql = "INSERT INTO frases (DETALLE) 
+        VALUES ('$detalle')";
+        
+        if (!$resultado = $mysqli->query($sql)) {
+    	    // ¡Oh, no! La consulta falló. 
+    	    echo "Lo sentimos, este sitio web está experimentando problemas.";
+    	
+    	    // De nuevo, no hacer esto en un sitio público, aunque nosotros mostraremos
+    	    // cómo obtener información del error
+    	    echo "Error: La ejecución de la consulta falló debido a: \n";
+    	    echo "Query: " . $sql . "\n";
+    	    echo "Errno: " . $mysqli->errno . "\n";
+    	    echo "Error: " . $mysqli->error . "\n";
+    	    
+    	    exit;
+    	} else {
+    		
+    		echo "Ingresado"."\n";
+    	    
+    	}
+	} 
+
+	function Frases(){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM frases ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>DETALLE</td><td>IMAGEN</td>';
+		$tabla = $tabla . '<td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			$direccion = '<a href="files/'.$row['imagen'].'" target="_blank">'.$row['imagen'].'</a>';
+			$tabla = $tabla . '<tr><td>'.$row['detalle'].'</td><td>'.$direccion.'</td>';
+			$tabla = $tabla . '<td><img onclick="EditarFrase('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+    	}
+    	$tabla = $tabla . '</tbody></table>';
+    	return $tabla;
+	}
+
+	function Unidad($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM unidad WHERE centro_costos='$id'";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '<select id="iunidad"><option value="0">Seleccione</option>';
+		
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . '<option value="'.$row['centro_costos'].'">'.$row['descripcion'].'</option>';
+    	}
+    	$tabla = $tabla . '</select>';
+    	return $tabla;
+	}
+
+	function CentroCostos(){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM centro_costos";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '<select id="icostos" onclick="CambioCentroCostos()" ><option value="0">Seleccione</option>';
+		
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . '<option value="'.$row['empresa'].'">'.$row['descripcion'].'</option>';
+			
+    	}
+    	$tabla = $tabla . '</select>';
+    	return $tabla;
+	}
+
 }
 
 ?>
