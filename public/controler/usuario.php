@@ -55,6 +55,8 @@
         echo $miprod -> Unidad($id);
     } else if($accion=="16"){
         echo $miprod -> CentroCostos();
+    } else if($accion=="17"){
+        echo $miprod -> Reglamentos();
     }
     
 ?>

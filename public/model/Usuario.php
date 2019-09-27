@@ -388,7 +388,7 @@ class Usuario{
 
 	function Unidad($id){
 		include('conexion.php');
-    
+		//echo $id;
         $query = "SELECT * FROM unidad WHERE centro_costos='$id'";
         mysqli_set_charset($mysqli, 'utf8'); 
     	$result = mysqli_query($mysqli, $query);
@@ -396,7 +396,7 @@ class Usuario{
 		$tabla = '<select id="iunidad"><option value="0">Seleccione</option>';
 		
     	while ($row = $result->fetch_array()){
-			$tabla = $tabla . '<option value="'.$row['centro_costos'].'">'.$row['descripcion'].'</option>';
+			$tabla = $tabla . '<option value="'.$row['id'].'">'.$row['descripcion'].'</option>';
     	}
     	$tabla = $tabla . '</select>';
     	return $tabla;
@@ -409,14 +409,62 @@ class Usuario{
         mysqli_set_charset($mysqli, 'utf8'); 
     	$result = mysqli_query($mysqli, $query);
 		
-		$tabla = '<select id="icostos" onclick="CambioCentroCostos()" ><option value="0">Seleccione</option>';
+		$tabla = '<select id="icostos" onclick="CambioCentroCostos()">';
+		//$tabla = '<select id="icostos" onclick="CambioCentroCostos()"><option value="0">Seleccione</option>';
 		
     	while ($row = $result->fetch_array()){
-			$tabla = $tabla . '<option value="'.$row['empresa'].'">'.$row['descripcion'].'</option>';
+			$tabla = $tabla . '<option value="'.$row['id'].'">'.$row['descripcion'].'</option>';
 			
     	}
     	$tabla = $tabla . '</select>';
     	return $tabla;
+	}
+
+	function Reglamentos(){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM reglamento ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>CENTRO DE COSTOS</td><td>UNIDAD</td>';
+		$tabla = $tabla . '<td>ARCHIVO</td><td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			$costo = $this->NombreCentro($row['centro_costos']);
+			$unidad = $this->NombreUnidad($row['unidad']);
+
+			$direccion = '<a href="files/'.$row['archivo'].'" target="_blank">'.$row['archivo'].'</a>';
+			$tabla = $tabla . '<tr><td>'.$costo.'</td><td>'.$unidad.'</td><td>'.$direccion.'</td>';
+			$tabla = $tabla . '<td><img onclick="EditarReglamentos('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+    	}
+    	$tabla = $tabla . '</tbody></table>';
+    	return $tabla;
+	}
+
+	function NombreCentro($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM centro_costos WHERE id='$id' ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		while ($row = $result->fetch_array()){
+			$dat = $row['descripcion'];
+		}
+		return $dat;
+	}
+
+	function NombreUnidad($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM unidad WHERE id='$id' ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		while ($row = $result->fetch_array()){
+			$dat = $row['descripcion'];
+		}
+		return $dat;
 	}
 
 }

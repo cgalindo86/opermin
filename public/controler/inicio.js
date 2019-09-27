@@ -71,6 +71,10 @@ function GuardaFrase(){
 	});
 }
 
+function GuardaReglamentos(){
+	Reglamentos();
+}
+
 function GuardaEditarBeneficios(){
 	if($("#bfecha2").val()!=""){
 		$caducidad = $("#bfecha2").val();
@@ -438,23 +442,69 @@ function Reglamentos(){
 		accion: "16"
 	}, function(htmlexterno){
 		$("#rcostos").html(htmlexterno);
+		htmlexterno = htmlexterno.replace("icostos","icostos2");
+		htmlexterno = htmlexterno.replace("CambioCentroCostos","CambioCentroCostos2");
 		$("#rcostos2").html(htmlexterno);
 		console.log("c16 "+htmlexterno+"");
+	});
+
+	$.post("../controler/usuario.php", {
+		accion: "17"
+	}, function(htmlexterno){
+
+		$("#cuerpoReglamentos").html(htmlexterno);
+		console.log(htmlexterno+"");s
 	});
 
 }
 
 function CambioCentroCostos(){
-	var $v = document.getElementById("icostos").value;
-	console.log("c15 "+$v+"");
+	var x = document.getElementById("icostos").selectedIndex;
+    var y = document.getElementById("icostos").options;
+    var v2 = y[x].value;
+	console.log("c15 aa "+v2+"");
 	$.post("../controler/usuario.php", {
 		accion: "15",
-		id: $v
+		id: v2
 	}, function(htmlexterno){
 		$("#runidad").html(htmlexterno);
+		//htmlexterno = htmlexterno.replace("iunidad","iunidad2");
+		//htmlexterno = htmlexterno.replace("CambioCentroCostos","CambioCentroCostos2");
+		//$("#runidad2").html(htmlexterno);
+		console.log("c15 "+htmlexterno+"");
+	});
+}
+
+function CambioCentroCostos2(){
+	var x = document.getElementById("icostos2").selectedIndex;
+    var y = document.getElementById("icostos2").options;
+    var v2 = y[x].value;
+	console.log("c15 aa "+v2+"");
+	$.post("../controler/usuario.php", {
+		accion: "15",
+		id: v2
+	}, function(htmlexterno){
+		//$("#runidad").html(htmlexterno);
+		htmlexterno = htmlexterno.replace("iunidad","iunidad2");
 		$("#runidad2").html(htmlexterno);
 		console.log("c15 "+htmlexterno+"");
 	});
+}
+
+function AgregarArchReglamentos(){
+	var v = document.getElementById("icostos").value;
+	var v2 = document.getElementById("iunidad").value;
+	$enlace = "cargar2.php?doc="+v+"&fini="+v2+"&ffin="+"&filtro=reglamento";
+	console.log("enlace",$enlace);
+	document.getElementById("archReglamentos").innerHTML = '<iframe src="'+$enlace+'" style="width:400px; height:200px;"></iframe><br>';
+}
+
+function AgregarArchReglamentos2(){
+	var v = document.getElementById("icostos2").value;
+	var v2 = document.getElementById("iunidad2").value;
+	$enlace = "cargar2.php?doc="+v+"&fini="+v2+"&ffin="+"&filtro=reglamento";
+	console.log("enlace",$enlace);
+	document.getElementById("archReglamentos2").innerHTML = '<iframe src="'+$enlace+'" style="width:400px; height:200px;"></iframe><br>';
 }
 
 function Interes(){
