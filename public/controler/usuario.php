@@ -57,6 +57,8 @@
         echo $miprod -> CentroCostos();
     } else if($accion=="17"){
         echo $miprod -> Reglamentos();
+    } else if($accion=="18"){
+        echo $miprod -> Reglamentos2($id);
     }
     
 ?>

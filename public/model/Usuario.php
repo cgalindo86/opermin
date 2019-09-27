@@ -402,6 +402,22 @@ class Usuario{
     	return $tabla;
 	}
 
+	function Unidad2($id){
+		include('conexion.php');
+		//echo $id;
+        $query = "SELECT * FROM unidad WHERE centro_costos='$id'";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '<select id="iunidad"><option value="0">Seleccione</option>';
+		
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . '<option value="'.$row['id'].'" selected>'.$row['descripcion'].'</option>';
+    	}
+    	$tabla = $tabla . '</select>';
+    	return $tabla;
+	}
+
 	function CentroCostos(){
 		include('conexion.php');
     
@@ -414,6 +430,24 @@ class Usuario{
 		
     	while ($row = $result->fetch_array()){
 			$tabla = $tabla . '<option value="'.$row['id'].'">'.$row['descripcion'].'</option>';
+			
+    	}
+    	$tabla = $tabla . '</select>';
+    	return $tabla;
+	}
+
+	function CentroCostos2(){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM centro_costos WHERE id='$id'";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '<select id="icostos" onclick="CambioCentroCostos()">';
+		//$tabla = '<select id="icostos" onclick="CambioCentroCostos()"><option value="0">Seleccione</option>';
+		
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . '<option value="'.$row['id'].'" selected>'.$row['descripcion'].'</option>';
 			
     	}
     	$tabla = $tabla . '</select>';
@@ -441,6 +475,26 @@ class Usuario{
     	}
     	$tabla = $tabla . '</tbody></table>';
     	return $tabla;
+	}
+
+
+	function Reglamentos2(){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM reglamento ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '';
+		while ($row = $result->fetch_array()){
+			$costo = $this->CentroCostos2($row['centro_costos']);
+			$unidad = $this->Unidad2($row['unidad']);
+			$direccion = '<a href="files/'.$row['archivo'].'" target="_blank">'.$row['archivo'].'</a>';
+			$tabla = $tabla . ''.$costo.'#'.$unidad.'#'.$direccion.'#';
+			
+    	}
+		
+		return $tabla;
 	}
 
 	function NombreCentro($id){

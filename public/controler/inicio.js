@@ -373,6 +373,24 @@ function EditarFrase($id){
 	});
 }
 
+function EditarReglamentos($id){
+	$mid = $id;
+	$.post("../controler/usuario.php", {
+		accion: "18", id:$id
+	}, function(htmlexterno){
+		$("#cuerpoReglamentos2").show();
+		$("#cuerpoReglamentos").hide();
+		console.log(htmlexterno);
+		var txt;
+		txt = htmlexterno.split("#");
+		document.getElementById("rcostos2").innerHTML = txt[0];
+		document.getElementById("runidad2").innerHTML = txt[1];
+		document.getElementById("rarchivo2").innerHTML = txt[2];
+		
+	});
+}
+
+
 function AgregarArchFrase(){
 	$doc = $("#fdetalle").val();
 	$fini = "";
