@@ -101,7 +101,7 @@
             while ($row = $result->fetch_array()){
                 $nombre = NombreUsuario($row['empleado']);
                 $tabla = $tabla . ''.$row['fecha'].'#'.$nombre.'#';
-                $tabla = $tabla . ''.$row['hora_inicio'].'#'.$row['hora_fin'].'#$';
+                $tabla = $tabla . ''.$row['hora_inicio'].'#'.$row['hora_fin'].'#%';
             }
             
             return $tabla;
