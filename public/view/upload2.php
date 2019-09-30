@@ -169,6 +169,44 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             }
                 
             echo "Documento subido correctamente";
+        }  else if($filtro=="interes"){
+            $mysqli = new mysqli('localhost', 'root', '', 'opermin');
+    
+            $sql = "INSERT INTO temas (TITULO,DETALLE) VALUES ('$empleado','$fechaI')";
+                
+                if (!$resultado = $mysqli->query($sql)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    $idT = mysqli_insert_id($mysqli);
+                    echo 'EXITO';
+                }
+            
+            $sql2 = "INSERT INTO temas (TEMA,TIPO,DETALLE) VALUES ('$idT','$fechaF','$fechaI')";
+                
+                if (!$resultado = $mysqli->query($sql2)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    //$id = mysqli_insert_id($mysqli);
+                    echo 'EXITO';
+                }
+            
+            
+                
+            echo "Documento subido correctamente";
         }
     }
     

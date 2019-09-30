@@ -17,7 +17,10 @@
 	$puesto = $_POST['puesto'];
 	$descripcion = $_POST['descripcion'];
 	$requisitos = $_POST['requisitos'];
-	$salario = $_POST['salario'];
+    $salario = $_POST['salario'];
+    $titulo = $_POST['titulo'];
+    $material = $_POST['material'];
+    $tipo = $_POST['tipo'];
 
 	include('../model/Usuario.php');
 	
@@ -59,6 +62,10 @@
         echo $miprod -> Reglamentos();
     } else if($accion=="18"){
         echo $miprod -> Reglamentos2($id);
+    } else if($accion=="19"){
+        echo $miprod -> GuardaInteres($titulo,$detalle,$tipo,$material);
+    } else if($accion=="20"){
+        echo $miprod -> Interes();
     }
     
 ?>

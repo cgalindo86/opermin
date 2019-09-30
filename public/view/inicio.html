@@ -609,6 +609,15 @@
 											</tr>
 											<tr>
 												<td>
+													<label>TITULO: </label>
+												</td>
+												<td>
+													<textarea id="btitulo2" type="text" style="width:200px;"></textarea>
+													
+												</td>
+											</tr>
+											<tr>
+												<td>
 													<label>DETALLE: </label>
 												</td>
 												<td>
@@ -893,9 +902,61 @@
 								</div>
 						</div>
 						<div id="campoInteres">
-							<div id="cabeceraInteres"></div>
+							<div id="cabeceraInteres">
+								<button type="button" class="btn bg-primary" id="addInteres">NUEVO</button>
+							</div>
+							<br>
 							<div id="cuerpoInteres"></div>
-							<div id="cuerpoInteres2"></div>
+							<div id="cuerpoInteres2" style="width:100%; justify-content: center; align-items: center;">
+								<table>
+									<tr>
+										<td>
+											<label>TITULO: </label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="ititulo" type="text" style="width:200px;" placeholder="TITULO"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>DETALLE: </label>
+										</td>
+										<td>
+											<div style="margin-right:5px;"><textarea id="idetalle" type="text" style="width:405px;" placeholder="DETALLE"></textarea></div>
+										
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>TIPO: </label>
+										</td>
+										<td>
+											<select id="itipo" onclick="TipoInteres()">
+												<option value="0">Seleccionar</option>
+												<option value="1">Video</option>
+												<option value="2">Enlace</option>
+												<option value="3">Infografía</option>
+												<option value="4">Documento</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>MATERIAL: </label>
+										</td>
+										<td>
+											<div id="imaterial1">
+												<div style="display:inline-block; margin-right:5px;"><input id="itexto" type="text" style="width:200px;" placeholder="VIDEO O ENLACE"></div>
+											</div>
+											<div id="imaterial2">
+												<div id="archInteres"></div>
+											</div>
+										</td>
+									</tr>
+								</table>
+								<br>
+								<button class="btn bg-primary" onclick="GuardaInteres()">GUARDAR</button>
+							</div>
 						</div>
 						<div id="campoUsuarios">
 							<div id="cabeceraUsuarios"></div>
@@ -1056,6 +1117,9 @@
 									<div style="justify-content: center; align-items: center;">
 										<div style="display:inline-block; margin-right:5px;"><input id="bcodigo" type="text" style="width:200px;" placeholder="CODIGO"></div>
 										<div style="display:inline-block; margin-right:5px;"><input id="bempresa" type="text" style="width:200px;" placeholder="EMPRESA"></div>
+										<br><br>
+										<div style="margin-right:5px;"><textarea id="btitulo" type="text" style="width:405px;" placeholder="TITULO"></textarea></div>
+										
 										<br><br>
 										<div style="margin-right:5px;"><textarea id="bdetalle" type="text" style="width:405px;" placeholder="DETALLE"></textarea></div>
 										<div style="display:inline-block; margin-right:5px;"><input id="bdescuento_p" type="text" style="width:200px;" placeholder="DESCUENTO EN PORCENTAJE"></div>

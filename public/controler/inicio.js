@@ -2,6 +2,12 @@
 $(document).ready(function () {
 	MainApp();
 
+	$("#addInteres").click(function(){
+		$("#cuerpoInteres2").show();
+		$("#cuerpoInteres").hide();
+	});
+		
+	
 });
 
 
@@ -35,6 +41,7 @@ function GuardaBeneficios(){
 	$.post("../controler/usuario.php", {
 		accion: "3",
 		codigo: $("#bcodigo").val(),
+		titulo: $("#btitulo").val(),
 		empresa: $("#bempresa").val(),
 		detalle: $("#bdetalle").val(),
 		descuento_p: $("#bdescuento_p").val(),
@@ -85,6 +92,7 @@ function GuardaEditarBeneficios(){
 		accion: "6",
 		id: $mid,
 		codigo: $("#bcodigo2").val(),
+		titulo: $("#btitulo2").val(),
 		empresa: $("#bempresa2").val(),
 		detalle: $("#bdetalle2").val(),
 		descuento_p: $("#bdescuento_p2").val(),
@@ -112,6 +120,34 @@ function GuardaEditarConvocatorias(){
 	});
 }
 
+function GuardaInteres(){
+	var x = document.getElementById("itipo").selectedIndex;
+    var y = document.getElementById("itipo").options;
+	var tipo = y[x].value;
+	
+	if(tipo!="0"){
+		var v = document.getElementById("ititulo").value;
+		var v2 = document.getElementById("idetalle").value;
+		var mat = document.getElementById("itexto").value;
+		if(v!="" && v2!="2"){
+			$.post("../controler/usuario.php", {
+				accion: "19",
+				titulo: v,
+				detalle: v2,
+				tipo: tipo,
+				material: mat
+
+			}, function(htmlexterno){
+				Interes();
+			});
+		} else {
+
+		}
+	} else {
+		alert("Elegir tipo material");
+	}
+}
+
 function EditarBeneficios($id){
 	$mid = $id;
 	$.post("../controler/usuario.php", {
@@ -131,7 +167,7 @@ function EditarBeneficios($id){
 		document.getElementById("bdescuento_m2").value = txt[4];
 		document.getElementById("bcondiciones2").innerHTML = txt[5];
 		document.getElementById("nfecha2").innerHTML = 'Actual: '+txt[6]+'<br><input name="datepicker" type="date" id="bfecha2" style="width:150px;" value="'+txt[6]+'" />';
-
+		document.getElementById("btitulo2").innerHTML = txt[7];
 	});
 }
 
@@ -544,13 +580,59 @@ function Interes(){
 	document.getElementById("usuarios").style.background = "transparent";
 
 	$.post("../controler/usuario.php", {
-		accion: "11"
+		accion: "20"
 	}, function(htmlexterno){
 
 	$("#cuerpoInteres").html(htmlexterno);
 		console.log(htmlexterno+"");
 	});
 }
+
+
+
+function TipoInteres(){
+	var x = document.getElementById("itipo").selectedIndex;
+    var y = document.getElementById("itipo").options;
+	var tipo = y[x].value;
+	
+	if(tipo!="0"){
+		if(tipo=="1" || tipo=="2"){
+			$("#imaterial1").show();
+			$("#imaterial2").hide();
+			
+		} else {
+			$("#imaterial1").hide();
+			$("#imaterial2").show();
+			var v = document.getElementById("ititulo").value;
+			var v2 = document.getElementById("idetalle").value;
+
+			if(v != "" && v2 != ""){
+				var w = v.split(" ");
+				for(var i=0; i<w.length; i++){
+					v = v.replace(" ","_");
+				}
+
+				var w2 = v2.split(" ");
+				for(var i2=0; i2<w2.length; i2++){
+					v2 = v2.replace(" ","_");
+				}
+				//v2 = v2.replace(" ","_");
+
+				$enlace = "cargar2.php?doc="+v+"&fini="+v2+"&ffin="+tipo+"&filtro=interes";
+				console.log("enlace",$enlace);
+				document.getElementById("archInteres").innerHTML = '<iframe src="'+$enlace+'" style="width:400px; height:200px;"></iframe><br>';
+			} else {
+				alert("Ingrese datos de titulo y detalle");
+			}
+			
+		}
+	} else {
+
+	}
+}
+
+
+
 
 function Usuarios(){
 	Ocultar();
@@ -578,4 +660,5 @@ function Usuarios(){
 		console.log(htmlexterno+"");
 	});
 }
+
 

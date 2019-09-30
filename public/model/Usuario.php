@@ -64,13 +64,14 @@ class Usuario{
     	$result = mysqli_query($mysqli, $query);
 		
 		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
-		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>CODIGO</td><td>EMPRESA</td><td>DETALLE</td>';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>CODIGO</td><td>EMPRESA</td><td>TITULO</td><td>DETALLE</td>';
 		$tabla = $tabla . '<td>DESCUENTO %</td><td>DESCUENTO S/</td>';
 		$tabla = $tabla . '<td>CONDICIONES</td><td>CADUCIDAD</td><td>EDITAR</td></tr></thead>';
 		$tabla = $tabla . '<tbody>';
     	while ($row = $result->fetch_array()){
 			
 			$tabla = $tabla . '<tr><td>'.$row['codigo'].'</td><td>'.$row['empresa'].'</td>';
+			$tabla = $tabla . '<td>'.$row['titulo'].'</td>';
 			$tabla = $tabla . '<td>'.$row['detalle'].'</td><td>'.$row['descuento_p'].'</td>';
 			$tabla = $tabla . '<td>'.$row['descuento_m'].'</td><td>'.$row['condiciones'].'</td>';
 			$tabla = $tabla . '<td>'.$row['caducidad'].'</td>';
@@ -92,17 +93,17 @@ class Usuario{
 			$tabla = $tabla . $row['codigo'].'#'.$row['empresa'].'#';
 			$tabla = $tabla . $row['detalle'].'#'.$row['descuento_p'].'#';
 			$tabla = $tabla . $row['descuento_m'].'#'.$row['condiciones'].'#';
-			$tabla = $tabla . $row['caducidad'].'#';
+			$tabla = $tabla . $row['caducidad'].'#'.$row['titulo'].'#';
 			
     	}
     	return $tabla;
 	}
 
-	function GuardaBeneficios($codigo,$empresa,$detalle,$descuento_p,$descuento_m,$condiciones,$caducidad){
+	function GuardaBeneficios($codigo,$titulo,$empresa,$detalle,$descuento_p,$descuento_m,$condiciones,$caducidad){
 		include('conexion.php');
     								
-        $sql = "INSERT INTO beneficios (CODIGO,EMPRESA,DETALLE,DESCUENTO_P,DESCUENTO_M,CONDICIONES,CADUCIDAD) 
-        VALUES ('$codigo','$empresa','$detalle','$descuento_p','$descuento_m','$condiciones','$caducidad')";
+        $sql = "INSERT INTO beneficios (CODIGO,TITULO,EMPRESA,DETALLE,DESCUENTO_P,DESCUENTO_M,CONDICIONES,CADUCIDAD) 
+        VALUES ('$codigo','$titulo','$empresa','$detalle','$descuento_p','$descuento_m','$condiciones','$caducidad')";
         
         if (!$resultado = $mysqli->query($sql)) {
     	    // ¡Oh, no! La consulta falló. 
@@ -123,10 +124,10 @@ class Usuario{
     	}
 	} 
 
-	function GuardaBeneficios2($id,$codigo,$empresa,$detalle,$descuento_p,$descuento_m,$condiciones,$caducidad){
+	function GuardaBeneficios2($id,$titulo,$codigo,$empresa,$detalle,$descuento_p,$descuento_m,$condiciones,$caducidad){
 		include('conexion.php');
     								
-        $sql = "UPDATE beneficios SET codigo='$codigo', empresa='$empresa', detalle='$detalle',
+        $sql = "UPDATE beneficios SET codigo='$codigo', titulo='$titulo', empresa='$empresa', detalle='$detalle',
 		descuento_p='$descuento_p', descuento_m='$descuento_m', condiciones='$condiciones',
 		caducidad='$caducidad' WHERE id='$id' ";
         
@@ -520,6 +521,88 @@ class Usuario{
 		}
 		return $dat;
 	}
+
+	function Interes(){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM temas ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>TITULO</td><td>DETALLE</td>';
+		$tabla = $tabla . '<td>MATERIAL</td><td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			$material = $this->MaterialXInteres($row['id']);
+
+			$tabla = $tabla . '<tr><td>'.$row['titulo'].'</td><td>'.$row['detalle'].'</td><td>'.$material.'</td>';
+			$tabla = $tabla . '<td><img onclick="EditarInteres('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table>';
+    	return $tabla;
+	}
+
+	function MaterialXInteres($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM materialesxtema WHERE tema = '$id' ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '';
+		while ($row = $result->fetch_array()){
+			if(($row['tipo']=="1") OR ($row['tipo']=="2")){
+				$direccion = '<a href="'.$row['detalle'].'"  target="_blank">'.$row['detalle'].'</a>';
+			} else {
+				$direccion = '<a href="files/'.$row['detalle'].'" target="_blank">'.$row['detalle'].'</a>';
+			}
+			
+			$tabla = $tabla . ''.$direccion.'<br>';
+			
+    	}
+		
+		return $tabla;
+	}
+
+	function GuardaInteres($titulo,$detalle,$tipo,$material){
+		include('conexion.php');
+		$sql = "INSERT INTO temas (TITULO,DETALLE) VALUES ('$titulo','$detalle')";
+                
+                if (!$resultado = $mysqli->query($sql)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    $idT = mysqli_insert_id($mysqli);
+                    echo 'EXITO';
+                }
+            
+        $sql2 = "INSERT INTO materialesxtema (TEMA,TIPO,DETALLE) VALUES ('$idT','$tipo','$material')";
+                
+                if (!$resultado = $mysqli->query($sql2)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    //$id = mysqli_insert_id($mysqli);
+                    echo 'EXITO';
+                }
+	}
+
+	
 
 }
 
