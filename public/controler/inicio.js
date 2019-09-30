@@ -1,3 +1,4 @@
+var $senal='';
 
 $(document).ready(function () {
 	MainApp();
@@ -5,6 +6,12 @@ $(document).ready(function () {
 	$("#addInteres").click(function(){
 		$("#cuerpoInteres2").show();
 		$("#cuerpoInteres").hide();
+	});
+
+	$("#addUsuarios").click(function(){
+		$senal = '1';
+		$("#cuerpoUsuarios2").show();
+		$("#cuerpoUsuarios").hide();
 	});
 		
 	
@@ -148,6 +155,59 @@ function GuardaInteres(){
 	}
 }
 
+function GuardaUsuarios(){
+	var x = document.getElementById("ucentro").selectedIndex;
+    var y = document.getElementById("ucentro").options;
+	var centro = y[x].value;
+	
+	var x = document.getElementById("uunidad").selectedIndex;
+    var y = document.getElementById("uunidad").options;
+	var unidad = y[x].value;
+	
+	if(centro!="0" && unidad != "0"){
+		var apellidos = document.getElementById("uapellidos").value;
+		var nombre = document.getElementById("unombres").value;
+		var dni = document.getElementById("udocumento").value;
+		var correo = document.getElementById("ucorreo").value;
+		//alert($senal);
+		if(apellidos!="" && nombre!="" && dni!="" && correo!=""){
+			if($senal=="1"){
+				$.post("../controler/usuario.php", {
+					accion: "22",
+					apellidos: apellidos,
+					nombre: nombre,
+					dni: dni,
+					correo: correo,
+					centro: centro,
+					unidad: unidad
+	
+				}, function(htmlexterno){
+					Usuarios();
+				});
+			} else {
+				$.post("../controler/usuario.php", {
+					accion: "24",
+					id: $mid,
+					apellidos: apellidos,
+					nombre: nombre,
+					dni: dni,
+					correo: correo,
+					centro: centro,
+					unidad: unidad
+	
+				}, function(htmlexterno){
+					Usuarios();
+				});
+			}
+			
+		} else {
+			alert("Ingrese datos");
+		}
+	} else {
+		alert("Elegir centro de costos o unidad");
+	}
+}
+
 function EditarBeneficios($id){
 	$mid = $id;
 	$.post("../controler/usuario.php", {
@@ -207,6 +267,26 @@ function EditarDescanso($id){
 		document.getElementById("nfechaInicio2").innerHTML = 'Actual: '+txt[1]+'<br><input name="datepicker" type="date" id="dfechaInicio2" style="width:150px;" value="'+txt[1]+'" />';
 		document.getElementById("nfechaFin2").innerHTML = 'Actual: '+txt[2]+'<br><input name="datepicker" type="date" id="dfechaFin2" style="width:150px;" value="'+txt[2]+'" />';
 		document.getElementById("ddireccion2").innerHTML = txt[3];
+		
+	});
+}
+
+function EditarUsuarios($id){
+	$senal = '2';
+	$mid = $id;
+	$.post("../controler/usuario.php", {
+		accion: "23", id:$id
+	}, function(htmlexterno){
+		$("#cuerpoUsuarios2").show();
+		$("#cuerpoUsuarios").hide();
+		console.log(htmlexterno);
+		var txt;
+		txt = htmlexterno.split("#");
+		//console.log(txt[0]+"-"+txt[1]+"-"+txt[2]+"-"+txt[3]+"-"+txt[4]+"-"+txt[5]+"-"+txt[6]);
+		document.getElementById("uapellidos").value = txt[0];
+		document.getElementById("unombres").value = txt[1];
+		document.getElementById("udocumento").value = txt[2];
+		document.getElementById("ucorreo").value = txt[3];
 		
 	});
 }
@@ -653,7 +733,7 @@ function Usuarios(){
 	document.getElementById("interes").style.background = "transparent";
 
 	$.post("../controler/usuario.php", {
-		accion: "11"
+		accion: "21"
 	}, function(htmlexterno){
 
 	$("#cuerpoUsuarios").html(htmlexterno);

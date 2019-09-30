@@ -4,6 +4,7 @@
     $id = $_POST['id'];
     $fecha = $_POST['fecha'];
     $nombre = $_POST['nombre'];
+    $apellidos = $_POST['apellidos'];
 	$password  = $_POST['password'];
     $codigo = $_POST['codigo'];
     $empresa = $_POST['empresa'];
@@ -21,6 +22,10 @@
     $titulo = $_POST['titulo'];
     $material = $_POST['material'];
     $tipo = $_POST['tipo'];
+    $dni = $_POST['dni'];
+    $correo = $_POST['correo'];
+    $centro = $_POST['centro'];
+    $unidad = $_POST['unidad'];
 
 	include('../model/Usuario.php');
 	
@@ -66,6 +71,14 @@
         echo $miprod -> GuardaInteres($titulo,$detalle,$tipo,$material);
     } else if($accion=="20"){
         echo $miprod -> Interes();
+    } else if($accion=="21"){
+        echo $miprod -> Usuarios();
+    } else if($accion=="22"){
+        echo $miprod -> GuardaUsuarios($apellidos,$nombre,$dni,$correo,$centro,$unidad);
+    } else if($accion=="23"){
+        echo $miprod -> Usuarios2($id);
+    } else if($accion=="24"){
+        echo $miprod -> EditaUsuarios($id,$apellidos,$nombre,$dni,$correo,$centro,$unidad);
     }
     
 ?>

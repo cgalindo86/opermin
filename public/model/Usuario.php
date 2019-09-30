@@ -602,6 +602,119 @@ class Usuario{
                 }
 	}
 
+	function Usuarios(){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM empleados ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>APELLIDOS</td><td>NOMBRES</td>';
+		$tabla = $tabla . '<td>DNI</td><td>CORREO</td><td>CENTRO COSTOS</td><td>UNIDAD</td><td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			//$material = $this->MaterialXInteres($row['id']);
+			$centro_costos = $this->Area($row['area']);
+			$unidad = $this->SubArea($row['subarea']);
+
+			$tabla = $tabla . '<tr><td>'.$row['apellidos'].'</td><td>'.$row['nombre'].'</td><td>'.$row['dni'].'</td>';
+			$tabla = $tabla . '<td>'.$row['email'].'</td><td>'.$centro_costos.'</td><td>'.$unidad.'</td>';
+			$tabla = $tabla . '<td><img onclick="EditarUsuarios('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table>';
+    	return $tabla;
+	}
+
+	function Usuarios2($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM empleados WHERE id='$id'";
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '';
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . ''.$row['apellidos'].'#'.$row['nombre'].'#'.$row['dni'].'#';
+			$tabla = $tabla . ''.$row['email'].'#';
+			
+		}
+    	return $tabla;
+	}
+
+	function Area($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM centro_costos WHERE id='$id' ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '';
+    	while ($row = $result->fetch_array()){
+			$tabla = $row['descripcion'];
+		}
+    	return $tabla;
+	}
+
+	function Subarea($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM unidad WHERE centro_costos='$id' ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '';
+    	while ($row = $result->fetch_array()){
+			$tabla = $row['descripcion'];
+		}
+    	return $tabla;
+	}
+
+	function GuardaUsuarios($apellidos,$nombre,$dni,$correo,$centro,$unidad){
+		include('conexion.php');
+		$sql = "INSERT INTO empleados (APELLIDOS,NOMBRE,USUARIO,DNI,EMAIL,EMPRESA,SUCURSAL,AREA,SUBAREA) 
+		VALUES ('$apellidos','$nombre','$nombre','$dni','$correo','1','1','$centro','$unidad')";
+                
+                if (!$resultado = $mysqli->query($sql)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    $idT = mysqli_insert_id($mysqli);
+                    echo 'EXITO';
+                }
+	}
+
+	function EditaUsuarios($id,$apellidos,$nombre,$dni,$correo,$centro,$unidad){
+		include('conexion.php');
+		
+		$sql = "UPDATE empleados SET apellidos='$apellidos', nombre='$nombre', usuario='$nombre', 
+		dni='$dni', email='$correo', area='$centro', subarea='$unidad' WHERE id='$id' ";
+                
+                if (!$resultado = $mysqli->query($sql)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    $idT = mysqli_insert_id($mysqli);
+                    echo 'EXITO';
+                }
+	}
 	
 
 }

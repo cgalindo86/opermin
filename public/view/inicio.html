@@ -959,9 +959,77 @@
 							</div>
 						</div>
 						<div id="campoUsuarios">
-							<div id="cabeceraUsuarios"></div>
+							<div id="cabeceraUsuarios">
+								<button type="button" class="btn bg-primary" id="addUsuarios">NUEVO</button>
+							</div>
 							<div id="cuerpoUsuarios"></div>
-							<div id="cuerpoUsuarios2"></div>
+							<div id="cuerpoUsuarios2">
+								<table>
+									<tr>
+										<td>
+											<label>APELLIDOS: </label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="uapellidos" type="text" style="width:200px;" placeholder="APELLIDOS"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>NOMBRES: </label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="unombres" type="text" style="width:200px;" placeholder="NOMBRES"></div>
+										
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>DOCUMENTO DE IDENTIDAD: </label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="udocumento" type="text" style="width:200px;" placeholder="DNI"></div>
+										
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>CORREO ELECTRÓNICO: </label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="ucorreo" type="text" style="width:200px;" placeholder="EMAIL"></div>
+										
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>CENTRO COSTOS: </label>
+										</td>
+										<td>
+											<select id="ucentro">
+												<option value="0">Seleccionar</option>
+												<option value="1">Recursos humanos</option>
+												<option value="2">Proyectos</option>
+												<option value="3">Logistica</option>
+												
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>UNIDAD: </label>
+										</td>
+										<td>
+											<select id="uunidad">
+												<option value="0">Seleccionar</option>
+												<option value="1">Jefatura</option>
+												
+											</select>
+										</td>
+									</tr>
+								</table>
+								<br>
+								<button class="btn bg-primary" onclick="GuardaUsuarios()">GUARDAR</button>
+							</div>
 						</div>
 
 					</div>
