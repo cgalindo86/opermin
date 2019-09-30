@@ -22,8 +22,9 @@
 	$salario = $_GET['salario'];
 
 	
-
-    if($accion=="1"){
+    if($accion=="0"){
+        echo Login($id);
+    } else if($accion=="1"){
         echo Asistencia($id);
     } else if($accion=="2"){
         echo Beneficios();
@@ -62,6 +63,22 @@
     }
     
     
+        function Login($id){
+            include('conexion.php');
+        
+            $query = "SELECT * FROM empleados WHERE dni='$id' ";
+            mysqli_set_charset($mysqli, 'utf8'); 
+            $result = mysqli_query($mysqli, $query);
+            
+            $dat = 'no';
+            while ($row = $result->fetch_array()){
+                $dat='si'."#".$row['nombre']."#".$row['apellidos']."#".$row['dni']."#".$row['empresa']."#";
+                $dat=$dat.$row['sucursal']."#".$row['area']."#".$row['subarea']."#".$row['email']."#";
+            }
+                
+            return $dat;
+        }
+    
         function Validar($usuario,$password){
             include('conexion.php');
         
@@ -94,40 +111,52 @@
         function Asistencia($id){
             include('conexion.php');
         
-            $query = "SELECT * FROM asistencia WHERE id='$id' ";
+            $query = "SELECT * FROM asistencia WHERE empleado='$id' ";
             mysqli_set_charset($mysqli, 'utf8'); 
             $result = mysqli_query($mysqli, $query);
             
             while ($row = $result->fetch_array()){
-                $nombre = NombreUsuario($row['empleado']);
-                $tabla = $tabla . ''.$row['fecha'].'#'.$nombre.'#';
-                $tabla = $tabla . ''.$row['hora_inicio'].'#'.$row['hora_fin'].'#%';
+                //$nombre = NombreUsuario($row['empleado']);
+                $d = explode(":",$row['hora_inicio']);
+                $dif = ((8*60 + 15) - (60*intval($d[0])+intval($d[1])));
+                //echo $dif.'<br>';
+                if(($dif >= 0) AND ($dif <= 15)){
+                    $t = "2";
+                    $tt = 'Temprano';
+                    $tabla = $tabla . ''.$row['fecha'].'#';
+                    $tabla = $tabla . ''.$row['hora_inicio'].'#'.$row['hora_fin'].'#'.$tt.'#'.$t.'#'.$dif.'#%';
+                } else {
+                    $t = "1";
+                    $tt = 'Tarde';
+                    $tabla = $tabla . ''.$row['fecha'].'#';
+                    $tabla = $tabla . ''.$row['hora_inicio'].'#'.$row['hora_fin'].'#'.$tt.'#'.$t.'#'.$dif.'#%';
+                }
+                //$tabla = $tabla . ''.$row['fecha'].'#';
+                //$tabla = $tabla . ''.$row['hora_inicio'].'#'.$row['hora_fin'].'#'.$tt.'#'.$t.'#%';
             }
             
             return $tabla;
         }
     
-        function Beneficios(){
+        function Beneficios($id){
             include('conexion.php');
         
             $query = "SELECT * FROM beneficios ";
             mysqli_set_charset($mysqli, 'utf8'); 
             $result = mysqli_query($mysqli, $query);
             
-            $tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
-            $tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>CODIGO</td><td>EMPRESA</td><td>DETALLE</td>';
-            $tabla = $tabla . '<td>DESCUENTO %</td><td>DESCUENTO S/</td>';
-            $tabla = $tabla . '<td>CONDICIONES</td><td>CADUCIDAD</td><td>EDITAR</td></tr></thead>';
-            $tabla = $tabla . '<tbody>';
             while ($row = $result->fetch_array()){
+                if($row['descuento_p']=="0"){
+                    $descuento = 'S/ '.$row['descuento_m'];
+                } else {
+                    $descuento = $row['descuento_p'].' porc.';
+                }
+                $tabla = $tabla . $row['titulo'].'#'.$descuento.'#';
+                $tabla = $tabla . $row['caducidad'].'#'.$row['detalle'].'#';
+                $tabla = $tabla . $row['codigo'].'#'.$row['empresa'].'#';
+                $tabla = $tabla . $row['condiciones'].'#%';
                 
-                $tabla = $tabla . '<tr><td>'.$row['codigo'].'</td><td>'.$row['empresa'].'</td>';
-                $tabla = $tabla . '<td>'.$row['detalle'].'</td><td>'.$row['descuento_p'].'</td>';
-                $tabla = $tabla . '<td>'.$row['descuento_m'].'</td><td>'.$row['condiciones'].'</td>';
-                $tabla = $tabla . '<td>'.$row['caducidad'].'</td>';
-                $tabla = $tabla . '<td><img onclick="EditarBeneficios('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
             }
-            $tabla = $tabla . '</tbody></table>';
             return $tabla;
         }
     
