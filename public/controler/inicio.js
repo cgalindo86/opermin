@@ -1,4 +1,7 @@
 var $senal='';
+var $curso='';
+var $tipoCurso='';
+var $sesion='';
 
 $(document).ready(function () {
 	MainApp();
@@ -12,8 +15,7 @@ $(document).ready(function () {
 		$senal = '1';
 		$("#cuerpoUsuarios2").show();
 		$("#cuerpoUsuarios").hide();
-	});
-		
+	});	
 	
 });
 
@@ -40,7 +42,14 @@ function Ocultar(){
 	$("#campoNotificaciones").hide();
 	$("#campoReglamentos").hide();
 	$("#campoInteres").hide();
-	$("#campoUsuarios").hide();	
+	$("#campoUsuarios").hide();
+
+	$("#campoCapacitaciones").hide();
+	$("#campoSesiones").hide();
+	$("#campoInducciones").hide();
+	$("#campoMejoras").hide();
+	$("#campoProcedimientos").hide();
+	$("#campoVideos").hide();
 	console.log("ocultar");
 }
 
@@ -208,6 +217,51 @@ function GuardaUsuarios(){
 	}
 }
 
+function GuardaCapacitacion(){
+	var x = document.getElementById("capcostos").selectedIndex;
+    var y = document.getElementById("capcostos").options;
+	var centro = y[x].value;
+	
+	var x = document.getElementById("capunidad").selectedIndex;
+    var y = document.getElementById("capunidad").options;
+	var unidad = y[x].value;
+	
+	if(centro!="0" && unidad != "0"){
+		var nombre = document.getElementById("capnombre").value;
+		
+		if(nombre!=""){
+			if($senal=="1"){
+				$.post("../controler/usuario.php", {
+					accion: "26",
+					nombre: nombre,
+					centro: centro,
+					unidad: unidad
+	
+				}, function(htmlexterno){
+					Capacitaciones();
+				});
+			} else {
+				$.post("../controler/usuario.php", {
+					accion: "28",
+					id: $mid,
+					nombre: nombre,
+					centro: centro,
+					unidad: unidad
+	
+				}, function(htmlexterno){
+					Capacitaciones();
+				});
+			}
+			
+		} else {
+			alert("Ingrese datos");
+		}
+	} else {
+		alert("Elegir centro de costos o unidad");
+	}
+}
+
+
 function EditarBeneficios($id){
 	$mid = $id;
 	$.post("../controler/usuario.php", {
@@ -287,6 +341,32 @@ function EditarUsuarios($id){
 		document.getElementById("unombres").value = txt[1];
 		document.getElementById("udocumento").value = txt[2];
 		document.getElementById("ucorreo").value = txt[3];
+		
+	});
+}
+
+function EditarCapacitaciones($id){
+	$senal = '2';
+	$mid = $id;
+	$.post("../controler/usuario.php", {
+		accion: "27", id:$id
+	}, function(htmlexterno){
+		$("#cuerpoCapacitaciones2").show();
+		$("#cuerpoCapacitaciones").hide();
+		$("#cabeceraCapacitaciones").hide();
+		console.log(htmlexterno);
+		var txt;
+		txt = htmlexterno.split("#");
+		var ss = txt[1];
+		ss = ss.replace("icostos","capcostos");
+		ss = ss.replace("CambioCentroCostos","CambioCentroCostos3");
+
+		var tt = txt[2];
+		tt = tt.replace("iunidad","capunidad");
+
+		document.getElementById("capnombre").value = txt[0];
+		document.getElementById("selectCapCentro").innerHTML = ss;
+		document.getElementById("selectCapUnidad").innerHTML = tt;
 		
 	});
 }
@@ -625,6 +705,22 @@ function CambioCentroCostos2(){
 	});
 }
 
+function CambioCentroCostos3(){
+	var x = document.getElementById("capcostos").selectedIndex;
+    var y = document.getElementById("capcostos").options;
+    var v2 = y[x].value;
+	//console.log("c15 aa "+v2+"");
+	$.post("../controler/usuario.php", {
+		accion: "15",
+		id: v2
+	}, function(htmlexterno){
+		//$("#runidad").html(htmlexterno);
+		htmlexterno = htmlexterno.replace("iunidad","capunidad");
+		$("#selectCapUnidad").html(htmlexterno);
+		console.log("c00 "+htmlexterno+"");
+	});
+}
+
 function AgregarArchReglamentos(){
 	var v = document.getElementById("icostos").value;
 	var v2 = document.getElementById("iunidad").value;
@@ -742,3 +838,179 @@ function Usuarios(){
 }
 
 
+function Capacitaciones(){
+	Ocultar();
+	
+	$("#campoCapacitaciones").show();
+	$("#cabeceraCapacitaciones").show();
+	$("#cuerpoCapacitaciones").show();
+	$("#cuerpoCapacitaciones2").hide();
+
+	document.getElementById("capacitaciones").style.background = "#273156";
+	document.getElementById("inducciones").style.background = "transparent";
+	document.getElementById("mejoras").style.background = "transparent";
+	document.getElementById("procedimientos").style.background = "transparent";
+	document.getElementById("videos").style.background = "transparent";
+
+	$.post("../controler/usuario.php", {
+		accion: "25"
+	}, function(htmlexterno){
+
+		$("#cuerpoCapacitaciones").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
+function Inducciones(){
+	Ocultar();
+	
+	$("#campoInducciones").show();
+	$("#cuerpoInducciones").show();
+	$("#cuerpoInducciones2").hide();
+
+	document.getElementById("inducciones").style.background = "#273156";
+	document.getElementById("capacitaciones").style.background = "transparent";
+	document.getElementById("mejoras").style.background = "transparent";
+	document.getElementById("procedimientos").style.background = "transparent";
+	document.getElementById("videos").style.background = "transparent";
+
+	/*$.post("../controler/usuario.php", {
+		accion: "21"
+	}, function(htmlexterno){
+
+	$("#cuerpoUsuarios").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});*/
+}
+
+function Mejoras(){
+	Ocultar();
+	
+	$("#campoMejoras").show();
+	$("#cuerpoMejoras").show();
+	$("#cuerpoMejoras2").hide();
+
+	document.getElementById("mejoras").style.background = "#273156";
+	document.getElementById("inducciones").style.background = "transparent";
+	document.getElementById("capacitaciones").style.background = "transparent";
+	document.getElementById("procedimientos").style.background = "transparent";
+	document.getElementById("videos").style.background = "transparent";
+
+	/*$.post("../controler/usuario.php", {
+		accion: "21"
+	}, function(htmlexterno){
+
+	$("#cuerpoUsuarios").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});*/
+}
+
+function Procedimientos(){
+	Ocultar();
+	
+	$("#campoProcedimientos").show();
+	$("#cuerpoProcedimientos").show();
+	$("#cuerpoProcedimientos2").hide();
+
+	document.getElementById("procedimientos").style.background = "#273156";
+	document.getElementById("inducciones").style.background = "transparent";
+	document.getElementById("mejoras").style.background = "transparent";
+	document.getElementById("capacitaciones").style.background = "transparent";
+	document.getElementById("videos").style.background = "transparent";
+
+	/*$.post("../controler/usuario.php", {
+		accion: "21"
+	}, function(htmlexterno){
+
+	$("#cuerpoUsuarios").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});*/
+}
+
+function Videos(){
+	Ocultar();
+	
+	$("#campoVideos").show();
+	$("#cuerpoVideos").show();
+	$("#cuerpoVideos2").hide();
+
+	document.getElementById("videos").style.background = "#273156";
+	document.getElementById("inducciones").style.background = "transparent";
+	document.getElementById("mejoras").style.background = "transparent";
+	document.getElementById("procedimientos").style.background = "transparent";
+	document.getElementById("capacitaciones").style.background = "transparent";
+
+	/*$.post("../controler/usuario.php", {
+		accion: "21"
+	}, function(htmlexterno){
+
+	$("#cuerpoUsuarios").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});*/
+}
+
+
+function Sesiones(){
+	Ocultar();
+	
+	$("#campoSesiones").show();
+	$("#cabeceraSesiones").show();
+	$("#cuerpoSesiones").show();
+	$("#cuerpoSesiones2").hide();
+
+	$.post("../controler/usuario.php", {
+		accion: "29",
+		tipo: $tipoCurso,
+		curso: $curso
+	}, function(htmlexterno){
+
+		$("#cuerpoSesiones").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
+function AddCapacitaciones(){
+	$senal = '1';
+	$("#cabeceraCapacitaciones").hide();
+	$("#cuerpoCapacitaciones2").show();
+	$("#cuerpoCapacitaciones").hide();
+
+	$.post("../controler/usuario.php", {
+		accion: "16"
+	}, function(htmlexterno){
+		htmlexterno = htmlexterno.replace("icostos","capcostos");
+		htmlexterno = htmlexterno.replace("CambioCentroCostos","CambioCentroCostos3");
+		$("#selectCapCentro").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+
+}
+
+function VerCapacitaciones($id){
+	$curso = $id;
+	$tipoCurso = '1';
+	Ocultar();
+	
+	$("#campoSesiones").show();
+	$("#cabeceraSesiones").show();
+	$("#cuerpoSesiones").show();
+	$("#cuerpoSesiones2").hide();
+
+	$.post("../controler/usuario.php", {
+		accion: "29",
+		tipo: $tipoCurso,
+		curso: $curso
+	}, function(htmlexterno){
+
+		$("#cuerpoSesiones").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
+function AddSesiones(){
+	
+	$("#cabeceraSesiones").hide();
+	$("#cuerpoSesiones2").show();
+	$("#cuerpoSesiones").hide();
+
+}

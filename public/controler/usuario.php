@@ -26,6 +26,7 @@
     $correo = $_POST['correo'];
     $centro = $_POST['centro'];
     $unidad = $_POST['unidad'];
+    $curso = $_POST['curso'];
 
 	include('../model/Usuario.php');
 	
@@ -36,13 +37,13 @@
     } else if($accion=="2"){
         echo $miprod -> Beneficios();
     } else if($accion=="3"){
-        echo $miprod -> GuardaBeneficios($codigo,$empresa,$detalle,$descuento_p,$descuento_m,$condiciones,$caducidad);
+        echo $miprod -> GuardaBeneficios($codigo,$titulo,$empresa,$detalle,$descuento_p,$descuento_m,$condiciones,$caducidad);
     } else if($accion=="4"){
         echo $miprod -> VerBoletas();
     } else if($accion=="5"){
         echo $miprod -> Beneficios2($id);
     } else if($accion=="6"){
-        echo $miprod -> GuardaBeneficios2($id,$codigo,$empresa,$detalle,$descuento_p,$descuento_m,$condiciones,$caducidad);
+        echo $miprod -> GuardaBeneficios2($id,$codigo,$titulo,$empresa,$detalle,$descuento_p,$descuento_m,$condiciones,$caducidad);
     } else if($accion=="7"){
         echo $miprod -> Convocatorias();
     } else if($accion=="8"){
@@ -79,6 +80,22 @@
         echo $miprod -> Usuarios2($id);
     } else if($accion=="24"){
         echo $miprod -> EditaUsuarios($id,$apellidos,$nombre,$dni,$correo,$centro,$unidad);
+    } else if($accion=="25"){
+        echo $miprod -> Capacitaciones();
+    } else if($accion=="26"){
+        echo $miprod -> GuardaCapacitaciones($nombre,$centro,$unidad);
+    } else if($accion=="27"){
+        echo $miprod -> Capacitaciones2($id);
+    } else if($accion=="28"){
+        echo $miprod -> EditaCapacitaciones($id,$nombre,$centro,$unidad);
+    } else if($accion=="29"){
+        echo $miprod -> Sesiones($tipo,$curso);
+    } else if($accion=="30"){
+        echo $miprod -> GuardaSesiones($tipo,$curso,$nombre);
+    } else if($accion=="31"){
+        echo $miprod -> Sesiones2($id,$tipo,$curso);
+    } else if($accion=="32"){
+        echo $miprod -> EditaSesiones($id,$tipo,$curso,$nombre);
     }
     
 ?>

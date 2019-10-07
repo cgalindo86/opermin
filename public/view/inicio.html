@@ -45,31 +45,7 @@
 
         $(document).ready(function () {
             
-            document.getElementById("datepicker").disabled = false;
-            document.getElementById("datepicker2").disabled = false;
             
-            $("#date-popover").popover({html: true, trigger: "manual"});
-            $("#date-popover").hide();
-            $("#date-popover").click(function (e) {
-                $(this).hide();
-            });
-        
-            $("#my-calendar").zabuto_calendar({
-                action: function () {
-                    return myDateFunction(this.id, false);
-                },
-                action_nav: function () {
-                    return myNavFunction(this.id);
-                },
-                ajax: {
-                    url: "show_data.php?action=1",
-                    modal: true
-                },
-                legend: [
-                    {type: "text", label: "Special event", badge: "00"},
-                    {type: "block", label: "Regular event", }
-                ]
-            });
         });
         
         
@@ -476,6 +452,18 @@
 							</ul>
 						</li>
 						<li class="nav-item nav-item-submenu">
+							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>PROYECTOS</span></a>
+
+							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
+								<li class="nav-item"><div id="capacitaciones" onclick="Capacitaciones()" class="nav-link">CAPACITACIONES</div></li>
+								<li class="nav-item"><div id="inducciones" onclick="Inducciones()" class="nav-link">INDUCCIONES</div></li>
+								<li class="nav-item"><div id="mejoras" onclick="Mejoras()" class="nav-link">MEJORA CONTINUA</div></li>
+								<li class="nav-item"><div id="procedimientos" onclick="Procedimientos()" class="nav-link">PROCEDIMIENTOS</div></li>
+								<li class="nav-item"><div id="videos" onclick="Videos()" class="nav-link">VIDEOS CORPORATIVOS</div></li>
+								
+							</ul>
+						</li>
+						<li class="nav-item nav-item-submenu">
 							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>ADMINISTRACION</span></a>
 
 							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
@@ -486,21 +474,6 @@
 								<li class="nav-item"><div id="configuracion" onclick="Configuracion()" class="nav-link">CONFIGURACION</div></li>
 							</ul>
 						</li>
-						<!--<li class="nav-item nav-item-submenu">
-							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>CONFIGURACIÓN</span></a>
-
-							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
-								<li class="nav-item"><div id="area" onclick="Area()" class="nav-link">AREA</div></li>
-								<li class="nav-item"><div id="funcion" onclick="Funcion()" class="nav-link">FUNCION</div></li>
-								<li class="nav-item"><div id="perfil" onclick="Perfil()" class="nav-link">PERFIL</div></li>
-								<li class="nav-item"><div id="usuarios" onclick="Usuarios()" class="nav-link">USUARIOS</div></li>
-								<li class="nav-item"><div id="opcionSistema" onclick="OpcionSistema()" class="nav-link">OPCIÓN SISTEMA</div></li>
-								<li class="nav-item"><div id="parametrosGenerales" onclick="ParametrosGenerales()" class="nav-link">PARÁMETROS GENERALES</div></li>
-							</ul>
-						</li>-->
-						<!-- /main -->
-
-						<!-- Forms -->
 						
 					</ul>
 				</div>
@@ -531,36 +504,12 @@
 
 				<div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
 					<div class="d-flex">
-						<!--<div class="breadcrumb">
-							<a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-							<span class="breadcrumb-item active">Dashboard</span>
-						</div>
-
-						<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>-->
+					
 					</div>
 
 					<div class="header-elements d-none">
 						<div class="breadcrumb justify-content-center">
-							<!--<a href="#" class="breadcrumb-elements-item">
-								<i class="icon-comment-discussion mr-2"></i>
-								Support
-							</a>
-
-							<div class="breadcrumb-elements-item dropdown p-0">
-								<a href="#" class="breadcrumb-elements-item dropdown-toggle" data-toggle="dropdown">
-									<i class="icon-gear mr-2"></i>
-									Settings
-								</a>
-
-								<div class="dropdown-menu dropdown-menu-right">
-									<a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account security</a>
-									<a href="#" class="dropdown-item"><i class="icon-statistics"></i> Analytics</a>
-									<a href="#" class="dropdown-item"><i class="icon-accessibility"></i> Accessibility</a>
-									<div class="dropdown-divider"></div>
-									<a href="#" class="dropdown-item"><i class="icon-gear"></i> All settings</a>
-								</div>
-							</div>
-							<select id="periodo"><option value="201908">Agosto 2018</option></select>-->
+							
 						</div>
 					</div>
 				</div>
@@ -1031,7 +980,102 @@
 								<button class="btn bg-primary" onclick="GuardaUsuarios()">GUARDAR</button>
 							</div>
 						</div>
-
+						<div id="campoCapacitaciones">
+							<div id="cabeceraCapacitaciones">
+								<button type="button" class="btn bg-primary" id="addCapacitaciones" onclick="AddCapacitaciones()">NUEVO CURSO</button>
+							</div><br>
+							<div id="cuerpoCapacitaciones"></div>
+							<div id="cuerpoCapacitaciones2">
+								<table>
+									<tr>
+										<td>
+											<label>NOMBRE</label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="capnombre" type="text" style="width:300px;" placeholder="NOMBRE DEL CURSO"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>CENTRO DE COSTOS</label>
+										</td>
+										<td>
+											<div id="selectCapCentro"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>UNIDAD</label>
+										</td>
+										<td>
+											<div id="selectCapUnidad"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label></label>
+										</td>
+										<td>
+											<button class="btn bg-primary" onclick="GuardaCapacitacion()">GUARDAR</button>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div id="campoSesiones">
+							<div id="cabeceraSesiones">
+								<button type="button" class="btn bg-primary" id="addSesiones" onclick="AddSesiones()">NUEVA SESION</button>
+							</div><br>
+							<div id="cuerpoSesiones"></div>
+							<div id="cuerpoSesiones2">
+								<table>
+									<tr>
+										<td>
+											<label>NOMBRE </label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="sesnombre" type="text" style="width:300px;" placeholder="NOMBRE DE LA SESION"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label></label>
+										</td>
+										<td>
+											<button class="btn bg-primary" onclick="GuardaSesion()">GUARDAR</button>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div id="campoInducciones">
+							<div id="cabeceraInducciones">
+								<button type="button" class="btn bg-primary" id="addInducciones">NUEVO</button>
+							</div>
+							<div id="cuerpoInducciones"></div>
+							<div id="cuerpoInducciones2"></div>
+						</div>
+						<div id="campoMejoras">
+							<div id="cabeceraMejoras">
+								<button type="button" class="btn bg-primary" id="addMejoras">NUEVO</button>
+							</div>
+							<div id="cuerpoMejoras"></div>
+							<div id="cuerpoMejoras2"></div>
+						</div>
+						<div id="campoProcedimientos">
+							<div id="cabeceraProcedimientos">
+								<button type="button" class="btn bg-primary" id="addProcedimientos">NUEVO</button>
+							</div>
+							<div id="cuerpoProcedimientos"></div>
+							<div id="cuerpoProcedimientos2"></div>
+						</div>
+						<div id="campoVideos">
+							<div id="cabeceraVideos">
+								<button type="button" class="btn bg-primary" id="addVideos">NUEVO</button>
+							</div>
+							<div id="cuerpoVideos"></div>
+							<div id="cuerpoVideos2"></div>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -101,6 +101,11 @@ class Usuario{
 
 	function GuardaBeneficios($codigo,$titulo,$empresa,$detalle,$descuento_p,$descuento_m,$condiciones,$caducidad){
 		include('conexion.php');
+
+		$titulo = utf8_encode($titulo);
+		$empresa = utf8_encode($empresa);
+		$detalle = utf8_encode($detalle);
+		$condiciones = utf8_encode($condiciones);
     								
         $sql = "INSERT INTO beneficios (CODIGO,TITULO,EMPRESA,DETALLE,DESCUENTO_P,DESCUENTO_M,CONDICIONES,CADUCIDAD) 
         VALUES ('$codigo','$titulo','$empresa','$detalle','$descuento_p','$descuento_m','$condiciones','$caducidad')";
@@ -124,8 +129,14 @@ class Usuario{
     	}
 	} 
 
-	function GuardaBeneficios2($id,$titulo,$codigo,$empresa,$detalle,$descuento_p,$descuento_m,$condiciones,$caducidad){
+	function GuardaBeneficios2($id,$codigo,$titulo,$empresa,$detalle,$descuento_p,$descuento_m,$condiciones,$caducidad){
 		include('conexion.php');
+
+		$titulo = utf8_encode($titulo);
+		$empresa = utf8_encode($empresa);
+		$detalle = utf8_encode($detalle);
+		$condiciones = utf8_encode($condiciones);
+
     								
         $sql = "UPDATE beneficios SET codigo='$codigo', titulo='$titulo', empresa='$empresa', detalle='$detalle',
 		descuento_p='$descuento_p', descuento_m='$descuento_m', condiciones='$condiciones',
@@ -255,6 +266,11 @@ class Usuario{
 
 	function GuardaConvocatorias($costos,$unidad,$puesto,$descripcion,$requisitos,$salario){
 		include('conexion.php');
+
+		$unidad = utf8_encode($unidad);
+		$puesto = utf8_encode($puesto);
+		$descripcion = utf8_encode($descripcion);
+		$requisitos = utf8_encode($requisitos);
     								
         $sql = "INSERT INTO convocatorias (CENTRO_COSTOS,UNIDAD,PUESTO,DESCRIPCION,REQUISITOS,SALARIO) 
         VALUES ('$costos','$unidad','$puesto','$descripcion','$requisitos','$salario')";
@@ -280,7 +296,13 @@ class Usuario{
 
 	function GuardaConvocatorias2($id,$costos,$unidad,$puesto,$descripcion,$requisitos,$salario){
 		include('conexion.php');
-    								
+		
+		$unidad = utf8_encode($unidad);
+		$puesto = utf8_encode($puesto);
+		$descripcion = utf8_encode($descripcion);
+		$requisitos = utf8_encode($requisitos);
+		
+		
         $sql = "UPDATE convocatorias SET centro_costos='$costos', unidad='$unidad', puesto='$puesto',
 		descripcion='$descripcion', requisitos='$requisitos', 
 		salario='$salario' WHERE id='$id' ";
@@ -344,7 +366,9 @@ class Usuario{
 
 	function GuardaFrase($detalle){
 		include('conexion.php');
-    								
+		
+		$detalle = utf8_encode($detalle);
+
         $sql = "INSERT INTO frases (DETALLE) 
         VALUES ('$detalle')";
         
@@ -419,6 +443,27 @@ class Usuario{
     	return $tabla;
 	}
 
+	function Unidad3($centro,$id){
+		include('conexion.php');
+		//echo $id;
+        $query = "SELECT * FROM unidad WHERE centro_costos='$centro'";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '<select id="iunidad"><option value="0">Seleccione</option>';
+		
+    	while ($row = $result->fetch_array()){
+			if($row['id']==$id){
+				$tabla = $tabla . '<option value="'.$row['id'].'" selected>'.$row['descripcion'].'</option>';
+			} else {
+				$tabla = $tabla . '<option value="'.$row['id'].'">'.$row['descripcion'].'</option>';
+			}
+			
+    	}
+    	$tabla = $tabla . '</select>';
+    	return $tabla;
+	}
+
 	function CentroCostos(){
 		include('conexion.php');
     
@@ -437,7 +482,7 @@ class Usuario{
     	return $tabla;
 	}
 
-	function CentroCostos2(){
+	function CentroCostos2($id){
 		include('conexion.php');
     
         $query = "SELECT * FROM centro_costos WHERE id='$id'";
@@ -454,6 +499,29 @@ class Usuario{
     	$tabla = $tabla . '</select>';
     	return $tabla;
 	}
+
+	function CentroCostos3($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM centro_costos ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '<select id="icostos" onclick="CambioCentroCostos()">';
+		//$tabla = '<select id="icostos" onclick="CambioCentroCostos()"><option value="0">Seleccione</option>';
+		
+    	while ($row = $result->fetch_array()){
+			if($row['id']==$id){
+				$tabla = $tabla . '<option value="'.$row['id'].'" selected>'.$row['descripcion'].'</option>';
+			} else {
+				$tabla = $tabla . '<option value="'.$row['id'].'">'.$row['descripcion'].'</option>';
+			}
+			
+    	}
+    	$tabla = $tabla . '</select>';
+    	return $tabla;
+	}
+
 
 	function Reglamentos(){
 		include('conexion.php');
@@ -569,6 +637,10 @@ class Usuario{
 
 	function GuardaInteres($titulo,$detalle,$tipo,$material){
 		include('conexion.php');
+		
+		$titulo = utf8_encode($titulo);
+		$detalle = utf8_encode($detalle);
+
 		$sql = "INSERT INTO temas (TITULO,DETALLE) VALUES ('$titulo','$detalle')";
                 
                 if (!$resultado = $mysqli->query($sql)) {
@@ -675,8 +747,15 @@ class Usuario{
     	return $tabla;
 	}
 
+
 	function GuardaUsuarios($apellidos,$nombre,$dni,$correo,$centro,$unidad){
 		include('conexion.php');
+		
+		$apellidos = utf8_encode($apellidos);
+		$nombre = utf8_encode($nombre);
+		$centro = utf8_encode($centro);
+		$unidad = utf8_encode($unidad);
+		
 		$sql = "INSERT INTO empleados (APELLIDOS,NOMBRE,USUARIO,DNI,EMAIL,EMPRESA,SUCURSAL,AREA,SUBAREA) 
 		VALUES ('$apellidos','$nombre','$nombre','$dni','$correo','1','1','$centro','$unidad')";
                 
@@ -698,6 +777,12 @@ class Usuario{
 	function EditaUsuarios($id,$apellidos,$nombre,$dni,$correo,$centro,$unidad){
 		include('conexion.php');
 		
+		$apellidos = utf8_encode($apellidos);
+		$nombre = utf8_encode($nombre);
+		$centro = utf8_encode($centro);
+		$unidad = utf8_encode($unidad);
+		
+		
 		$sql = "UPDATE empleados SET apellidos='$apellidos', nombre='$nombre', usuario='$nombre', 
 		dni='$dni', email='$correo', area='$centro', subarea='$unidad' WHERE id='$id' ";
                 
@@ -714,6 +799,130 @@ class Usuario{
                     $idT = mysqli_insert_id($mysqli);
                     echo 'EXITO';
                 }
+	}
+
+	function Capacitaciones(){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM cursos ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>CODIGO</td><td>NOMBRE</td>';
+		$tabla = $tabla . '<td>CENTRO COSTOS</td><td>UNIDAD</td><td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			//$material = $this->MaterialXInteres($row['id']);
+			$centro_costos = $this->Area($row['centro_costos']);
+			$unidad = $this->SubArea($row['unidad']);
+
+			$tabla = $tabla . '<tr><td>'.$row['id'].'</td><td>'.$row['nombre'].'</td>';
+			$tabla = $tabla . '<td>'.$centro_costos.'</td><td>'.$unidad.'</td>';
+			$tabla = $tabla . '<td><img onclick="VerCapacitaciones('.$row['id'].')" src="imagenes/ver.png"><img onclick="EditarCapacitaciones('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table>';
+    	return $tabla;
+	}
+
+	function Capacitaciones2($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM cursos WHERE id='$id'";
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '';
+    	while ($row = $result->fetch_array()){
+			$centro = $this->CentroCostos3($row['centro_costos']);
+			$unidad = $this->Unidad3($row['centro_costos'],$row['unidad']);
+			$tabla = $tabla . ''.$row['nombre'].'#';
+			$tabla = $tabla . ''.$centro."#";
+			$tabla = $tabla . ''.$unidad."#";
+		}
+    	return $tabla;
+	}
+
+	function GuardaCapacitaciones($nombre,$centro,$unidad){
+		include('conexion.php');
+		
+		$nombre = utf8_encode($nombre);
+		$centro = utf8_encode($centro);
+		$unidad = utf8_encode($unidad);
+		
+		$sql = "INSERT INTO cursos (NOMBRE,EMPRESA,CENTRO_COSTOS,UNIDAD) 
+		VALUES ('$nombre','1','$centro','$unidad')";
+                
+                if (!$resultado = $mysqli->query($sql)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    $idT = mysqli_insert_id($mysqli);
+                    echo 'EXITO';
+                }
+	}
+
+	function EditaCapacitaciones($id,$nombre,$centro,$unidad){
+		include('conexion.php');
+		
+		$nombre = utf8_encode($nombre);
+		$centro = utf8_encode($centro);
+		$unidad = utf8_encode($unidad);
+		
+		
+		$sql = "UPDATE cursos SET nombre='$nombre',  
+		centro_costos='$centro', unidad='$unidad' WHERE id='$id' ";
+                
+                if (!$resultado = $mysqli->query($sql)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    //$idT = mysqli_insert_id($mysqli);
+                    echo 'EXITO';
+                }
+	}
+
+	function Sesiones($tipo,$curso){
+		include('conexion.php');
+
+		if($tipo=="1"){
+			$query = "SELECT * FROM sesionesxcurso WHERE curso='$curso' ";
+		} else {
+			$query = "SELECT * FROM sesionesxinduccion WHERE induccion='$curso'";
+		}
+    
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>COD. CURSO</td><td>NOMBRE</td>';
+		$tabla = $tabla . '<td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			//$material = $this->MaterialXInteres($row['id']);
+			$tabla = $tabla . '<tr><td>'.$row['curso'].'</td><td>'.$row['detalle'].'</td>';
+			$tabla = $tabla . '<td><img onclick="VerSesiones('.$row['id'].')" src="imagenes/ver.png"><img onclick="EditarSesiones('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table>';
+    	return $tabla;
 	}
 	
 
