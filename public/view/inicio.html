@@ -1048,6 +1048,46 @@
 								</table>
 							</div>
 						</div>
+						<div id="campoMateriales">
+							<div id="cabeceraMateriales">
+								<button type="button" class="btn bg-primary" id="addMateriales" onclick="AddMateriales()">NUEVO</button>
+							</div>
+							<br>
+							<div id="cuerpoMateriales"></div>
+							<div id="cuerpoMateriales2" style="width:100%; justify-content: center; align-items: center;">
+								<table>
+									<tr>
+										<td>
+											<label>TIPO: </label>
+										</td>
+										<td>
+											<select id="mattipo" onclick="TipoMaterial()">
+												<option value="0">Seleccionar</option>
+												<option value="1">Video</option>
+												<option value="2">Enlace</option>
+												<option value="3">Infografía</option>
+												<option value="4">Documento</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>MATERIAL: </label>
+										</td>
+										<td>
+											<div id="matmaterial1">
+												<div style="display:inline-block; margin-right:5px;"><input id="mattexto" type="text" style="width:200px;" placeholder="VIDEO O ENLACE"></div>
+											</div>
+											<div id="matmaterial2">
+												<div id="archMateriales"></div>
+											</div>
+										</td>
+									</tr>
+								</table>
+								<br>
+								<button class="btn bg-primary" onclick="GuardaMateriales()">GUARDAR</button>
+							</div>
+						</div>
 						<div id="campoInducciones">
 							<div id="cabeceraInducciones">
 								<button type="button" class="btn bg-primary" id="addInducciones">NUEVO</button>

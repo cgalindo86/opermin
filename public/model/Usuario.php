@@ -102,10 +102,10 @@ class Usuario{
 	function GuardaBeneficios($codigo,$titulo,$empresa,$detalle,$descuento_p,$descuento_m,$condiciones,$caducidad){
 		include('conexion.php');
 
-		$titulo = utf8_encode($titulo);
-		$empresa = utf8_encode($empresa);
-		$detalle = utf8_encode($detalle);
-		$condiciones = utf8_encode($condiciones);
+		$titulo = utf8_decode($titulo);
+		$empresa = utf8_decode($empresa);
+		$detalle = utf8_decode($detalle);
+		$condiciones = utf8_decode($condiciones);
     								
         $sql = "INSERT INTO beneficios (CODIGO,TITULO,EMPRESA,DETALLE,DESCUENTO_P,DESCUENTO_M,CONDICIONES,CADUCIDAD) 
         VALUES ('$codigo','$titulo','$empresa','$detalle','$descuento_p','$descuento_m','$condiciones','$caducidad')";
@@ -132,10 +132,10 @@ class Usuario{
 	function GuardaBeneficios2($id,$codigo,$titulo,$empresa,$detalle,$descuento_p,$descuento_m,$condiciones,$caducidad){
 		include('conexion.php');
 
-		$titulo = utf8_encode($titulo);
-		$empresa = utf8_encode($empresa);
-		$detalle = utf8_encode($detalle);
-		$condiciones = utf8_encode($condiciones);
+		$titulo = utf8_decode($titulo);
+		$empresa = utf8_decode($empresa);
+		$detalle = utf8_decode($detalle);
+		$condiciones = utf8_decode($condiciones);
 
     								
         $sql = "UPDATE beneficios SET codigo='$codigo', titulo='$titulo', empresa='$empresa', detalle='$detalle',
@@ -267,10 +267,10 @@ class Usuario{
 	function GuardaConvocatorias($costos,$unidad,$puesto,$descripcion,$requisitos,$salario){
 		include('conexion.php');
 
-		$unidad = utf8_encode($unidad);
-		$puesto = utf8_encode($puesto);
-		$descripcion = utf8_encode($descripcion);
-		$requisitos = utf8_encode($requisitos);
+		$unidad = utf8_decode($unidad);
+		$puesto = utf8_decode($puesto);
+		$descripcion = utf8_decode($descripcion);
+		$requisitos = utf8_decode($requisitos);
     								
         $sql = "INSERT INTO convocatorias (CENTRO_COSTOS,UNIDAD,PUESTO,DESCRIPCION,REQUISITOS,SALARIO) 
         VALUES ('$costos','$unidad','$puesto','$descripcion','$requisitos','$salario')";
@@ -297,10 +297,10 @@ class Usuario{
 	function GuardaConvocatorias2($id,$costos,$unidad,$puesto,$descripcion,$requisitos,$salario){
 		include('conexion.php');
 		
-		$unidad = utf8_encode($unidad);
-		$puesto = utf8_encode($puesto);
-		$descripcion = utf8_encode($descripcion);
-		$requisitos = utf8_encode($requisitos);
+		$unidad = utf8_decode($unidad);
+		$puesto = utf8_decode($puesto);
+		$descripcion = utf8_decode($descripcion);
+		$requisitos = utf8_decode($requisitos);
 		
 		
         $sql = "UPDATE convocatorias SET centro_costos='$costos', unidad='$unidad', puesto='$puesto',
@@ -367,7 +367,7 @@ class Usuario{
 	function GuardaFrase($detalle){
 		include('conexion.php');
 		
-		$detalle = utf8_encode($detalle);
+		$detalle = utf8_decode($detalle);
 
         $sql = "INSERT INTO frases (DETALLE) 
         VALUES ('$detalle')";
@@ -638,8 +638,8 @@ class Usuario{
 	function GuardaInteres($titulo,$detalle,$tipo,$material){
 		include('conexion.php');
 		
-		$titulo = utf8_encode($titulo);
-		$detalle = utf8_encode($detalle);
+		$titulo = utf8_decode($titulo);
+		$detalle = utf8_decode($detalle);
 
 		$sql = "INSERT INTO temas (TITULO,DETALLE) VALUES ('$titulo','$detalle')";
                 
@@ -751,10 +751,10 @@ class Usuario{
 	function GuardaUsuarios($apellidos,$nombre,$dni,$correo,$centro,$unidad){
 		include('conexion.php');
 		
-		$apellidos = utf8_encode($apellidos);
-		$nombre = utf8_encode($nombre);
-		$centro = utf8_encode($centro);
-		$unidad = utf8_encode($unidad);
+		$apellidos = utf8_decode($apellidos);
+		$nombre = utf8_decode($nombre);
+		$centro = utf8_decode($centro);
+		$unidad = utf8_decode($unidad);
 		
 		$sql = "INSERT INTO empleados (APELLIDOS,NOMBRE,USUARIO,DNI,EMAIL,EMPRESA,SUCURSAL,AREA,SUBAREA) 
 		VALUES ('$apellidos','$nombre','$nombre','$dni','$correo','1','1','$centro','$unidad')";
@@ -777,10 +777,10 @@ class Usuario{
 	function EditaUsuarios($id,$apellidos,$nombre,$dni,$correo,$centro,$unidad){
 		include('conexion.php');
 		
-		$apellidos = utf8_encode($apellidos);
-		$nombre = utf8_encode($nombre);
-		$centro = utf8_encode($centro);
-		$unidad = utf8_encode($unidad);
+		$apellidos = utf8_decode($apellidos);
+		$nombre = utf8_decode($nombre);
+		$centro = utf8_decode($centro);
+		$unidad = utf8_decode($unidad);
 		
 		
 		$sql = "UPDATE empleados SET apellidos='$apellidos', nombre='$nombre', usuario='$nombre', 
@@ -849,9 +849,9 @@ class Usuario{
 	function GuardaCapacitaciones($nombre,$centro,$unidad){
 		include('conexion.php');
 		
-		$nombre = utf8_encode($nombre);
-		$centro = utf8_encode($centro);
-		$unidad = utf8_encode($unidad);
+		$nombre = utf8_decode($nombre);
+		$centro = utf8_decode($centro);
+		$unidad = utf8_decode($unidad);
 		
 		$sql = "INSERT INTO cursos (NOMBRE,EMPRESA,CENTRO_COSTOS,UNIDAD) 
 		VALUES ('$nombre','1','$centro','$unidad')";
@@ -874,9 +874,9 @@ class Usuario{
 	function EditaCapacitaciones($id,$nombre,$centro,$unidad){
 		include('conexion.php');
 		
-		$nombre = utf8_encode($nombre);
-		$centro = utf8_encode($centro);
-		$unidad = utf8_encode($unidad);
+		$nombre = utf8_decode($nombre);
+		$centro = utf8_decode($centro);
+		$unidad = utf8_decode($unidad);
 		
 		
 		$sql = "UPDATE cursos SET nombre='$nombre',  
@@ -923,6 +923,248 @@ class Usuario{
 		}
     	$tabla = $tabla . '</tbody></table>';
     	return $tabla;
+	}
+
+	function Sesiones2($id,$tipo,$curso){
+		include('conexion.php');
+
+		if($tipo=="1"){
+			$query = "SELECT * FROM sesionesxcurso WHERE id='$id' ";
+		} else {
+			$query = "SELECT * FROM sesionesxinduccion WHERE id='$id' ";
+		}
+    
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		while ($row = $result->fetch_array()){
+			$tabla = $tabla . ''.$row['detalle'].'#';
+			
+		}
+    	return $tabla;
+	}
+
+	function GuardaSesiones($tipo,$curso,$nombre){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+		
+		if($tipo=="1"){
+			$sql = "INSERT INTO sesionesxcurso (DETALLE,CURSO) 
+			VALUES ('$nombre','$curso')";
+					
+					if (!$resultado = $mysqli->query($sql)) {
+						
+						echo "Lo sentimos, este sitio web está experimentando problemas.";
+						echo "Error: La ejecución de la consulta falló debido a: \n";
+						echo "Query: " . $sql . "\n";
+						echo "Errno: " . $mysqli->errno . "\n";
+						echo "Error: " . $mysqli->error . "\n";
+						
+						exit;
+					} else {
+						$idT = mysqli_insert_id($mysqli);
+						echo 'EXITO';
+					}
+		} else {
+			$sql = "INSERT INTO sesionesxinduccion (DETALLE,INDUCCION) 
+			VALUES ('$nombre','$curso')";
+					
+					if (!$resultado = $mysqli->query($sql)) {
+						
+						echo "Lo sentimos, este sitio web está experimentando problemas.";
+						echo "Error: La ejecución de la consulta falló debido a: \n";
+						echo "Query: " . $sql . "\n";
+						echo "Errno: " . $mysqli->errno . "\n";
+						echo "Error: " . $mysqli->error . "\n";
+						
+						exit;
+					} else {
+						$idT = mysqli_insert_id($mysqli);
+						echo 'EXITO';
+					}
+		}
+		
+	}
+
+	function EditaSesiones($id,$tipo,$curso,$nombre){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+
+		if($tipo=="1"){
+			$sql = "UPDATE sesionesxcurso SET detalle='$nombre' WHERE id='$id' ";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			} else {
+				echo 'EXITO';
+			}
+		} else {
+			$sql = "UPDATE sesionesxinduccion SET detalle='$nombre' WHERE id='$id' ";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			} else {
+				echo 'EXITO';
+			}
+		}
+		
+		
+	}
+
+	function Materiales($tipo,$sesion){
+		include('conexion.php');
+
+		if($tipo=="1"){
+			$query = "SELECT * FROM materialesxcurso WHERE sesion='$sesion' ";
+		} else {
+			$query = "SELECT * FROM materialesxinduccion WHERE sesion='$sesion'";
+		}
+    
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>COD. SESION</td><td>NOMBRE</td>';
+		$tabla = $tabla . '<td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			
+			if(($row['tipo']=="1") OR ($row['tipo']=="2")){
+				$direccion = '<a href="'.$row['detalle'].'"  target="_blank">'.$row['detalle'].'</a>';
+			} else {
+				$direccion = '<a href="files/'.$row['detalle'].'" target="_blank">'.$row['detalle'].'</a>';
+			}
+
+			$tabla = $tabla . '<tr><td>'.$row['sesion'].'</td><td>'.$direccion.'</td>';
+			$tabla = $tabla . '<td><img onclick="VerMateriales('.$row['id'].')" src="imagenes/ver.png"><img onclick="EditarMateriales('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table>';
+    	return $tabla;
+	}
+
+	function Materiales2($id,$tipo,$sesion){
+		include('conexion.php');
+
+		if($tipo=="1"){
+			$query = "SELECT * FROM materialesxcurso WHERE id='$id' ";
+		} else {
+			$query = "SELECT * FROM materialesxinduccion WHERE id='$id' ";
+		}
+    
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		while ($row = $result->fetch_array()){
+			if(($row['tipo']=="1") OR ($row['tipo']=="2")){
+				$direccion = '<a href="'.$row['detalle'].'"  target="_blank">'.$row['detalle'].'</a>';
+			} else {
+				$direccion = '<a href="files/'.$row['detalle'].'" target="_blank">'.$row['detalle'].'</a>';
+			}
+			
+			$tabla = $tabla . ''.$direccion.'#';
+			
+		}
+    	return $tabla;
+	}
+
+	function GuardaMateriales($tipo,$tipomat,$sesion,$nombre){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+		
+		if($tipo=="1"){
+			$sql = "INSERT INTO materialesxcurso (DETALLE,SESION,TIPO) 
+			VALUES ('$nombre','$sesion','$tipomat')";
+					
+					if (!$resultado = $mysqli->query($sql)) {
+						
+						echo "Lo sentimos, este sitio web está experimentando problemas.";
+						echo "Error: La ejecución de la consulta falló debido a: \n";
+						echo "Query: " . $sql . "\n";
+						echo "Errno: " . $mysqli->errno . "\n";
+						echo "Error: " . $mysqli->error . "\n";
+						
+						exit;
+					} else {
+						$idT = mysqli_insert_id($mysqli);
+						echo 'EXITO';
+					}
+		} else {
+			$sql = "INSERT INTO materialesxinduccion (DETALLE,SESION,TIPO) 
+			VALUES ('$nombre','$sesion','$tipomat')";
+					
+					if (!$resultado = $mysqli->query($sql)) {
+						
+						echo "Lo sentimos, este sitio web está experimentando problemas.";
+						echo "Error: La ejecución de la consulta falló debido a: \n";
+						echo "Query: " . $sql . "\n";
+						echo "Errno: " . $mysqli->errno . "\n";
+						echo "Error: " . $mysqli->error . "\n";
+						
+						exit;
+					} else {
+						$idT = mysqli_insert_id($mysqli);
+						echo 'EXITO';
+					}
+		}
+		
+	}
+
+	function EditaMateriales($id,$tipo,$tipomat,$sesion,$nombre){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+
+		if($tipo=="1"){
+			$sql = "UPDATE materialesxcurso SET detalle='$nombre' WHERE id='$id' ";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			} else {
+				echo 'EXITO';
+			}
+		} else {
+			$sql = "UPDATE materialesxinduccion SET detalle='$nombre' WHERE id='$id' ";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			} else {
+				echo 'EXITO';
+			}
+		}
+		
+		
 	}
 	
 

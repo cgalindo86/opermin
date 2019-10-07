@@ -27,6 +27,8 @@
     $centro = $_POST['centro'];
     $unidad = $_POST['unidad'];
     $curso = $_POST['curso'];
+    $sesion = $_POST['sesion'];
+    $tipomat = $_POST['tipomat'];
 
 	include('../model/Usuario.php');
 	
@@ -96,6 +98,15 @@
         echo $miprod -> Sesiones2($id,$tipo,$curso);
     } else if($accion=="32"){
         echo $miprod -> EditaSesiones($id,$tipo,$curso,$nombre);
+    } else if($accion=="33"){
+        echo $miprod -> Materiales($tipo,$sesion);
+    } else if($accion=="34"){
+        echo $miprod -> GuardaMateriales($tipo,$tipomat,$sesion,$nombre);
+    } else if($accion=="35"){
+        echo $miprod -> Materiales2($id,$tipo,$sesion);
+    } else if($accion=="36"){
+        echo $miprod -> EditaMateriales($id,$tipo,$tipomat,$sesion,$nombre);
     }
+
     
 ?>
