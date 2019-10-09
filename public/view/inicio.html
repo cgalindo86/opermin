@@ -1090,10 +1090,45 @@
 						</div>
 						<div id="campoInducciones">
 							<div id="cabeceraInducciones">
-								<button type="button" class="btn bg-primary" id="addInducciones">NUEVO</button>
-							</div>
+								<button type="button" class="btn bg-primary" id="addInducciones" onclick="AddInducciones()">NUEVO</button>
+							</div><br>
 							<div id="cuerpoInducciones"></div>
-							<div id="cuerpoInducciones2"></div>
+							<div id="cuerpoInducciones2">
+								<table>
+									<tr>
+										<td>
+											<label>NOMBRE</label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="indnombre" type="text" style="width:300px;" placeholder="NOMBRE DEL CURSO"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>CENTRO DE COSTOS</label>
+										</td>
+										<td>
+											<div id="selectIndCentro"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>UNIDAD</label>
+										</td>
+										<td>
+											<div id="selectIndUnidad"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label></label>
+										</td>
+										<td>
+											<button class="btn bg-primary" onclick="GuardaInduccion()">GUARDAR</button>
+										</td>
+									</tr>
+								</table>
+							</div>
 						</div>
 						<div id="campoMejoras">
 							<div id="cabeceraMejoras">

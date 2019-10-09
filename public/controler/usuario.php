@@ -106,6 +106,14 @@
         echo $miprod -> Materiales2($id,$tipo,$sesion);
     } else if($accion=="36"){
         echo $miprod -> EditaMateriales($id,$tipo,$tipomat,$sesion,$nombre);
+    } else if($accion=="37"){
+        echo $miprod -> Inducciones();
+    } else if($accion=="38"){
+        echo $miprod -> GuardaInducciones($nombre,$centro,$unidad);
+    } else if($accion=="39"){
+        echo $miprod -> Inducciones2($id);
+    } else if($accion=="40"){
+        echo $miprod -> EditaInducciones($id,$nombre,$centro,$unidad);
     }
 
     

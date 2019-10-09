@@ -897,6 +897,102 @@ class Usuario{
                 }
 	}
 
+	function Inducciones(){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM inducciones ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>CODIGO</td><td>NOMBRE</td>';
+		$tabla = $tabla . '<td>CENTRO COSTOS</td><td>UNIDAD</td><td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			//$material = $this->MaterialXInteres($row['id']);
+			$centro_costos = $this->Area($row['centro_costos']);
+			$unidad = $this->SubArea($row['unidad']);
+
+			$tabla = $tabla . '<tr><td>'.$row['id'].'</td><td>'.$row['nombre'].'</td>';
+			$tabla = $tabla . '<td>'.$centro_costos.'</td><td>'.$unidad.'</td>';
+			$tabla = $tabla . '<td><img onclick="VerInducciones('.$row['id'].')" src="imagenes/ver.png"><img onclick="EditarInducciones('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table>';
+    	return $tabla;
+	}
+
+	function Inducciones2($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM inducciones WHERE id='$id'";
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '';
+    	while ($row = $result->fetch_array()){
+			$centro = $this->CentroCostos3($row['centro_costos']);
+			$unidad = $this->Unidad3($row['centro_costos'],$row['unidad']);
+			$tabla = $tabla . ''.$row['nombre'].'#';
+			$tabla = $tabla . ''.$centro."#";
+			$tabla = $tabla . ''.$unidad."#";
+		}
+    	return $tabla;
+	}
+
+	function GuardaInducciones($nombre,$centro,$unidad){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+		$centro = utf8_decode($centro);
+		$unidad = utf8_decode($unidad);
+		
+		$sql = "INSERT INTO inducciones (NOMBRE,EMPRESA,CENTRO_COSTOS,UNIDAD) 
+		VALUES ('$nombre','1','$centro','$unidad')";
+                
+                if (!$resultado = $mysqli->query($sql)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    $idT = mysqli_insert_id($mysqli);
+                    echo 'EXITO';
+                }
+	}
+
+	function EditaInducciones($id,$nombre,$centro,$unidad){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+		$centro = utf8_decode($centro);
+		$unidad = utf8_decode($unidad);
+		
+		
+		$sql = "UPDATE inducciones SET nombre='$nombre',  
+		centro_costos='$centro', unidad='$unidad' WHERE id='$id' ";
+                
+                if (!$resultado = $mysqli->query($sql)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    //$idT = mysqli_insert_id($mysqli);
+                    echo 'EXITO';
+                }
+	}
+
 	function Sesiones($tipo,$curso){
 		include('conexion.php');
 
@@ -1045,15 +1141,16 @@ class Usuario{
 		$tabla = $tabla . '<td>EDITAR</td></tr></thead>';
 		$tabla = $tabla . '<tbody>';
     	while ($row = $result->fetch_array()){
-			
+
 			if(($row['tipo']=="1") OR ($row['tipo']=="2")){
+				//$direccion = $video_title;
 				$direccion = '<a href="'.$row['detalle'].'"  target="_blank">'.$row['detalle'].'</a>';
 			} else {
 				$direccion = '<a href="files/'.$row['detalle'].'" target="_blank">'.$row['detalle'].'</a>';
 			}
 
 			$tabla = $tabla . '<tr><td>'.$row['sesion'].'</td><td>'.$direccion.'</td>';
-			$tabla = $tabla . '<td><img onclick="VerMateriales('.$row['id'].')" src="imagenes/ver.png"><img onclick="EditarMateriales('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+			$tabla = $tabla . '<td><img onclick="EditarMateriales('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
 		
 		}
     	$tabla = $tabla . '</tbody></table>';

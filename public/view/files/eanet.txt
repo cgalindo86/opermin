@@ -1,0 +1,9 @@
+Prestashop
+/* */
+Clientes
+Productos (precios,categorias)
+Proveedores
+Cotizacion (pedido)
+Factura
+Stock
+Marca

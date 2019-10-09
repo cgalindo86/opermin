@@ -299,6 +299,40 @@ function GuardaSesion(){
 }
 
 
+function GuardaMateriales(){
+	
+	var x = document.getElementById("mattipo").selectedIndex;
+    var y = document.getElementById("mattipo").options;
+	var tipomat = y[x].value;
+
+	var nombre = document.getElementById("mattexto").value;
+		
+	if(nombre!=""){
+		if(tipomat=="1" || tipomat=="2"){
+			$.post("../controler/usuario.php", {
+				accion: "34",
+				nombre: nombre,
+				tipo: $tipoCurso,
+				tipomat: tipomat,
+				sesion: $sesion
+			}, function(htmlexterno){
+				//Sesiones();
+				Materiales();
+			});
+		} else {
+			
+		}
+			
+	} else if($tipoCurso=="3" || $tipoCurso=="4"){
+		//alert("Ingrese datos");
+		Materiales();
+	} else if($nombre==""){
+		alert("Ingrese datos");
+	}
+	
+}
+
+
 function EditarBeneficios($id){
 	$mid = $id;
 	$.post("../controler/usuario.php", {
@@ -880,8 +914,8 @@ function TipoMaterial(){
 			$("#matmaterial1").hide();
 			$("#matmaterial2").show();
 			var v = $sesion;
-			var v2 = "";
-
+			var v2 = $tipoCurso;
+			console.log($tipoCurso);
 			$enlace = "cargar2.php?doc="+v+"&fini="+v2+"&ffin="+tipo+"&filtro=materiales";
 			console.log("enlace",$enlace);
 			document.getElementById("archMateriales").innerHTML = '<iframe src="'+$enlace+'" style="width:400px; height:200px;"></iframe><br>';
@@ -958,13 +992,13 @@ function Inducciones(){
 	document.getElementById("procedimientos").style.background = "transparent";
 	document.getElementById("videos").style.background = "transparent";
 
-	/*$.post("../controler/usuario.php", {
-		accion: "21"
+	$.post("../controler/usuario.php", {
+		accion: "37"
 	}, function(htmlexterno){
 
-	$("#cuerpoUsuarios").html(htmlexterno);
+	$("#cuerpoInducciones").html(htmlexterno);
 		console.log(htmlexterno+"");
-	});*/
+	});
 }
 
 function Mejoras(){
@@ -1053,6 +1087,25 @@ function Sesiones(){
 	});
 }
 
+function Materiales(){
+	Ocultar();
+	
+	$("#campoMateriales").show();
+	$("#cabeceraMateriales").show();
+	$("#cuerpoMateriales").show();
+	$("#cuerpoMateriales2").hide();
+
+	$.post("../controler/usuario.php", {
+		accion: "33",
+		tipo: $tipoCurso,
+		sesion: $sesion
+	}, function(htmlexterno){
+
+		$("#cuerpoMateriales").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
 function AddCapacitaciones(){
 	$senal = '1';
 	$("#cabeceraCapacitaciones").hide();
@@ -1069,6 +1122,25 @@ function AddCapacitaciones(){
 	});
 
 }
+
+
+function AddInducciones(){
+	$senal = '2';
+	$("#cabeceraInducciones").hide();
+	$("#cuerpoInducciones2").show();
+	$("#cuerpoInducciones").hide();
+
+	$.post("../controler/usuario.php", {
+		accion: "16"
+	}, function(htmlexterno){
+		htmlexterno = htmlexterno.replace("icostos","capcostos");
+		htmlexterno = htmlexterno.replace("CambioCentroCostos","CambioCentroCostos3");
+		$("#selectCapCentro").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+
+}
+
 
 function VerCapacitaciones($id){
 	$curso = $id;

@@ -207,6 +207,49 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             
                 
             echo "Documento subido correctamente";
+        } else if($filtro=="materiales"){
+            /*
+            $empleado = $d[0];
+            $fechaI = $d[1];
+            $fechaF = $d[2];
+            $filtro = $d[3];
+            */
+            $mysqli = new mysqli('localhost', 'root', '', 'opermin');
+            if($fechaI=="1"){
+                $sql = "INSERT INTO materialesxcurso (DETALLE,SESION,TIPO) 
+                VALUES ('$nom_arch','$empleado','$fechaF')";
+                        
+                        if (!$resultado = $mysqli->query($sql)) {
+                            
+                            echo "Lo sentimos, este sitio web está experimentando problemas.";
+                            echo "Error: La ejecución de la consulta falló debido a: \n";
+                            echo "Query: " . $sql . "\n";
+                            echo "Errno: " . $mysqli->errno . "\n";
+                            echo "Error: " . $mysqli->error . "\n";
+                            
+                            exit;
+                        } else {
+                            $idT = mysqli_insert_id($mysqli);
+                            echo 'EXITO';
+                        }
+            } else {
+                $sql = "INSERT INTO materialesxinduccion (DETALLE,SESION,TIPO) 
+                VALUES ('$nom_arch','$empleado','$fechaF')";
+                        
+                        if (!$resultado = $mysqli->query($sql)) {
+                            
+                            echo "Lo sentimos, este sitio web está experimentando problemas.";
+                            echo "Error: La ejecución de la consulta falló debido a: \n";
+                            echo "Query: " . $sql . "\n";
+                            echo "Errno: " . $mysqli->errno . "\n";
+                            echo "Error: " . $mysqli->error . "\n";
+                            
+                            exit;
+                        } else {
+                            $idT = mysqli_insert_id($mysqli);
+                            echo 'EXITO';
+                        }
+            }
         }
     }
     
