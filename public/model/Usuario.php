@@ -52,7 +52,7 @@ class Usuario{
 			$tabla = $tabla . '<tr><td>'.$row['fecha'].'</td><td>'.$nombre.'</td>';
 			$tabla = $tabla . '<td>'.$row['hora_inicio'].'</td><td>'.$row['hora_fin'].'</td></tr>';
     	}
-    	$tabla = $tabla . '</tbody></table>';
+    	$tabla = $tabla . '</tbody></table></div>';
     	return $tabla;
 	}
 
@@ -77,7 +77,7 @@ class Usuario{
 			$tabla = $tabla . '<td>'.$row['caducidad'].'</td>';
 			$tabla = $tabla . '<td><img onclick="EditarBeneficios('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
     	}
-    	$tabla = $tabla . '</tbody></table>';
+    	$tabla = $tabla . '</tbody></table></div>';
     	return $tabla;
 	}
 
@@ -218,7 +218,7 @@ class Usuario{
 			$tabla = $tabla . '<td>'.$row['neto'].'</td><td>'.$row['esslud'].'</td>';
 			$tabla = $tabla . '</tr>';
     	}
-    	$tabla = $tabla . '</tbody></table>';
+    	$tabla = $tabla . '</tbody></table></div>';
     	return $tabla;
 	}
 
@@ -242,7 +242,7 @@ class Usuario{
 			$tabla = $tabla . '<td>'.$row['salario'].'</td>';
 			$tabla = $tabla . '<td><img onclick="EditarConvocatorias('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
     	}
-    	$tabla = $tabla . '</tbody></table>';
+    	$tabla = $tabla . '</tbody></table></div>';
     	return $tabla;
 	}
 
@@ -343,7 +343,7 @@ class Usuario{
 			$tabla = $tabla . '<td>'.$row['fecha_fin'].'</td><td>'.$direccion.'</td>';
 			$tabla = $tabla . '<td><img onclick="EditarDescanso('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
     	}
-    	$tabla = $tabla . '</tbody></table>';
+    	$tabla = $tabla . '</tbody></table></div>';
     	return $tabla;
 	}
 
@@ -407,7 +407,7 @@ class Usuario{
 			$tabla = $tabla . '<tr><td>'.$row['detalle'].'</td><td>'.$direccion.'</td>';
 			$tabla = $tabla . '<td><img onclick="EditarFrase('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
     	}
-    	$tabla = $tabla . '</tbody></table>';
+    	$tabla = $tabla . '</tbody></table></div>';
     	return $tabla;
 	}
 
@@ -542,7 +542,7 @@ class Usuario{
 			$tabla = $tabla . '<tr><td>'.$costo.'</td><td>'.$unidad.'</td><td>'.$direccion.'</td>';
 			$tabla = $tabla . '<td><img onclick="EditarReglamentos('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
     	}
-    	$tabla = $tabla . '</tbody></table>';
+    	$tabla = $tabla . '</tbody></table></div>';
     	return $tabla;
 	}
 
@@ -609,7 +609,7 @@ class Usuario{
 			$tabla = $tabla . '<td><img onclick="EditarInteres('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
 		
 		}
-    	$tabla = $tabla . '</tbody></table>';
+    	$tabla = $tabla . '</tbody></table></div>';
     	return $tabla;
 	}
 
@@ -696,7 +696,7 @@ class Usuario{
 			$tabla = $tabla . '<td><img onclick="EditarUsuarios('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
 		
 		}
-    	$tabla = $tabla . '</tbody></table>';
+    	$tabla = $tabla . '</tbody></table></div>';
     	return $tabla;
 	}
 
@@ -823,7 +823,7 @@ class Usuario{
 			$tabla = $tabla . '<td><img onclick="VerCapacitaciones('.$row['id'].')" src="imagenes/ver.png"><img onclick="EditarCapacitaciones('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
 		
 		}
-    	$tabla = $tabla . '</tbody></table>';
+    	$tabla = $tabla . '</tbody></table></div>';
     	return $tabla;
 	}
 
@@ -919,7 +919,7 @@ class Usuario{
 			$tabla = $tabla . '<td><img onclick="VerInducciones('.$row['id'].')" src="imagenes/ver.png"><img onclick="EditarInducciones('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
 		
 		}
-    	$tabla = $tabla . '</tbody></table>';
+    	$tabla = $tabla . '</tbody></table></div>';
     	return $tabla;
 	}
 
@@ -1012,12 +1012,15 @@ class Usuario{
 		$tabla = $tabla . '<td>EDITAR</td></tr></thead>';
 		$tabla = $tabla . '<tbody>';
     	while ($row = $result->fetch_array()){
-			//$material = $this->MaterialXInteres($row['id']);
-			$tabla = $tabla . '<tr><td>'.$row['curso'].'</td><td>'.$row['detalle'].'</td>';
+			if($tipo=="1"){
+				$tabla = $tabla . '<tr><td>'.$row['curso'].'</td><td>'.$row['detalle'].'</td>';
+			} else {
+				$tabla = $tabla . '<tr><td>'.$row['induccion'].'</td><td>'.$row['detalle'].'</td>';
+			}
 			$tabla = $tabla . '<td><img onclick="VerSesiones('.$row['id'].')" src="imagenes/ver.png"><img onclick="EditarSesiones('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
 		
 		}
-    	$tabla = $tabla . '</tbody></table>';
+    	$tabla = $tabla . '</tbody></table></div>';
     	return $tabla;
 	}
 
@@ -1153,7 +1156,7 @@ class Usuario{
 			$tabla = $tabla . '<td><img onclick="EditarMateriales('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
 		
 		}
-    	$tabla = $tabla . '</tbody></table>';
+    	$tabla = $tabla . '</tbody></table></div>';
     	return $tabla;
 	}
 
@@ -1264,7 +1267,69 @@ class Usuario{
 		
 	}
 	
+	function Mejoras(){
+		include('conexion.php');
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>CODIGO</td><td>EMPLEADO</td>';
+		$tabla = $tabla . '<td>SUGERENCIA</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	
+		$query = "SELECT * FROM mejoras ";
+		mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		while ($row = $result->fetch_array()){
 
+			$dat = $dat.'<tr><td>'.$row['id']."</td><td>".$row['id_usuario']."</td><td>".$row['detalle']."</td></tr>";
+		}
+
+		$tabla = $tabla.$dat.'</tbody></table></div>';
+		return $tabla;
+			
+	}
+
+	function Procedimientos(){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM procedimientos ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>CENTRO DE COSTOS</td><td>UNIDAD</td>';
+		$tabla = $tabla . '<td>ARCHIVO</td><td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			$costo = $this->NombreCentro($row['centro_costos']);
+			$unidad = $this->NombreUnidad($row['unidad']);
+
+			$direccion = '<a href="files/'.$row['archivo'].'" target="_blank">'.$row['archivo'].'</a>';
+			$tabla = $tabla . '<tr><td>'.$costo.'</td><td>'.$unidad.'</td><td>'.$direccion.'</td>';
+			$tabla = $tabla . '<td><img onclick="EditarProcedimientos('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+    	}
+    	$tabla = $tabla . '</tbody></table></div>';
+    	return $tabla;
+	}
+
+
+	function Procedimientos2(){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM procedimientos ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '';
+		while ($row = $result->fetch_array()){
+			$costo = $this->CentroCostos2($row['centro_costos']);
+			$unidad = $this->Unidad2($row['unidad']);
+			$direccion = '<a href="files/'.$row['archivo'].'" target="_blank">'.$row['archivo'].'</a>';
+			$tabla = $tabla . ''.$costo.'#'.$unidad.'#'.$direccion.'#';
+			
+    	}
+		
+		return $tabla;
+	}
 }
 
 ?>

@@ -21,6 +21,9 @@
 	$requisitos = $_GET['requisitos'];
 	$salario = $_GET['salario'];
 
+    $accion2 = $_POST['accion2'];
+    $detalle2 = $_POST['detalle2'];
+    $usuario2 = $_POST['usuario2'];
 	
     if($accion=="0"){
         echo Login($id);
@@ -60,6 +63,10 @@
         echo Reglamentos();
     } else if($accion=="18"){
         echo Reglamentos2($id);
+    } else if($accion2=="19"){
+        echo Mejoras($usuario2,$detalle2);
+    } else if($accion=="20"){
+        echo Mejoras2($id);
     }
     
     
@@ -601,7 +608,50 @@
             return $dat;
         }
     
+        function Mejoras($usuario2,$detalle2){
+            include('conexion.php');
+                                        
+            $sql = "INSERT INTO mejoras (ID_USUARIO,DETALLE) 
+            VALUES ('$usuario2','$detalle2')";
+            
+            if (!$resultado = $mysqli->query($sql)) {
+                // ¡Oh, no! La consulta falló. 
+                echo "Lo sentimos, este sitio web está experimentando problemas.";
+            
+                // De nuevo, no hacer esto en un sitio público, aunque nosotros mostraremos
+                // cómo obtener información del error
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $sql . "\n";
+                echo "Errno: " . $mysqli->errno . "\n";
+                echo "Error: " . $mysqli->error . "\n";
+                
+                exit;
+            } else {
+                
+                $query = "SELECT * FROM mejoras WHERE id_usuario='$usuario2' ";
+                mysqli_set_charset($mysqli, 'utf8'); 
+                $result = mysqli_query($mysqli, $query);
+                while ($row = $result->fetch_array()){
+                    $dat = $dat.$row['id']."#".$row['detalle']."#%";
+                }
+                return $dat;
+                
+            }
+        } 
 
+
+        function Mejoras2($usuario2){
+            include('conexion.php');
+                                        
+            $query = "SELECT * FROM mejoras WHERE id_usuario='$usuario2' ";
+                mysqli_set_charset($mysqli, 'utf8'); 
+                $result = mysqli_query($mysqli, $query);
+                while ($row = $result->fetch_array()){
+                    $dat = $dat.$row['id']."#".$row['detalle']."#%";
+                }
+                return $dat;
+                
+        } 
     
     
 

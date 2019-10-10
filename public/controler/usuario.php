@@ -114,6 +114,12 @@
         echo $miprod -> Inducciones2($id);
     } else if($accion=="40"){
         echo $miprod -> EditaInducciones($id,$nombre,$centro,$unidad);
+    } else if($accion=="41"){
+        echo $miprod -> Mejoras();
+    } else if($accion=="42"){
+        echo $miprod -> Procedimientos();
+    } else if($accion=="43"){
+        echo $miprod -> Procedimientos2($id);
     }
 
     

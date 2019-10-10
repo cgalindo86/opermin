@@ -262,6 +262,50 @@ function GuardaCapacitacion(){
 	}
 }
 
+function GuardaInduccion(){
+	var x = document.getElementById("indcostos").selectedIndex;
+    var y = document.getElementById("indcostos").options;
+	var centro = y[x].value;
+	
+	var x = document.getElementById("indunidad").selectedIndex;
+    var y = document.getElementById("indunidad").options;
+	var unidad = y[x].value;
+	
+	if(centro!="0" && unidad != "0"){
+		var nombre = document.getElementById("indnombre").value;
+		
+		if(nombre!=""){
+			if($senal=="1"){
+				$.post("../controler/usuario.php", {
+					accion: "38",
+					nombre: nombre,
+					centro: centro,
+					unidad: unidad
+	
+				}, function(htmlexterno){
+					Inducciones();
+				});
+			} else {
+				$.post("../controler/usuario.php", {
+					accion: "40",
+					id: $mid,
+					nombre: nombre,
+					centro: centro,
+					unidad: unidad
+	
+				}, function(htmlexterno){
+					Inducciones();
+				});
+			}
+			
+		} else {
+			alert("Ingrese datos");
+		}
+	} else {
+		alert("Elegir centro de costos o unidad");
+	}
+}
+
 function GuardaSesion(){
 	
 	var nombre = document.getElementById("sesnombre").value;
@@ -438,6 +482,32 @@ function EditarCapacitaciones($id){
 		document.getElementById("capnombre").value = txt[0];
 		document.getElementById("selectCapCentro").innerHTML = ss;
 		document.getElementById("selectCapUnidad").innerHTML = tt;
+		
+	});
+}
+
+function EditarInducciones($id){
+	$senal = '2';
+	$mid = $id;
+	$.post("../controler/usuario.php", {
+		accion: "39", id:$id
+	}, function(htmlexterno){
+		$("#cuerpoInducciones2").show();
+		$("#cuerpoInducciones").hide();
+		$("#cabeceraInducciones").hide();
+		console.log(htmlexterno);
+		var txt;
+		txt = htmlexterno.split("#");
+		var ss = txt[1];
+		ss = ss.replace("icostos","indcostos");
+		ss = ss.replace("CambioCentroCostos","CambioCentroCostos4");
+
+		var tt = txt[2];
+		tt = tt.replace("iunidad","indunidad");
+
+		document.getElementById("indnombre").value = txt[0];
+		document.getElementById("selectIndCentro").innerHTML = ss;
+		document.getElementById("selectIndUnidad").innerHTML = tt;
 		
 	});
 }
@@ -764,6 +834,39 @@ function Reglamentos(){
 
 }
 
+function Procedimientos(){
+	Ocultar();
+	
+	$("#campoProcedimientos").show();
+	$("#cuerpoProcedimientos").show();
+	$("#cuerpoProcedimientos2").hide();
+
+	document.getElementById("procedimientos").style.background = "#273156";
+	document.getElementById("inducciones").style.background = "transparent";
+	document.getElementById("mejoras").style.background = "transparent";
+	document.getElementById("videos").style.background = "transparent";
+	document.getElementById("capacitaciones").style.background = "transparent";
+
+	$.post("../controler/usuario.php", {
+		accion: "16"
+	}, function(htmlexterno){
+		$("#proccostos").html(htmlexterno);
+		htmlexterno = htmlexterno.replace("icostos","proccostos2");
+		htmlexterno = htmlexterno.replace("CambioCentroCostos","CambioCentroCostos5");
+		$("#proccostos2").html(htmlexterno);
+		console.log("c16 "+htmlexterno+"");
+	});
+
+	$.post("../controler/usuario.php", {
+		accion: "17"
+	}, function(htmlexterno){
+
+		$("#cuerpoProcedimientos").html(htmlexterno);
+		console.log(htmlexterno+"");s
+	});
+
+}
+
 function CambioCentroCostos(){
 	var x = document.getElementById("icostos").selectedIndex;
     var y = document.getElementById("icostos").options;
@@ -809,6 +912,22 @@ function CambioCentroCostos3(){
 		//$("#runidad").html(htmlexterno);
 		htmlexterno = htmlexterno.replace("iunidad","capunidad");
 		$("#selectCapUnidad").html(htmlexterno);
+		console.log("c00 "+htmlexterno+"");
+	});
+}
+
+function CambioCentroCostos4(){
+	var x = document.getElementById("indcostos").selectedIndex;
+    var y = document.getElementById("indcostos").options;
+    var v2 = y[x].value;
+	//console.log("c15 aa "+v2+"");
+	$.post("../controler/usuario.php", {
+		accion: "15",
+		id: v2
+	}, function(htmlexterno){
+		//$("#runidad").html(htmlexterno);
+		htmlexterno = htmlexterno.replace("iunidad","indunidad");
+		$("#selectIndUnidad").html(htmlexterno);
 		console.log("c00 "+htmlexterno+"");
 	});
 }
@@ -983,6 +1102,7 @@ function Inducciones(){
 	Ocultar();
 	
 	$("#campoInducciones").show();
+	$("#cabeceraInducciones").show();
 	$("#cuerpoInducciones").show();
 	$("#cuerpoInducciones2").hide();
 
@@ -1106,6 +1226,23 @@ function Materiales(){
 	});
 }
 
+function Mejoras(){
+	Ocultar();
+	
+	$("#campoMejoras").show();
+	$("#cabeceraMejoras").show();
+	$("#cuerpoMejoras").show();
+	$("#cuerpoMejoras2").hide();
+
+	$.post("../controler/usuario.php", {
+		accion: "41"
+	}, function(htmlexterno){
+
+		$("#cuerpoMejoras").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
 function AddCapacitaciones(){
 	$senal = '1';
 	$("#cabeceraCapacitaciones").hide();
@@ -1125,7 +1262,7 @@ function AddCapacitaciones(){
 
 
 function AddInducciones(){
-	$senal = '2';
+	$senal = '1';
 	$("#cabeceraInducciones").hide();
 	$("#cuerpoInducciones2").show();
 	$("#cuerpoInducciones").hide();
@@ -1133,10 +1270,10 @@ function AddInducciones(){
 	$.post("../controler/usuario.php", {
 		accion: "16"
 	}, function(htmlexterno){
-		htmlexterno = htmlexterno.replace("icostos","capcostos");
-		htmlexterno = htmlexterno.replace("CambioCentroCostos","CambioCentroCostos3");
-		$("#selectCapCentro").html(htmlexterno);
-		console.log(htmlexterno+"");
+		htmlexterno = htmlexterno.replace("icostos","indcostos");
+		htmlexterno = htmlexterno.replace("CambioCentroCostos","CambioCentroCostos4");
+		$("#selectIndCentro").html(htmlexterno);
+		console.log("ind",htmlexterno+"");
 	});
 
 }
@@ -1144,7 +1281,30 @@ function AddInducciones(){
 
 function VerCapacitaciones($id){
 	$curso = $id;
+	$senal = '1';
 	$tipoCurso = '1';
+	Ocultar();
+	
+	$("#campoSesiones").show();
+	$("#cabeceraSesiones").show();
+	$("#cuerpoSesiones").show();
+	$("#cuerpoSesiones2").hide();
+
+	$.post("../controler/usuario.php", {
+		accion: "29",
+		tipo: $tipoCurso,
+		curso: $curso
+	}, function(htmlexterno){
+
+		$("#cuerpoSesiones").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
+function VerInducciones($id){
+	$curso = $id;
+	$senal = '1';
+	$tipoCurso = '2';
 	Ocultar();
 	
 	$("#campoSesiones").show();
@@ -1165,7 +1325,7 @@ function VerCapacitaciones($id){
 
 function VerSesiones($id){
 	$sesion = $id;
-	$tipoCurso = '1';
+	//$tipoCurso = '1';
 	Ocultar();
 	
 	$("#campoMateriales").show();

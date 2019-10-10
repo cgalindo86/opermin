@@ -1139,10 +1139,46 @@
 						</div>
 						<div id="campoProcedimientos">
 							<div id="cabeceraProcedimientos">
-								<button type="button" class="btn bg-primary" id="addProcedimientos">NUEVO</button>
+								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_procedimientos">NUEVO</button>
 							</div>
 							<div id="cuerpoProcedimientos"></div>
-							<div id="cuerpoProcedimientos2"></div>
+							<div id="cuerpoProcedimientos2" style="width:100%; justify-content: center; align-items: center;">
+									<div style="width:100%;">
+										<div style="justify-content: center; align-items: center;">
+											<table>
+												<tr>
+													<td>
+														<label>CENTRO DE COSTOS: </label>
+													</td>
+													<td>
+														<div id="proccostos2"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label>UNIDAD: </label>
+													</td>
+													<td>
+														<div id="procunidad2"></div>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<label>ARCHIVO: </label>
+													</td>
+													<td>
+														<div id="procarchivo2"></div>
+													</td>
+												</tr>
+											</table>
+											<button id="agregarArchProcedimientos" onclick="AgregarArchProcedimientos2()" class="btn bg-primary" >AGREGAR ARCHIVO</button>
+											<br>
+											<div id="archProcedimientos2"></div>
+											<br>
+											<button onclick="EditProcedimientos()" type="button" class="btn btn-danger">GUARDAR</button>
+										</div>
+									</div>
+								</div>
 						</div>
 						<div id="campoVideos">
 							<div id="cabeceraVideos">
@@ -1155,6 +1191,51 @@
 				</div>
 			</div>
 			<!-- /content area -->
+				<div id="modal_procedimientos" class="modal fade" tabindex="-1">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">AGREGAR PROCEDIMIENTOS</h5>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+
+							<div class="modal-body">
+								<h6 class="font-weight-semibold">DATOS</h6>
+								<table>
+										
+										<tr>
+											<td>
+												<label>CENTRO DE COSTOS: </label>
+											</td>
+											<td>
+												<div id="proccostos"></div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<label>UNIDAD: </label>
+											</td>
+											<td>
+												<div id="procunidad"></div>
+											</td>
+										</tr>
+									</table>
+									<button id="agregarArchProcedimientos" onclick="AgregarArchProcedimientos()" class="btn bg-primary" >AGREGAR ARCHIVO</button>
+									<br>
+									<div id="archProcedimientos"></div>
+									<br>
+
+								<hr>
+								
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+								<button type="button" onclick="GuardaProcedimientos()" class="btn bg-primary" data-dismiss="modal">Save changes</button>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div id="modal_reglamentos" class="modal fade" tabindex="-1">
 					<div class="modal-dialog">
 						<div class="modal-content">
