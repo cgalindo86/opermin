@@ -464,6 +464,17 @@
 							</ul>
 						</li>
 						<li class="nav-item nav-item-submenu">
+							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>LOGISTICA</span></a>
+
+							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
+								<li class="nav-item"><div id="almacenes" onclick="Almacenes()" class="nav-link">ALMACENES</div></li>
+								<li class="nav-item"><div id="productos" onclick="Productos()" class="nav-link">PRODUCTOS</div></li>
+								<li class="nav-item"><div id="controlepp" onclick="ControlEpp()" class="nav-link">CONTROL EPP</div></li>
+								<li class="nav-item"><div id="documentos" onclick="DocumentosEpp()" class="nav-link">ALMACEN DIGITAL EPP</div></li>
+								
+							</ul>
+						</li>
+						<li class="nav-item nav-item-submenu">
 							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>ADMINISTRACION</span></a>
 
 							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
@@ -1182,10 +1193,73 @@
 						</div>
 						<div id="campoVideos">
 							<div id="cabeceraVideos">
-								<button type="button" class="btn bg-primary" id="addVideos">NUEVO</button>
+								<button type="button" class="btn bg-primary" id="addVideos" onclick="AddVideos()">NUEVO</button>
 							</div>
+							<br>
 							<div id="cuerpoVideos"></div>
-							<div id="cuerpoVideos2"></div>
+							<div id="cuerpoVideos2" style="width:100%; justify-content: center; align-items: center;">
+								<table>
+									<tr>
+										<td>
+											<label>TIPO: </label>
+										</td>
+										<td>
+											<select id="vidtipo" onclick="TipoVideo()">
+												<option value="0">Seleccionar</option>
+												<option value="1">Video (enlace)</option>
+												<option value="4">Archivo</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>VIDEO: </label>
+										</td>
+										<td>
+											<div id="vidmaterial1">
+												<div style="display:inline-block; margin-right:5px;"><input id="vidtexto" type="text" style="width:200px;" placeholder="VIDEO - ENLACE"></div>
+											</div>
+											<div id="vidmaterial2">
+												<div id="archVideos"></div>
+											</div>
+										</td>
+									</tr>
+								</table>
+								<br>
+								<button class="btn bg-primary" onclick="GuardaVideos()">GUARDAR</button>
+							</div>
+						</div>
+						<div id="campoAlmacenes">
+							<div id="cabeceraAlmacenes">
+								<button onclick="AddAlmacenes()" type="button" class="btn btn-danger" data-toggle="button">AGREGAR</button>
+								
+							</div><br>
+							<div id="cuerpoAlmacenes"></div>
+							<div id="cuerpoAlmacenes2"></div>
+						</div>
+						<div id="campoProductos">
+							<div id="cabeceraProductos">
+								<button onclick="AddProductos()" type="button" class="btn btn-danger" data-toggle="button">AGREGAR</button>
+								
+							</div><br>
+							<div id="cuerpoProductos"></div>
+							<div id="cuerpoProductos2"></div>
+						</div>
+						<div id="campoControlEpp">
+							<div id="cabeceraControlEpp">
+								<button onclick="AddControlEpp()" type="button" class="btn btn-danger" data-toggle="button">AGREGAR</button>
+								
+							</div><br>
+							<div id="cuerpoControlEpp"></div>
+							<div id="cuerpoControlEpp2"></div>
+						</div>
+						<div id="campoDocumentos">
+							<div id="cabeceraDocumentos">
+								<button onclick="AddDocumentos()" type="button" class="btn btn-danger" data-toggle="button">AGREGAR</button>
+								
+							</div><br>
+							<div id="cuerpoDocumentos"></div>
+							<div id="cuerpoDocumentos2"></div>
 						</div>
 					</div>
 				</div>
@@ -1208,7 +1282,7 @@
 												<label>CENTRO DE COSTOS: </label>
 											</td>
 											<td>
-												<div id="proccostos"></div>
+												<div id="procostos"></div>
 											</td>
 										</tr>
 										<tr>
@@ -1216,7 +1290,7 @@
 												<label>UNIDAD: </label>
 											</td>
 											<td>
-												<div id="procunidad"></div>
+												<div id="selectProcUnidad"></div>
 											</td>
 										</tr>
 									</table>

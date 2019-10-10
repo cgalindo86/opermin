@@ -120,6 +120,10 @@
         echo $miprod -> Procedimientos();
     } else if($accion=="43"){
         echo $miprod -> Procedimientos2($id);
+    } else if($accion=="44"){
+        echo $miprod -> Videos($id);
+    } else if($accion=="45"){
+        echo $miprod -> GuardaVideos($tipomat,$nombre);
     }
 
     

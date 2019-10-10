@@ -1330,6 +1330,98 @@ class Usuario{
 		
 		return $tabla;
 	}
+
+	function Videos(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM videos ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>CODIGO</td><td>ENLACE</td>';
+		$tabla = $tabla . '<td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+
+			if(($row['tipo']=="1") OR ($row['tipo']=="2")){
+				$direccion = '<a href="'.$row['detalle'].'"  target="_blank">'.$row['detalle'].'</a>';
+			} else {
+				$direccion = '<a href="files/'.$row['detalle'].'" target="_blank">'.$row['detalle'].'</a>';
+			}
+
+			$tabla = $tabla . '<tr><td>'.$row['id'].'</td><td>'.$direccion.'</td>';
+			$tabla = $tabla . '<td><img onclick="EditarVideos('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table></div>';
+    	return $tabla;
+	}
+
+	function Videos2($id){
+		include('conexion.php');
+
+		$query = "SELECT * FROM videos WHERE id='$id'";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '';
+    	while ($row = $result->fetch_array()){
+
+			$tabla = $tabla.$row['detalle'].'#';
+		
+		}
+		
+		return $tabla;
+	}
+
+	function GuardaVideos($tipomat,$nombre){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+		
+		$sql = "INSERT INTO videos (DETALLE,TIPO) 
+			VALUES ('$nombre','$tipomat')";
+					
+					if (!$resultado = $mysqli->query($sql)) {
+						
+						echo "Lo sentimos, este sitio web está experimentando problemas.";
+						echo "Error: La ejecución de la consulta falló debido a: \n";
+						echo "Query: " . $sql . "\n";
+						echo "Errno: " . $mysqli->errno . "\n";
+						echo "Error: " . $mysqli->error . "\n";
+						
+						exit;
+					} else {
+						$idT = mysqli_insert_id($mysqli);
+						echo 'EXITO';
+					}
+	}
+
+	function EditaVideos($id,$tipomat,$nombre){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+
+		$sql = "UPDATE videos SET detalle='$nombre' WHERE id='$id' ";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			} else {
+				echo 'EXITO';
+			}
+		
+		
+	}
 }
 
 ?>

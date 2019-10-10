@@ -51,6 +51,12 @@ function Ocultar(){
 	$("#campoMejoras").hide();
 	$("#campoProcedimientos").hide();
 	$("#campoVideos").hide();
+
+	$("#campoAlmacenes").hide();
+	$("#campoProductos").hide();
+	$("#campoControlEpp").hide();
+	$("#campoDocumentos").hide();
+
 	console.log("ocultar");
 }
 
@@ -97,6 +103,10 @@ function GuardaFrase(){
 
 function GuardaReglamentos(){
 	Reglamentos();
+}
+
+function GuardaProcedimientos(){
+	Procedimientos();
 }
 
 function GuardaEditarBeneficios(){
@@ -370,6 +380,34 @@ function GuardaMateriales(){
 	} else if($tipoCurso=="3" || $tipoCurso=="4"){
 		//alert("Ingrese datos");
 		Materiales();
+	} else if($nombre==""){
+		alert("Ingrese datos");
+	}
+	
+}
+
+function GuardaVideos(){
+	
+	var x = document.getElementById("vidtipo").selectedIndex;
+    var y = document.getElementById("vidtipo").options;
+	var tipomat = y[x].value;
+
+	var nombre = document.getElementById("vidtexto").value;
+		
+	if(nombre!=""){
+		if(tipomat=="1" || tipomat=="2"){
+			$.post("../controler/usuario.php", {
+				accion: "45",
+				nombre: nombre,
+				tipomat: tipomat
+			}, function(htmlexterno){
+				//Sesiones();
+				Videos();
+			});
+		} else {
+			
+		}
+			
 	} else if($nombre==""){
 		alert("Ingrese datos");
 	}
@@ -850,19 +888,24 @@ function Procedimientos(){
 	$.post("../controler/usuario.php", {
 		accion: "16"
 	}, function(htmlexterno){
-		$("#proccostos").html(htmlexterno);
-		htmlexterno = htmlexterno.replace("icostos","proccostos2");
+		
+		htmlexterno = htmlexterno.replace("icostos","proccostos");
 		htmlexterno = htmlexterno.replace("CambioCentroCostos","CambioCentroCostos5");
+		$("#procostos").html(htmlexterno);
+
+		htmlexterno = htmlexterno.replace("proccostos","proccostos2");
+		htmlexterno = htmlexterno.replace("CambioCentroCostos5","CambioCentroCostos6");
 		$("#proccostos2").html(htmlexterno);
+		//$("#proccostos2").html(htmlexterno);
 		console.log("c16 "+htmlexterno+"");
 	});
 
 	$.post("../controler/usuario.php", {
-		accion: "17"
+		accion: "42"
 	}, function(htmlexterno){
 
 		$("#cuerpoProcedimientos").html(htmlexterno);
-		console.log(htmlexterno+"");s
+		console.log(htmlexterno+"");
 	});
 
 }
@@ -932,6 +975,39 @@ function CambioCentroCostos4(){
 	});
 }
 
+function CambioCentroCostos5(){
+	var x = document.getElementById("proccostos").selectedIndex;
+    var y = document.getElementById("proccostos").options;
+    var v2 = y[x].value;
+	//console.log("c15 aa "+v2+"");
+	$.post("../controler/usuario.php", {
+		accion: "15",
+		id: v2
+	}, function(htmlexterno){
+		//$("#runidad").html(htmlexterno);
+		htmlexterno = htmlexterno.replace("iunidad","procunidad");
+		$("#selectProcUnidad").html(htmlexterno);
+		console.log("c00 "+htmlexterno+"");
+	});
+}
+
+
+function CambioCentroCostos6(){
+	var x = document.getElementById("proccostos2").selectedIndex;
+    var y = document.getElementById("proccostos2").options;
+    var v2 = y[x].value;
+	//console.log("c15 aa "+v2+"");
+	$.post("../controler/usuario.php", {
+		accion: "15",
+		id: v2
+	}, function(htmlexterno){
+		//$("#runidad").html(htmlexterno);
+		htmlexterno = htmlexterno.replace("iunidad","procunidad2");
+		$("#selectProcUnidad2").html(htmlexterno);
+		console.log("c00 "+htmlexterno+"");
+	});
+}
+
 function AgregarArchReglamentos(){
 	var v = document.getElementById("icostos").value;
 	var v2 = document.getElementById("iunidad").value;
@@ -946,6 +1022,22 @@ function AgregarArchReglamentos2(){
 	$enlace = "cargar2.php?doc="+v+"&fini="+v2+"&ffin="+"&filtro=reglamento";
 	console.log("enlace",$enlace);
 	document.getElementById("archReglamentos2").innerHTML = '<iframe src="'+$enlace+'" style="width:400px; height:200px;"></iframe><br>';
+}
+
+function AgregarArchProcedimientos(){
+	var v = document.getElementById("proccostos").value;
+	var v2 = document.getElementById("procunidad").value;
+	$enlace = "cargar2.php?doc="+v+"&fini="+v2+"&ffin="+"&filtro=procedimientos";
+	console.log("enlace",$enlace);
+	document.getElementById("archProcedimientos").innerHTML = '<iframe src="'+$enlace+'" style="width:400px; height:200px;"></iframe><br>';
+}
+
+function AgregarArchProcedimientos2(){
+	var v = document.getElementById("proccostos2").value;
+	var v2 = document.getElementById("procunidad2").value;
+	$enlace = "cargar2.php?doc="+v+"&fini="+v2+"&ffin="+"&filtro=procedimientos";
+	console.log("enlace",$enlace);
+	document.getElementById("archProcedimientos2").innerHTML = '<iframe src="'+$enlace+'" style="width:400px; height:200px;"></iframe><br>';
 }
 
 function Interes(){
@@ -1046,6 +1138,33 @@ function TipoMaterial(){
 }
 
 
+function TipoVideo(){
+	var x = document.getElementById("vidtipo").selectedIndex;
+    var y = document.getElementById("vidtipo").options;
+	var tipo = y[x].value;
+	
+	if(tipo!="0"){
+		if(tipo=="1" || tipo=="2"){
+			$("#vidmaterial1").show();
+			$("#vidmaterial2").hide();
+			
+		} else {
+			$("#vidmaterial1").hide();
+			$("#vidmaterial2").show();
+			var v = $sesion;
+			var v2 = $tipoCurso;
+			console.log($tipoCurso);
+			$enlace = "cargar2.php?doc="+v+"&fini="+v2+"&ffin="+tipo+"&filtro=videos";
+			console.log("enlace",$enlace);
+			document.getElementById("archVideos").innerHTML = '<iframe src="'+$enlace+'" style="width:400px; height:200px;"></iframe><br>';
+			
+		}
+	} else {
+
+	}
+}
+
+
 
 function Usuarios(){
 	Ocultar();
@@ -1125,6 +1244,7 @@ function Mejoras(){
 	Ocultar();
 	
 	$("#campoMejoras").show();
+	$("#cabeceraMejoras").show();
 	$("#cuerpoMejoras").show();
 	$("#cuerpoMejoras2").hide();
 
@@ -1134,59 +1254,14 @@ function Mejoras(){
 	document.getElementById("procedimientos").style.background = "transparent";
 	document.getElementById("videos").style.background = "transparent";
 
-	/*$.post("../controler/usuario.php", {
-		accion: "21"
+	$.post("../controler/usuario.php", {
+		accion: "41"
 	}, function(htmlexterno){
 
-	$("#cuerpoUsuarios").html(htmlexterno);
+		$("#cuerpoMejoras").html(htmlexterno);
 		console.log(htmlexterno+"");
-	});*/
+	});
 }
-
-function Procedimientos(){
-	Ocultar();
-	
-	$("#campoProcedimientos").show();
-	$("#cuerpoProcedimientos").show();
-	$("#cuerpoProcedimientos2").hide();
-
-	document.getElementById("procedimientos").style.background = "#273156";
-	document.getElementById("inducciones").style.background = "transparent";
-	document.getElementById("mejoras").style.background = "transparent";
-	document.getElementById("capacitaciones").style.background = "transparent";
-	document.getElementById("videos").style.background = "transparent";
-
-	/*$.post("../controler/usuario.php", {
-		accion: "21"
-	}, function(htmlexterno){
-
-	$("#cuerpoUsuarios").html(htmlexterno);
-		console.log(htmlexterno+"");
-	});*/
-}
-
-function Videos(){
-	Ocultar();
-	
-	$("#campoVideos").show();
-	$("#cuerpoVideos").show();
-	$("#cuerpoVideos2").hide();
-
-	document.getElementById("videos").style.background = "#273156";
-	document.getElementById("inducciones").style.background = "transparent";
-	document.getElementById("mejoras").style.background = "transparent";
-	document.getElementById("procedimientos").style.background = "transparent";
-	document.getElementById("capacitaciones").style.background = "transparent";
-
-	/*$.post("../controler/usuario.php", {
-		accion: "21"
-	}, function(htmlexterno){
-
-	$("#cuerpoUsuarios").html(htmlexterno);
-		console.log(htmlexterno+"");
-	});*/
-}
-
 
 function Sesiones(){
 	Ocultar();
@@ -1226,22 +1301,53 @@ function Materiales(){
 	});
 }
 
-function Mejoras(){
+
+function Videos(){
 	Ocultar();
 	
-	$("#campoMejoras").show();
-	$("#cabeceraMejoras").show();
-	$("#cuerpoMejoras").show();
-	$("#cuerpoMejoras2").hide();
+	$("#campoVideos").show();
+	$("#cabeceraVideos").show();
+	$("#cuerpoVideos").show();
+	$("#cuerpoVideos2").hide();
+
+	document.getElementById("videos").style.background = "#273156";
+	document.getElementById("inducciones").style.background = "transparent";
+	document.getElementById("mejoras").style.background = "transparent";
+	document.getElementById("procedimientos").style.background = "transparent";
+	document.getElementById("capacitaciones").style.background = "transparent";
 
 	$.post("../controler/usuario.php", {
-		accion: "41"
+		accion: "44"
 	}, function(htmlexterno){
 
-		$("#cuerpoMejoras").html(htmlexterno);
+		$("#cuerpoVideos").html(htmlexterno);
 		console.log(htmlexterno+"");
 	});
 }
+
+
+function Almacenes(){
+	Ocultar();
+	
+	$("#campoAlmacenes").show();
+	$("#cabeceraAlmacenes").show();
+	$("#cuerpoAlmacenes").show();
+	$("#cuerpoAlmacenes2").hide();
+
+	document.getElementById("almacenes").style.background = "#273156";
+	document.getElementById("productos").style.background = "transparent";
+	document.getElementById("controlepp").style.background = "transparent";
+	document.getElementById("documentos").style.background = "transparent";
+	
+	/*$.post("../controler/usuario.php", {
+		accion: "46"
+	}, function(htmlexterno){
+
+	$("#cuerpoAlmacenes").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});*/
+}
+
 
 function AddCapacitaciones(){
 	$senal = '1';
@@ -1357,5 +1463,13 @@ function AddMateriales(){
 	$("#cabeceraMateriales").hide();
 	$("#cuerpoMateriales2").show();
 	$("#cuerpoMateriales").hide();
+
+}
+
+function AddVideos(){
+	
+	$("#cabeceraVideos").hide();
+	$("#cuerpoVideos2").show();
+	$("#cuerpoVideos").hide();
 
 }

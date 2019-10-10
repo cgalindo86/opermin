@@ -250,7 +250,77 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                             echo 'EXITO';
                         }
             }
+        } else if($filtro=="procedimientos"){
+            $mysqli = new mysqli('localhost', 'root', '', 'opermin');
+    
+            $query = "SELECT * FROM procedimientos WHERE centro_costos='$empleado' AND unidad='$fechaI' ";
+            mysqli_set_charset($mysqli, 'utf8'); 
+            $result = mysqli_query($mysqli, $query);
+            $dat="";
+            while ($row = $result->fetch_array()){
+                $dat = $row['id'];
+            }
+            
+            //echo $dat."#";
+            
+            if($dat==""){
+                $sql = "INSERT INTO procedimientos (CENTRO_COSTOS,UNIDAD,ARCHIVO) VALUES ('$empleado','$fechaI','$nom_arch')";
+                
+                if (!$resultado = $mysqli->query($sql)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    echo 'EXITO';
+                }
+            } else {
+                $sql = "UPDATE procedimientos SET centro_costos='$empleado', unidad='$unidad', archivo='$nom_arch' WHERE id='$dat'";
+                
+                if (!$resultado = $mysqli->query($sql)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    echo 'EXITO2';
+                } 
+            }
+                
+            echo "Documento subido correctamente";
         }
+    } else if($filtro=="videos"){
+        /*
+        $empleado = $d[0];
+        $fechaI = $d[1];
+        $fechaF = $d[2];
+        $filtro = $d[3];
+        */
+        $mysqli = new mysqli('localhost', 'root', '', 'opermin');
+        $sql = "INSERT INTO videos (DETALLE,TIPO) 
+            VALUES ('$nom_arch','$fechaF')";
+                    
+                    if (!$resultado = $mysqli->query($sql)) {
+                        
+                        echo "Lo sentimos, este sitio web está experimentando problemas.";
+                        echo "Error: La ejecución de la consulta falló debido a: \n";
+                        echo "Query: " . $sql . "\n";
+                        echo "Errno: " . $mysqli->errno . "\n";
+                        echo "Error: " . $mysqli->error . "\n";
+                        
+                        exit;
+                    } else {
+                        $idT = mysqli_insert_id($mysqli);
+                        echo 'EXITO';
+                    }
     }
     
 }else{
