@@ -1422,6 +1422,70 @@ class Usuario{
 		
 		
 	}
+
+	function Almacenes(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM almacen ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>CODIGO</td><td>NOMBRE</td>';
+		$tabla = $tabla . '<td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+
+			$tabla = $tabla . '<tr><td>'.$row['id'].'</td><td>'.$row['nombre'].'</td>';
+			$tabla = $tabla . '<td><img onclick="EditarAlmacenes('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table></div>';
+    	return $tabla;
+	}
+
+	function GuardaAlmacenes($nombre){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+		
+		$sql = "INSERT INTO almacen (EMPRESA,NOMBRE) 
+			VALUES ('1','$nombre')";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+						
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			} else {
+				$idT = mysqli_insert_id($mysqli);
+				echo 'EXITO';
+			}
+	}
+
+	function Almacenes2($id){
+		include('conexion.php');
+
+		$query = "SELECT * FROM almacen WHERE id='$id' ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		$tabla = $tabla . '';
+    	while ($row = $result->fetch_array()){
+
+			$tabla = $tabla . ''.$row['nombre'].'#';
+			
+		}
+    	return $tabla;
+	}
+
 }
 
 ?>

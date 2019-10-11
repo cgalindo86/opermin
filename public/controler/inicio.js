@@ -415,6 +415,30 @@ function GuardaVideos(){
 }
 
 
+function GuardaAlmacen(){
+
+	if($senal == '1'){
+		$.post("../controler/usuario.php", {
+			accion: "47",
+			nombre: $("#almnombre").val()
+	
+		}, function(htmlexterno){
+			Almacenes();
+		});
+	} else {
+		$.post("../controler/usuario.php", {
+			accion: "49",
+			id: $mid,
+			nombre: $("#almnombre").val()
+	
+		}, function(htmlexterno){
+			Almacenes();
+		});
+	}
+	
+}
+
+
 function EditarBeneficios($id){
 	$mid = $id;
 	$.post("../controler/usuario.php", {
@@ -567,6 +591,25 @@ function EditarSesiones($id){
 		txt = htmlexterno.split("#");
 
 		document.getElementById("sesnombre").value = txt[0];
+		
+	});
+}
+
+function EditarAlmacenes($id){
+	$senal = '2';
+	$mid = $id;
+	$.post("../controler/usuario.php", {
+		accion: "48", 
+		id:$id
+	}, function(htmlexterno){
+		$("#cuerpoAlmacenes2").show();
+		$("#cuerpoAlmacenes").hide();
+		$("#cabeceraAlmacenes").hide();
+		console.log(htmlexterno);
+		var txt;
+		txt = htmlexterno.split("#");
+
+		document.getElementById("almnombre").value = txt[0];
 		
 	});
 }
@@ -1339,13 +1382,13 @@ function Almacenes(){
 	document.getElementById("controlepp").style.background = "transparent";
 	document.getElementById("documentos").style.background = "transparent";
 	
-	/*$.post("../controler/usuario.php", {
+	$.post("../controler/usuario.php", {
 		accion: "46"
 	}, function(htmlexterno){
 
-	$("#cuerpoAlmacenes").html(htmlexterno);
+		$("#cuerpoAlmacenes").html(htmlexterno);
 		console.log(htmlexterno+"");
-	});*/
+	});
 }
 
 
@@ -1471,5 +1514,13 @@ function AddVideos(){
 	$("#cabeceraVideos").hide();
 	$("#cuerpoVideos2").show();
 	$("#cuerpoVideos").hide();
+
+}
+
+function AddAlmacenes(){
+	$senal = '1';
+	$("#cabeceraAlmacenes").hide();
+	$("#cuerpoAlmacenes2").show();
+	$("#cuerpoAlmacenes").hide();
 
 }

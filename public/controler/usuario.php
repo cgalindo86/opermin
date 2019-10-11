@@ -124,6 +124,12 @@
         echo $miprod -> Videos($id);
     } else if($accion=="45"){
         echo $miprod -> GuardaVideos($tipomat,$nombre);
+    } else if($accion=="46"){
+        echo $miprod -> Almacenes();
+    } else if($accion=="47"){
+        echo $miprod -> GuardaAlmacenes($nombre);
+    } else if($accion=="48"){
+        echo $miprod -> Almacenes2($id);
     }
 
     
