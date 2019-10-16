@@ -468,10 +468,17 @@
 
 							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
 								<li class="nav-item"><div id="almacenes" onclick="Almacenes()" class="nav-link">ALMACENES</div></li>
+								<li class="nav-item"><div id="categorias" onclick="Categorias()" class="nav-link">CATEGORIAS</div></li>
 								<li class="nav-item"><div id="productos" onclick="Productos()" class="nav-link">PRODUCTOS</div></li>
 								<li class="nav-item"><div id="controlepp" onclick="ControlEpp()" class="nav-link">CONTROL EPP</div></li>
 								<li class="nav-item"><div id="documentos" onclick="DocumentosEpp()" class="nav-link">ALMACEN DIGITAL EPP</div></li>
 								
+							</ul>
+						</li>
+						<li class="nav-item nav-item-submenu">
+							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>ASISTENCIA ADM.</span></a>
+							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
+								<li class="nav-item"><div id="empresas" onclick="AsistenciaAdm()" class="nav-link">EVENTOS</div></li>
 							</ul>
 						</li>
 						<li class="nav-item nav-item-submenu">
@@ -1255,30 +1262,200 @@
 								</table>
 							</div>
 						</div>
+						<div id="campoCategorias">
+							<div id="cabeceraCategorias">
+								<button onclick="AddProductos()" type="button" class="btn btn-danger" data-toggle="button">AGREGAR PRODUCTOS</button>
+								<button onclick="AddCategorias()" type="button" class="btn btn-danger" data-toggle="button">AGREGAR CATEGORIAS</button>
+								
+							</div><br>
+							<div id="cuerpoCategorias"></div>
+							<div id="cuerpoCategorias2">
+								<table>
+									<tr>
+										<td>
+											<label>NOMBRE</label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="catnombre" type="text" style="width:300px;" placeholder="NOMBRE DE LA CATEGORIA"></div>
+										</td>
+										<td>
+											<label></label>
+										</td>
+										<td>
+											<button class="btn bg-primary" onclick="GuardaCategoria()">GUARDAR</button>
+										</td>
+									</tr>
+									
+								</table>
+							</div>
+						</div>
 						<div id="campoProductos">
 							<div id="cabeceraProductos">
-								<button onclick="AddProductos()" type="button" class="btn btn-danger" data-toggle="button">AGREGAR</button>
+								<button onclick="AddProductos()" type="button" class="btn btn-danger" data-toggle="button">AGREGAR PRODUCTOS</button>
+								<button onclick="AddCategorias()" type="button" class="btn btn-danger" data-toggle="button">AGREGAR CATEGORIAS</button>
 								
 							</div><br>
 							<div id="cuerpoProductos"></div>
-							<div id="cuerpoProductos2"></div>
+							<div id="cuerpoProductos2">
+								<table>
+									<tr>
+										<td>
+											<label>NOMBRE</label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="prodnombre" type="text" style="width:300px;" placeholder="NOMBRE DEL PRODUCTO"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>MARCA</label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="prodmarca" type="text" style="width:300px;" placeholder="MARCA DEL PRODUCTO"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>STOCK</label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="prodstock" type="number" style="width:300px;" placeholder="STOCK"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>ALMACEN</label>
+										</td>
+										<td>
+											<div id="almacenProductos"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>CATEGORIAS</label>
+										</td>
+										<td>
+											<div id="categoriaProductos"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label></label>
+										</td>
+										<td>
+											<button class="btn bg-primary" onclick="GuardaProductos()">GUARDAR</button>
+										</td>
+									</tr>
+									
+								</table>
+							</div>
 						</div>
 						<div id="campoControlEpp">
 							<div id="cabeceraControlEpp">
-								<button onclick="AddControlEpp()" type="button" class="btn btn-danger" data-toggle="button">AGREGAR</button>
+								<button onclick="AddControlEpp()" type="button" class="btn btn-danger" data-toggle="button">AGREGAR STOCK</button>
+								<button onclick="DespacharControlEpp()" type="button" class="btn btn-danger" data-toggle="button">DESPACHAR</button>
 								
 							</div><br>
 							<div id="cuerpoControlEpp"></div>
-							<div id="cuerpoControlEpp2"></div>
+							<div id="cuerpoControlEpp2">
+								<table>
+									<tr id="filaEmpleado">
+										<td>
+											<label>EMPLEADO</label>
+										</td>
+										<td>
+											<div id="controleppEmpleados"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>ALMACEN</label>
+										</td>
+										<td>
+											<div id="controleppAlmacen"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>EPP</label>
+										</td>
+										<td>
+											<div id="controleppEpp"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>CANTIDAD</label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="controleppstock" onkeyup="ValidaStock()" type="number" style="width:300px;" placeholder="CANTIDAD"><div id="valmens"></div>
+										</td>
+									</tr>
+									<tr id="filaDuracion">
+										<td>
+											<label>DURACION (MESES)</label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="controleppduracion" type="number" style="width:300px;" placeholder="DURACION"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label></label>
+										</td>
+										<td>
+											<button class="btn bg-primary" onclick="GuardaControlEpp()">GUARDAR</button>
+										</td>
+									</tr>
+									
+								</table>
+							</div>
 						</div>
 						<div id="campoDocumentos">
 							<div id="cabeceraDocumentos">
-								<button onclick="AddDocumentos()" type="button" class="btn btn-danger" data-toggle="button">AGREGAR</button>
-								
+								<!--<button onclick="AddDocumentos()" type="button" class="btn btn-danger" data-toggle="button">AGREGAR</button>
+								-->
 							</div><br>
+							<div id="documentosEmpleados"></div>
 							<div id="cuerpoDocumentos"></div>
-							<div id="cuerpoDocumentos2"></div>
+							<div id="cuerpoDocumentos2">
+							
+							</div>
 						</div>
+						<div id="campoAsistenciaAdm">
+							<div id="cabeceraAsistenciaAdm">
+								<button type="button" class="btn bg-primary" id="addAsistenciaAdm" onclick="AddAsistenciaAdm()">NUEVO</button>
+							</div>
+							<br>
+							<div id="cuerpoAsistenciaAdm"></div>
+							<div id="cuerpoAsistenciaAdm2" style="width:100%; justify-content: center; align-items: center;">
+								<table>
+									<tr>
+										<td>
+											<label>TIPO: </label>
+										</td>
+										<td>
+											<select id="asistenciaAdmTipo">
+												<option value="0">Reunión privada</option>
+												<option value="1">Público en general</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>NOMBRE: </label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="asistenciaAdmTexto" type="text" style="width:200px;" placeholder="NOMBRE DEL EVENTO"></div>
+											
+										</td>
+									</tr>
+								</table>
+								<br>
+								<button class="btn bg-primary" onclick="GuardaMateriales()">GUARDAR</button>
+							</div>
+						</div>
+						
 					</div>
 				</div>
 			</div>

@@ -31,8 +31,28 @@ class Usuario{
     		
     	while ($row = $result->fetch_array()){
     	    $dat=$row['nombre']." ".$row['apellidos'];
-    	}
+		}
+		
+		
+		if($dat==""){
+			$dat = "ADM SISTEMA";
+		}
+    	
     		
+    	return $dat;
+	}
+
+	function NombreProducto($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM productos WHERE id='$id' ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+    		
+    	while ($row = $result->fetch_array()){
+    	    $dat=$row['nombre'];
+		}
+			
     	return $dat;
 	}
 
@@ -586,6 +606,18 @@ class Usuario{
 		$result = mysqli_query($mysqli, $query);
 		while ($row = $result->fetch_array()){
 			$dat = $row['descripcion'];
+		}
+		return $dat;
+	}
+
+	function NombreAlmacen($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM almacen WHERE id='$id' ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		while ($row = $result->fetch_array()){
+			$dat = $row['nombre'];
 		}
 		return $dat;
 	}
@@ -1446,12 +1478,13 @@ class Usuario{
     	return $tabla;
 	}
 
-	function GuardaAlmacenes($nombre){
+	function GuardaAlmacenes($id,$tipo,$nombre){
 		include('conexion.php');
 		
 		$nombre = utf8_decode($nombre);
 		
-		$sql = "INSERT INTO almacen (EMPRESA,NOMBRE) 
+		if($tipo=="1"){
+			$sql = "INSERT INTO almacen (EMPRESA,NOMBRE) 
 			VALUES ('1','$nombre')";
 					
 			if (!$resultado = $mysqli->query($sql)) {
@@ -1467,6 +1500,22 @@ class Usuario{
 				$idT = mysqli_insert_id($mysqli);
 				echo 'EXITO';
 			}
+		} else {
+			$sql = "UPDATE almacen SET nombre='$nombre' WHERE id='$id' ";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			} else {
+				echo 'EXITO';
+			}
+		}
+		
 	}
 
 	function Almacenes2($id){
@@ -1483,6 +1532,501 @@ class Usuario{
 			$tabla = $tabla . ''.$row['nombre'].'#';
 			
 		}
+    	return $tabla;
+	}
+
+
+	function Categorias(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM categorias ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>CODIGO</td><td>NOMBRE</td>';
+		$tabla = $tabla . '<td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+
+			$tabla = $tabla . '<tr><td>'.$row['id'].'</td><td>'.$row['nombre'].'</td>';
+			$tabla = $tabla . '<td><img onclick="EditarCategorias('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table></div>';
+    	return $tabla;
+	}
+
+	function GuardaCategorias($id,$tipo,$nombre){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+		
+		if($tipo=="1"){
+			$sql = "INSERT INTO categorias (EMPRESA,NOMBRE) 
+			VALUES ('1','$nombre')";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+						
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			} else {
+				$idT = mysqli_insert_id($mysqli);
+				echo 'EXITO';
+			}
+		} else {
+			$sql = "UPDATE categorias SET nombre='$nombre' WHERE id='$id' ";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			} else {
+				echo 'EXITO';
+			}
+		}
+		
+	}
+
+	function Categorias2($id){
+		include('conexion.php');
+
+		$query = "SELECT * FROM categorias WHERE id='$id' ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		$tabla = $tabla . '';
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . ''.$row['nombre'].'#';
+		}
+    	return $tabla;
+	}
+
+	function SelectCategorias(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM categorias ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		$tabla = $tabla.'<select id="scategorias"><option value="0">Seleccionar</option>';
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . '<option value="'.$row['id'].'">'.$row['nombre'].'</option>';
+		}
+		$tabla = $tabla.'</select>';
+    	return $tabla;
+	}
+
+	function SelectAlmacen(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM almacen ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		$tabla = $tabla.'<select id="salmacen"><option value="0">Seleccionar</option>';
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . '<option value="'.$row['id'].'">'.$row['nombre'].'</option>';
+		}
+		$tabla = $tabla.'</select>';
+    	return $tabla;
+	}
+
+
+	function SelectAlmacen2(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM almacen ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		$tabla = $tabla.'<select onclick="CambioAlmacen()" id="ssalmacen"><option value="0">Seleccionar</option>';
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . '<option value="'.$row['id'].'">'.$row['nombre'].'</option>';
+		}
+		$tabla = $tabla.'</select>';
+    	return $tabla;
+	}
+
+	function SelectEmpleados(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM empleados ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		$tabla = $tabla.'<select id="sempleados"><option value="0">Seleccionar</option>';
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . '<option value="'.$row['id'].'">'.$row['nombre'].' '.$row['apellidos'].'</option>';
+		}
+		$tabla = $tabla.'</select>';
+    	return $tabla;
+	}
+
+	function SelectEmpleados2(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM empleados ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		$tabla = $tabla.'<select onclick="CambiaEmpleado()" id="ssempleados"><option value="0">Seleccionar</option>';
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . '<option value="'.$row['id'].'">'.$row['nombre'].' '.$row['apellidos'].'</option>';
+		}
+		$tabla = $tabla.'</select>';
+    	return $tabla;
+	}
+
+	function SelectEpp($id){
+		include('conexion.php');
+
+		$query = "SELECT * FROM productos WHERE almacen = '$id' ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		$tabla = $tabla.'<select id="ssproductos"><option value="0">Seleccionar</option>';
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . '<option value="'.$row['id'].'">'.$row['nombre'].' - Stock: '.$row['stock'].'</option>';
+		}
+		$tabla = $tabla.'</select>';
+    	return $tabla;
+	}
+
+	function ValidaStock($id,$stock){
+		include('conexion.php');
+
+		$query = "SELECT * FROM productos WHERE id = '$id' ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		while ($row = $result->fetch_array()){
+			$st = $row['stock'];
+		}
+		
+		$stocki = intval($st);
+		$stockf = intval($stock);
+
+		if($stocki>=$stockf){
+			$resp="ok";
+		} else {
+			$resp = "no";
+		}
+
+		return $resp;
+	}
+
+	function AgregaStock($id,$stock){
+		include('conexion.php');
+
+		date_default_timezone_set('America/Lima');
+        //$date1 = new DateTime($row['fecha_salida']." ".$row['hora_salida']);
+        $date2 = date("Y-m-d");
+		//$diff = $date2->diff($date1);
+						
+		$query = "SELECT * FROM productos WHERE id = '$id' ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		while ($row = $result->fetch_array()){
+			$st = $row['stock'];
+		}
+		
+		$stockf = intval($stock) + intval($st);
+
+		$sql = "UPDATE productos SET stock='$stockf' WHERE id='$id' ";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			} else {
+				echo 'EXITO';
+			}
+
+		$sql = "INSERT INTO movimientosepp (EPP,TIPO,CANTIDAD,EMPLEADO,FECHA) 
+			VALUES ('$id','ingreso','$stock','0','$date2')";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+						
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			}
+
+		return "";
+	}
+
+	function DisminuyeStock($id,$empleado,$stock){
+		include('conexion.php');
+
+		$query = "SELECT * FROM productos WHERE id = '$id' ";
+		
+		date_default_timezone_set('America/Lima');
+        //$date1 = new DateTime($row['fecha_salida']." ".$row['hora_salida']);
+        $date2 = date("Y-m-d");
+		//$diff = $date2->diff($date1);
+
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		while ($row = $result->fetch_array()){
+			$st = $row['stock'];
+		}
+		
+		$stockf = intval($st) - intval($stock);
+
+		$sql = "UPDATE productos SET stock='$stockf' WHERE id='$id' ";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			} else {
+				echo 'EXITO';
+			}
+
+		$sql = "INSERT INTO movimientosepp (EPP,TIPO,CANTIDAD,EMPLEADO,FECHA) 
+			VALUES ('$id','salida','$stock','$empleado','$date2')";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+						
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			}
+
+		return "";
+	}
+
+	function Productos(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM productos ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>CODIGO</td><td>NOMBRE</td><td>ALMACEN</td>';
+		$tabla = $tabla . '<td>STOCK</td><td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			$almacen = $this->NombreAlmacen($row['almacen']);
+			$tabla = $tabla . '<tr><td>'.$row['id'].'</td><td>'.$row['nombre'].'</td><td>'.$almacen.'</td><td>'.$row['stock'].'</td>';
+			$tabla = $tabla . '<td><img onclick="EditarProductos('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table></div>';
+    	return $tabla;
+	}
+
+	function GuardaProductos($id,$almacen,$categoria,$tipo,$marca,$nombre,$stock){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+		
+		if($tipo=="1"){
+			$sql = "INSERT INTO productos (ALMACEN,CATEGORIA,MARCA,NOMBRE,STOCK) 
+			VALUES ('$almacen','$categoria','$marca','$nombre','$stock')";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+						
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			} else {
+				$idT = mysqli_insert_id($mysqli);
+				echo 'EXITO';
+			}
+
+			date_default_timezone_set('America/Lima');
+			//$date1 = new DateTime($row['fecha_salida']." ".$row['hora_salida']);
+			$date2 = date("Y-m-d");
+			//$diff = $date2->diff($date1);
+
+			$sql = "INSERT INTO movimientosepp (EPP,TIPO,CANTIDAD,EMPLEADO,FECHA) 
+			VALUES ('$idT','ingreso','$stock','0','$date2')";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+						
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			} else {
+				$idT = mysqli_insert_id($mysqli);
+				echo 'EXITO';
+			}
+		} else {
+			$sql = "UPDATE productos SET almacen='$almacen', categoria='$categoria', 
+			marca='$marca', stock='$stock', nombre='$nombre' WHERE id='$id' ";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			} else {
+				echo 'EXITO';
+			}
+
+			$sql = "UPDATE movimientosepp SET stock='$stock' WHERE id='$id' ";
+					
+			if (!$resultado = $mysqli->query($sql)) {
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+						
+				exit;
+			} else {
+				echo 'EXITO';
+			}
+		}
+		
+	}
+
+	function Productos2($id){
+		include('conexion.php');
+
+		$query = "SELECT * FROM productos WHERE id='$id' ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		$tabla = $tabla . '';
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . ''.$row['nombre'].'#'.$row['marca'].'#'.$row['stock'].'#';
+		}
+    	return $tabla;
+	}
+
+	function MovimientoStock(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM movimientosepp ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>EPP</td><td>TIPO</td><td>CANTIDAD</td>';
+		$tabla = $tabla . '<td>EMPLEADO</td><td>FECHA</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			$empleado = $this->NombreUsuario($row['empleado']);
+			$epp = $this->NombreProducto($row['epp']);
+			$tabla = $tabla . '<tr><td>'.$epp.'</td><td>'.$row['tipo'].'</td><td>'.$row['cantidad'].'</td><td>'.$empleado.'</td>';
+			$tabla = $tabla . '<td>'.$row['fecha'].'</td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table></div>';
+    	return $tabla;
+	}
+
+	function MovimientoStockEmpleado($id){
+		include('conexion.php');
+
+		$query = "SELECT * FROM movimientosepp WHERE empleado = '$id' ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>EPP</td><td>TIPO</td><td>CANTIDAD</td>';
+		$tabla = $tabla . '<td>EMPLEADO</td><td>FECHA</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			$empleado = $this->NombreUsuario($row['empleado']);
+			$epp = $this->NombreProducto($row['epp']);
+			$tabla = $tabla . '<tr><td>'.$epp.'</td><td>'.$row['tipo'].'</td><td>'.$row['cantidad'].'</td><td>'.$empleado.'</td>';
+			$tabla = $tabla . '<td>'.$row['fecha'].'</td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table></div>';
+    	return $tabla;
+	}
+
+	function Eventos(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM eventos ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>TIPO</td><td>NOMBRE</td>';
+		$tabla = $tabla . '<td>DETALLE</td><td>LUGAR</td><td>DIRECCION</td>';
+		$tabla = $tabla . '<td>FECHA</td><td>HORA</td>';
+		$tabla = $tabla . '<td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			if($row['tipo']=="1"){
+				$tipo = "PUBLICO";
+			} else {
+				$tipo = "PRIVADO";
+			}
+
+			$tabla = $tabla . '<tr><td>'.$tipo.'</td><td>'.$row['evento'].'</td>';
+			$tabla = $tabla . '<td>'.$row['detalle'].'</td><td>'.$row['lugar'].'</td>';
+			$tabla = $tabla . '<td>'.$row['direccion'].'</td><td>'.$row['fecha'].'</td><td>'.$row['hora'].'</td>';
+			$tabla = $tabla . '<td><img onclick="EditarEventos('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table></div>';
     	return $tabla;
 	}
 

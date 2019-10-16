@@ -29,6 +29,11 @@
     $curso = $_POST['curso'];
     $sesion = $_POST['sesion'];
     $tipomat = $_POST['tipomat'];
+    $categoria = $_POST['categoria'];
+    $almacen = $_POST['almacen'];
+    $marca = $_POST['marca'];
+    $stock = $_POST['stock'];
+    $empleado = $_POST['empleado'];
 
 	include('../model/Usuario.php');
 	
@@ -127,9 +132,45 @@
     } else if($accion=="46"){
         echo $miprod -> Almacenes();
     } else if($accion=="47"){
-        echo $miprod -> GuardaAlmacenes($nombre);
+        echo $miprod -> GuardaAlmacenes($id,$tipo,$nombre);
     } else if($accion=="48"){
         echo $miprod -> Almacenes2($id);
+    } else if($accion=="49"){
+        echo $miprod -> Categorias();
+    } else if($accion=="50"){
+        echo $miprod -> GuardaCategorias($id,$tipo,$nombre);
+    } else if($accion=="51"){
+        echo $miprod -> Categorias2($id);
+    } else if($accion=="52"){
+        echo $miprod -> Productos();
+    } else if($accion=="53"){
+        echo $miprod -> SelectCategorias();
+    } else if($accion=="54"){
+        echo $miprod -> GuardaProductos($id,$almacen,$categoria,$tipo,$marca,$nombre,$stock);
+    } else if($accion=="55"){
+        echo $miprod -> SelectAlmacen();
+    } else if($accion=="56"){
+        echo $miprod -> Productos2($id);
+    } else if($accion=="57"){
+        echo $miprod -> SelectEmpleados();
+    } else if($accion=="58"){
+        echo $miprod -> SelectAlmacen2();
+    } else if($accion=="59"){
+        echo $miprod -> SelectEpp($id);
+    } else if($accion=="60"){
+        echo $miprod -> ValidaStock($id,$stock);
+    } else if($accion=="61"){
+        echo $miprod -> AgregaStock($id,$stock);
+    } else if($accion=="62"){
+        echo $miprod -> DisminuyeStock($id,$empleado,$stock);
+    } else if($accion=="63"){
+        echo $miprod -> MovimientoStock();
+    } else if($accion=="64"){
+        echo $miprod -> MovimientoStockEmpleado($id);
+    } else if($accion=="65"){
+        echo $miprod -> SelectEmpleados2();
+    } else if($accion=="66"){
+        echo $miprod -> Eventos();
     }
 
     

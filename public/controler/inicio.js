@@ -54,8 +54,11 @@ function Ocultar(){
 
 	$("#campoAlmacenes").hide();
 	$("#campoProductos").hide();
+	$("#campoCategorias").hide();
 	$("#campoControlEpp").hide();
 	$("#campoDocumentos").hide();
+
+	$("#campoAsistenciaAdm").hide();
 
 	console.log("ocultar");
 }
@@ -416,10 +419,12 @@ function GuardaVideos(){
 
 
 function GuardaAlmacen(){
-
+	console.log("senal",$senal);
 	if($senal == '1'){
 		$.post("../controler/usuario.php", {
 			accion: "47",
+			id: "",
+			tipo: $senal,
 			nombre: $("#almnombre").val()
 	
 		}, function(htmlexterno){
@@ -427,8 +432,9 @@ function GuardaAlmacen(){
 		});
 	} else {
 		$.post("../controler/usuario.php", {
-			accion: "49",
+			accion: "47",
 			id: $mid,
+			tipo: $senal,
 			nombre: $("#almnombre").val()
 	
 		}, function(htmlexterno){
@@ -436,6 +442,114 @@ function GuardaAlmacen(){
 		});
 	}
 	
+}
+
+function GuardaCategoria(){
+	console.log("senal",$senal);
+	if($senal == '1'){
+		$.post("../controler/usuario.php", {
+			accion: "50",
+			id: "",
+			tipo: $senal,
+			nombre: $("#catnombre").val()
+	
+		}, function(htmlexterno){
+			Categorias();
+		});
+	} else {
+		$.post("../controler/usuario.php", {
+			accion: "50",
+			id: $mid,
+			tipo: $senal,
+			nombre: $("#catnombre").val()
+	
+		}, function(htmlexterno){
+			Categorias();
+		});
+	}
+	
+}
+
+
+function GuardaProductos(){
+	var x = document.getElementById("scategorias").selectedIndex;
+    var y = document.getElementById("scategorias").options;
+	var categoria = y[x].value;
+
+	var x = document.getElementById("salmacen").selectedIndex;
+    var y = document.getElementById("salmacen").options;
+	var almacen = y[x].value;
+
+	if(categoria!="0" && almacen!="0"){
+		console.log("senal",$senal);
+		if($senal == '1'){
+			$.post("../controler/usuario.php", {
+				accion: "54",
+				id: "",
+				almacen: almacen,
+				categoria: categoria,
+				tipo: $senal,
+				marca: $("#prodmarca").val(),
+				stock: $("#prodstock").val(),
+				nombre: $("#prodnombre").val()
+		
+			}, function(htmlexterno){
+				Productos();
+			});
+		} else {
+			$.post("../controler/usuario.php", {
+				accion: "54",
+				id: $mid,
+				almacen: almacen,
+				categoria: categoria,
+				tipo: $senal,
+				stock: $("#prodstock").val(),
+				marca: $("#prodmarca").val(),
+				nombre: $("#prodnombre").val()
+		
+			}, function(htmlexterno){
+				Productos();
+			});
+		}
+	} else {
+		alert("Verifique datos seleccionados");
+	}
+	
+	
+}
+
+function GuardaControlEpp(){
+	var x = document.getElementById("ssproductos").selectedIndex;
+    var y = document.getElementById("ssproductos").options;
+	var prod = y[x].value;
+
+	
+	if($senal=="1"){
+		$.post("../controler/usuario.php", {
+			accion: "61",
+			id: prod,
+			stock: $("#controleppstock").val()
+		}, function(htmlexterno){
+			ControlEpp();
+		});
+	} else {
+		var x = document.getElementById("sempleados").selectedIndex;
+    	var y = document.getElementById("sempleados").options;
+		var empleado = y[x].value;
+
+		$.post("../controler/usuario.php", {
+			accion: "62",
+			id: prod,
+			empleado: empleado,
+			stock: $("#controleppstock").val()
+		}, function(htmlexterno){
+			ControlEpp();
+		});
+	}
+	
+
+	
+
 }
 
 
@@ -611,6 +725,47 @@ function EditarAlmacenes($id){
 
 		document.getElementById("almnombre").value = txt[0];
 		
+	});
+}
+
+function EditarCategorias($id){
+	$senal = '2';
+	$mid = $id;
+	$.post("../controler/usuario.php", {
+		accion: "51", 
+		id:$id
+	}, function(htmlexterno){
+		$("#cuerpoCategorias2").show();
+		$("#cuerpoCategorias").hide();
+		$("#cabeceraCategorias").hide();
+		console.log(htmlexterno);
+		var txt;
+		txt = htmlexterno.split("#");
+
+		document.getElementById("catnombre").value = txt[0];
+		
+	});
+}
+
+function EditarProductos($id){
+	
+	$mid = $id;
+	AddProductos();
+	$.post("../controler/usuario.php", {
+		accion: "56", 
+		id:$id
+	}, function(htmlexterno){
+		$("#cuerpoProductos2").show();
+		$("#cuerpoProductos").hide();
+		$("#cabeceraProductos").hide();
+		console.log(htmlexterno);
+		var txt;
+		txt = htmlexterno.split("#");
+
+		document.getElementById("prodnombre").value = txt[0];
+		document.getElementById("prodmarca").value = txt[1];
+		document.getElementById("prodstock").value = txt[2];
+		$senal = '2';
 	});
 }
 
@@ -1035,6 +1190,43 @@ function CambioCentroCostos5(){
 }
 
 
+function CambioAlmacen(){
+	var x = document.getElementById("ssalmacen").selectedIndex;
+    var y = document.getElementById("ssalmacen").options;
+    var v2 = y[x].value;
+	
+	if(v2!="0"){
+		$.post("../controler/usuario.php", {
+			accion: "59",
+			id: v2
+		}, function(htmlexterno){
+			
+			$("#controleppEpp").html(htmlexterno);
+			
+		});
+	}
+	
+}
+
+
+function CambiaEmpleado(){
+	var x = document.getElementById("ssempleados").selectedIndex;
+    var y = document.getElementById("ssempleados").options;
+    var v2 = y[x].value;
+	
+	if(v2!="0"){
+		$.post("../controler/usuario.php", {
+			accion: "64",
+			id: v2
+		}, function(htmlexterno){
+			
+			$("#cuerpoDocumentos").html(htmlexterno);
+			
+		});
+	}
+	
+}
+
 function CambioCentroCostos6(){
 	var x = document.getElementById("proccostos2").selectedIndex;
     var y = document.getElementById("proccostos2").options;
@@ -1379,6 +1571,7 @@ function Almacenes(){
 
 	document.getElementById("almacenes").style.background = "#273156";
 	document.getElementById("productos").style.background = "transparent";
+	document.getElementById("categorias").style.background = "transparent";
 	document.getElementById("controlepp").style.background = "transparent";
 	document.getElementById("documentos").style.background = "transparent";
 	
@@ -1391,6 +1584,98 @@ function Almacenes(){
 	});
 }
 
+
+function Productos(){
+	Ocultar();
+	
+	$("#campoProductos").show();
+	$("#cabeceraProductos").show();
+	$("#cuerpoProductos").show();
+	$("#cuerpoProductos2").hide();
+
+	document.getElementById("productos").style.background = "#273156";
+	document.getElementById("almacenes").style.background = "transparent";
+	document.getElementById("categorias").style.background = "transparent";
+	document.getElementById("controlepp").style.background = "transparent";
+	document.getElementById("documentos").style.background = "transparent";
+	
+	$.post("../controler/usuario.php", {
+		accion: "52"
+	}, function(htmlexterno){
+
+		$("#cuerpoProductos").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
+function Categorias(){
+	Ocultar();
+	
+	$("#campoCategorias").show();
+	$("#cabeceraCategorias").show();
+	$("#cuerpoCategorias").show();
+	$("#cuerpoCategorias2").hide();
+	
+	document.getElementById("categorias").style.background = "#273156";
+	document.getElementById("productos").style.background = "transparent";
+	document.getElementById("almacenes").style.background = "transparent";
+	document.getElementById("controlepp").style.background = "transparent";
+	document.getElementById("documentos").style.background = "transparent";
+
+	$.post("../controler/usuario.php", {
+		accion: "49"
+	}, function(htmlexterno){
+
+		$("#cuerpoCategorias").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
+function ControlEpp(){
+	Ocultar();
+	
+	$("#campoControlEpp").show();
+	$("#cabeceraControlEpp").show();
+	$("#cuerpoControlEpp").show();
+	$("#cuerpoControlEpp2").hide();
+	
+	document.getElementById("controlepp").style.background = "#273156";
+	document.getElementById("productos").style.background = "transparent";
+	document.getElementById("almacenes").style.background = "transparent";
+	document.getElementById("categorias").style.background = "transparent";
+	document.getElementById("documentos").style.background = "transparent";
+
+	$.post("../controler/usuario.php", {
+		accion: "63"
+	}, function(htmlexterno){
+
+		$("#cuerpoControlEpp").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
+function DocumentosEpp(){
+	Ocultar();
+	
+	$("#campoDocumentos").show();
+	$("#cabeceraDocumentos").show();
+	$("#cuerpoDocumentos").show();
+	$("#cuerpoDocumentos2").hide();
+	
+	document.getElementById("documentos").style.background = "#273156";
+	document.getElementById("productos").style.background = "transparent";
+	document.getElementById("almacenes").style.background = "transparent";
+	document.getElementById("categorias").style.background = "transparent";
+	document.getElementById("controlepp").style.background = "transparent";
+
+	$.post("../controler/usuario.php", {
+		accion: "65"
+	}, function(htmlexterno){
+
+		$("#documentosEmpleados").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
 
 function AddCapacitaciones(){
 	$senal = '1';
@@ -1522,5 +1807,154 @@ function AddAlmacenes(){
 	$("#cabeceraAlmacenes").hide();
 	$("#cuerpoAlmacenes2").show();
 	$("#cuerpoAlmacenes").hide();
+
+}
+
+function AddCategorias(){
+	$senal = '1';
+
+	Ocultar();
+	
+	$("#campoCategorias").show();
+	$("#cabeceraCategorias").hide();
+	$("#cuerpoCategorias2").show();
+	$("#cuerpoCategorias").hide();
+
+}
+
+function AddProductos(){
+	$senal = '1';
+
+	Ocultar();
+	
+	$("#campoProductos").show();
+	$("#cabeceraProductos").hide();
+	$("#cuerpoProductos2").show();
+	$("#cuerpoProductos").hide();
+
+	$.post("../controler/usuario.php", {
+		accion: "53"
+	}, function(htmlexterno){
+
+		$("#categoriaProductos").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+
+	$.post("../controler/usuario.php", {
+		accion: "55"
+	}, function(htmlexterno){
+
+		$("#almacenProductos").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
+
+function AddControlEpp(){
+	$senal = '1';
+
+	Ocultar();
+	
+	$("#campoControlEpp").show();
+	$("#cabeceraControlEpp").hide();
+	$("#cuerpoControlEpp2").show();
+	$("#cuerpoControlEpp").hide();
+	$("#filaEmpleado").hide();
+	$("#filaDuracion").hide();
+
+	$.post("../controler/usuario.php", {
+		accion: "57"
+	}, function(htmlexterno){
+
+		$("#controleppEmpleados").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+
+	$.post("../controler/usuario.php", {
+		accion: "58"
+	}, function(htmlexterno){
+
+		$("#controleppAlmacen").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
+function DespacharControlEpp(){
+	$senal = '2';
+
+	Ocultar();
+	
+	$("#campoControlEpp").show();
+	$("#cabeceraControlEpp").hide();
+	$("#cuerpoControlEpp2").show();
+	$("#cuerpoControlEpp").hide();
+	$("#filaEmpleado").show();
+	$("#filaDuracion").show();
+
+	$.post("../controler/usuario.php", {
+		accion: "57"
+	}, function(htmlexterno){
+
+		$("#controleppEmpleados").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+
+	$.post("../controler/usuario.php", {
+		accion: "58"
+	}, function(htmlexterno){
+
+		$("#controleppAlmacen").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
+/**/
+
+function ValidaStock(){
+	var x = document.getElementById("ssproductos").selectedIndex;
+    var y = document.getElementById("ssproductos").options;
+	var prod = y[x].value;
+
+	$.post("../controler/usuario.php", {
+		accion: "60",
+		id: prod,
+		stock: $("#controleppstock").val()
+	}, function(htmlexterno){
+		if(htmlexterno=="ok"){
+			//valmens
+			$("#valmens").html("Stock disponible");
+		} else {
+			$("#valmens").html("Stock NO disponible");
+		}
+		
+		console.log(htmlexterno+"");
+	});
+
+}
+
+function AsistenciaAdm(){
+	console.log("hola");
+
+	Ocultar();
+	
+	$("#campoAsistenciaAdm").show();
+	$("#cabeceraAsistenciaAdm").show();
+	$("#cuerpoAsistenciaAdm").show();
+	$("#cuerpoAsistenciaAdm2").hide();
+	
+	$.post("../controler/usuario.php", {
+		accion: "66"
+	}, function(htmlexterno){
+
+		$("#cuerpoAsistenciaAdm").html(htmlexterno);
+		//console.log(htmlexterno+"");
+	});
+}
+
+function AddAsistenciaAdm(){
+	$senal = '1';
+	$("#cabeceraAsistenciaAdm").hide();
+	$("#cuerpoAsistenciaAdm2").show();
+	$("#cuerpoAsistenciaAdm").hide();
 
 }
