@@ -478,7 +478,7 @@
 						<li class="nav-item nav-item-submenu">
 							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>ASISTENCIA ADM.</span></a>
 							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
-								<li class="nav-item"><div id="empresas" onclick="AsistenciaAdm()" class="nav-link">EVENTOS</div></li>
+								<li class="nav-item"><div id="asistenciaAdm" onclick="AsistenciaAdm()" class="nav-link">EVENTOS</div></li>
 							</ul>
 						</li>
 						<li class="nav-item nav-item-submenu">
@@ -486,10 +486,11 @@
 
 							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
 								<li class="nav-item"><div id="empresas" onclick="Empresas()" class="nav-link">EMPRESAS</div></li>
-								<li class="nav-item"><div id="usuarios" onclick="Usuarios()" class="nav-link">USUARIOS</div></li>
+								<li class="nav-item"><div id="usuarios2" onclick="Usuarios()" class="nav-link">USUARIOS</div></li>
 								<li class="nav-item"><div id="centroCostos" onclick="CentroCostos()" class="nav-link">CENTRO COSTOS</div></li>
 								<li class="nav-item"><div id="unidad" onclick="Unidad()" class="nav-link">UNIDAD</div></li>
-								<li class="nav-item"><div id="configuracion" onclick="Configuracion()" class="nav-link">CONFIGURACION</div></li>
+								<!--<li class="nav-item"><div id="configuracion" onclick="Configuracion()" class="nav-link">CONFIGURACION</div></li>
+								-->
 							</ul>
 						</li>
 						
@@ -972,13 +973,14 @@
 											<label>CENTRO COSTOS: </label>
 										</td>
 										<td>
-											<select id="ucentro">
+											<div id="userCentro"></div>
+											<!--<select id="ucentro">
 												<option value="0">Seleccionar</option>
 												<option value="1">Recursos humanos</option>
 												<option value="2">Proyectos</option>
 												<option value="3">Logistica</option>
 												
-											</select>
+											</select>-->
 										</td>
 									</tr>
 									<tr>
@@ -1446,16 +1448,183 @@
 											<label>NOMBRE: </label>
 										</td>
 										<td>
-											<div style="display:inline-block; margin-right:5px;"><input id="asistenciaAdmTexto" type="text" style="width:200px;" placeholder="NOMBRE DEL EVENTO"></div>
+											<div style="display:inline-block; margin-right:5px;"><input id="asistenciaAdmEvento" type="text" style="width:200px;" placeholder="NOMBRE DEL EVENTO"></div>
 											
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>DETALLE: </label>
+										</td>
+										<td>
+											<div style="margin-right:5px;"><textarea id="asistenciaAdmDetalle" type="text" style="width:405px;" placeholder="DETALLE"></textarea></div>
+									
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>LUGAR: </label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="asistenciaAdmLugar" type="text" style="width:200px;" placeholder="LUGAR DEL EVENTO"></div>
+											
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>DIRECCIÓN: </label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="asistenciaAdmDireccion" type="text" style="width:200px;" placeholder="DIRECCIÓN DEL EVENTO"></div>
+											
+										</td>
+									</tr>	
+									<tr>
+										<td>
+											<span class="input-group-prepend">
+												<span class="input-group-text">
+													FECHA:
+													<i class="icon-calendar22"></i>
+												</span>
+											</span>
+										</td>
+										<td>
+											<div class="form-group">
+												<div class="input-group">
+													<div style="display:inline-block; margin-left:25px;"><input name="datepicker" type="date" id="asistenciaAdmFecha" style="width:150px;" /></div>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>HORA: </label> 
+										</td>
+										<td>
+											<div class="form-group">
+												<div class="input-group">
+													<div style="display:inline-block; margin-left:25px;"><input type="time" id="asistenciaAdmHora" style="width:150px;" /></div>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>ESTADO: </label>
+										</td>
+										<td>
+											<select id="asistenciaAdmEstado">
+												<option value="1">Visible</option>
+												<option value="0">No visible</option>
+												
+											</select>
 										</td>
 									</tr>
 								</table>
 								<br>
-								<button class="btn bg-primary" onclick="GuardaMateriales()">GUARDAR</button>
+								<button class="btn bg-primary" onclick="GuardaAsistenciaAdm()">GUARDAR</button>
+							</div>
+						</div>
+						<div id="campoEmpresas">
+							<div id="cabeceraEmpresas">
+								<button type="button" class="btn bg-primary" id="addAsistenciaAdm" onclick="AddEmpresas()">NUEVO</button>
+							</div>
+							<br>
+							<div id="cuerpoEmpresas"></div>
+							<div id="cuerpoEmpresas2" style="width:100%; justify-content: center; align-items: center;">
+								<table>
+									<tr>
+										<td>
+											<label>PAIS: </label>
+										</td>
+										<td>
+											<select id="empresasPais">
+												<option value="0">Seleccionar</option>
+												<option value="1">Perú</option>
+												<option value="2">Sudáfrica</option>
+												<option value="3">Brasil</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>NOMBRE: </label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="empresasNombre" type="text" style="width:200px;" placeholder="NOMBRE DE LA EEMPRESA"></div>
+											
+										</td>
+									</tr>
+									
+								</table>
+								<br>
+								<button class="btn bg-primary" onclick="GuardaEmpresas()">GUARDAR</button>
 							</div>
 						</div>
 						
+						<div id="campoUnidad">
+								<div id="cabeceraUnidad">
+									<button type="button" class="btn bg-primary" id="addUnidad" onclick="AddUnidad()">NUEVO</button>
+								</div>
+								<br>
+								<div id="cuerpoUnidad"></div>
+								<div id="cuerpoUnidad2" style="width:100%; justify-content: center; align-items: center;">
+									<table>
+										<tr>
+											<td>
+												<label>CENTRO DE COSTOS: </label>
+											</td>
+											<td>
+												<div id="select_unidad"></div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<label>NOMBRE: </label>
+											</td>
+											<td>
+												<div style="display:inline-block; margin-right:5px;"><input id="unidadNombre" type="text" style="width:200px;" placeholder="NOMBRE UNIDAD"></div>
+												<div id="comprobarNombreUnidad"></div>
+											</td>
+										</tr>
+										
+									</table>
+									<br>
+									<button class="btn bg-primary" onclick="GuardaUnidad()">GUARDAR</button>
+								</div>
+							</div>
+							<div id="campoCentroCostos">
+									<div id="cabeceraCentroCostos">
+										<button type="button" class="btn bg-primary" id="addCentroCostos" onclick="AddCentroCostos()">NUEVO</button>
+									</div>
+									<br>
+									<div id="cuerpoCentroCostos"></div>
+									<div id="cuerpoCentroCostos2" style="width:100%; justify-content: center; align-items: center;">
+										<table>
+											<tr>
+												<td>
+													<label>EMPRESA: </label>
+												</td>
+												<td>
+													<div id="selectEmpresa"></div>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<label>NOMBRE: </label>
+												</td>
+												<td>
+													<div style="display:inline-block; margin-right:5px;"><input id="centroCostoNombre" type="text" style="width:200px;" placeholder="NOMBRE CENTRO COSTO"></div>
+													<div id="comprobarNombreCentroCosto"></div>
+												</td>
+											</tr>
+											
+										</table>
+										<br>
+										<button class="btn bg-primary" onclick="GuardaCentroCostos()">GUARDAR</button>
+									</div>
+								</div>
+							
 					</div>
 				</div>
 			</div>

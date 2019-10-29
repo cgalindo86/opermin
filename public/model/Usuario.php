@@ -42,6 +42,34 @@ class Usuario{
     	return $dat;
 	}
 
+	function NombreEmpresa($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM empresa WHERE id='$id' ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+    		
+    	while ($row = $result->fetch_array()){
+    	    $dat=$row['nombre'];
+		}
+		
+    	return $dat;
+	}
+
+	function NombreCentroCostos($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM centro_costos WHERE id='$id' ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+    		
+    	while ($row = $result->fetch_array()){
+    	    $dat=$row['descripcion'];
+		}
+		
+    	return $dat;
+	}
+
 	function NombreProducto($id){
 		include('conexion.php');
     
@@ -2027,6 +2055,384 @@ class Usuario{
 		
 		}
     	$tabla = $tabla . '</tbody></table></div>';
+    	return $tabla;
+	}
+
+	function Eventos2($id){
+		include('conexion.php');
+
+		$query = "SELECT * FROM eventos WHERE id='$id'";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = $tabla . '';
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . ''.$row['evento'].'#';
+			$tabla = $tabla . ''.$row['detalle'].'#'.$row['lugar'].'#';
+			$tabla = $tabla . ''.$row['direccion'].'#'.$row['fecha'].'#'.$row['hora'].'#';
+			
+		}
+		
+		return $tabla;
+	}
+
+	function GuardaEventos($tipo,$evento,$detalle,$lugar,$direccion,$fecha,$hora,$estado){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+		
+		$sql = "INSERT INTO eventos (EVENTO,TIPO,DETALLE,LUGAR,DIRECCION,FECHA,HORA,ESTADO) 
+		VALUES ('$evento','$tipo','$detalle','$lugar','$direccion','$fecha','$hora','$estado')";
+					
+		if (!$resultado = $mysqli->query($sql)) {
+						
+			echo "Lo sentimos, este sitio web está experimentando problemas.";
+			echo "Error: La ejecución de la consulta falló debido a: \n";
+			echo "Query: " . $sql . "\n";
+			echo "Errno: " . $mysqli->errno . "\n";
+			echo "Error: " . $mysqli->error . "\n";
+						
+			exit;
+		} else {
+			$idT = mysqli_insert_id($mysqli);
+			echo 'EXITO';
+		}
+	}
+
+	function EditaEventos($id,$tipo,$evento,$detalle,$lugar,$direccion,$fecha,$hora,$estado){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+		
+		$sql = "UPDATE eventos SET evento='$evento', tipo='$tipo', detalle='$detalle', lugar='$lugar',
+		direccion='$direccion', fecha='$fecha', hora='$hora' WHERE id='$id' ";
+					
+		if (!$resultado = $mysqli->query($sql)) {
+						
+			echo "Lo sentimos, este sitio web está experimentando problemas.";
+			echo "Error: La ejecución de la consulta falló debido a: \n";
+			echo "Query: " . $sql . "\n";
+			echo "Errno: " . $mysqli->errno . "\n";
+			echo "Error: " . $mysqli->error . "\n";
+						
+			exit;
+		} else {
+			//$idT = mysqli_insert_id($mysqli);
+			echo 'EXITO';
+		}
+	}
+
+	function Empresas(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM empresa ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>PAIS</td><td>NOMBRE</td>';
+		$tabla = $tabla . '<td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			if($row['pais']=="1"){
+				$pais = "PERU";
+			} else if($row['pais']=="2"){
+				$pais = "SUDAFRICA";
+			} else {
+				$pais = "BRASIL";
+			}
+
+			$tabla = $tabla . '<tr><td>'.$pais.'</td><td>'.$row['nombre'].'</td>';
+			$tabla = $tabla . '<td><img onclick="EditarEmpresas('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table></div>';
+    	return $tabla;
+	}
+
+	function Empresas2($id){
+		include('conexion.php');
+
+		$query = "SELECT * FROM empresa WHERE id='$id'";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = $tabla . '';
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . ''.$row['nombre'].'#';
+			
+		}
+		
+		return $tabla;
+	}
+
+	function GuardaEmpresas($pais,$nombre){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+		
+		$sql = "INSERT INTO empresa (PAIS,NOMBRE) 
+		VALUES ('$pais','$nombre')";
+					
+		if (!$resultado = $mysqli->query($sql)) {
+						
+			echo "Lo sentimos, este sitio web está experimentando problemas.";
+			echo "Error: La ejecución de la consulta falló debido a: \n";
+			echo "Query: " . $sql . "\n";
+			echo "Errno: " . $mysqli->errno . "\n";
+			echo "Error: " . $mysqli->error . "\n";
+						
+			exit;
+		} else {
+			$idT = mysqli_insert_id($mysqli);
+			echo 'EXITO';
+		}
+	}
+
+	function EditaEmpresas($id,$pais,$nombre){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+		
+		$sql = "UPDATE empresa SET pais='$pais', nombre='$nombre' WHERE id='$id' ";
+					
+		if (!$resultado = $mysqli->query($sql)) {
+						
+			echo "Lo sentimos, este sitio web está experimentando problemas.";
+			echo "Error: La ejecución de la consulta falló debido a: \n";
+			echo "Query: " . $sql . "\n";
+			echo "Errno: " . $mysqli->errno . "\n";
+			echo "Error: " . $mysqli->error . "\n";
+						
+			exit;
+		} else {
+			//$idT = mysqli_insert_id($mysqli);
+			echo 'EXITO';
+		}
+	}
+
+	function SelectEmpresas(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM empresa ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		$tabla = $tabla.'<select id="centroCostosEmpresa"><option value="0">Seleccionar</option>';
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . '<option value="'.$row['id'].'">'.$row['nombre'].'</option>';
+		}
+		$tabla = $tabla.'</select>';
+    	return $tabla;
+	}
+
+	function ListarCentroCostos(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM centro_costos ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>EMPRESA</td><td>NOMBRE</td>';
+		$tabla = $tabla . '<td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			$empresa = $this->NombreEmpresa($row['empresa']);
+			$tabla = $tabla . '<tr><td>'.$empresa.'</td><td>'.$row['descripcion'].'</td>';
+			$tabla = $tabla . '<td><img onclick="EditarCentroCostos('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table></div>';
+    	return $tabla;
+	}
+
+	function ListarCentroCostos2($id){
+		include('conexion.php');
+
+		$query = "SELECT * FROM centro_costos WHERE id='$id'";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = $tabla . '';
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . ''.$row['descripcion'].'#';
+			
+		}
+		
+		return $tabla;
+	}
+
+	function GuardaCentroCostos($empresa,$nombre){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+		
+		$sql = "INSERT INTO centro_costos (EMPRESA,DESCRIPCION) 
+		VALUES ('$empresa','$nombre')";
+					
+		if (!$resultado = $mysqli->query($sql)) {
+						
+			echo "Lo sentimos, este sitio web está experimentando problemas.";
+			echo "Error: La ejecución de la consulta falló debido a: \n";
+			echo "Query: " . $sql . "\n";
+			echo "Errno: " . $mysqli->errno . "\n";
+			echo "Error: " . $mysqli->error . "\n";
+						
+			exit;
+		} else {
+			$idT = mysqli_insert_id($mysqli);
+			echo 'EXITO';
+		}
+	}
+
+	function EditaCentroCostos($id,$empresa,$nombre){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+		
+		$sql = "UPDATE centro_costos SET empresa='$empresa', descripcion='$nombre' WHERE id='$id' ";
+					
+		if (!$resultado = $mysqli->query($sql)) {
+						
+			echo "Lo sentimos, este sitio web está experimentando problemas.";
+			echo "Error: La ejecución de la consulta falló debido a: \n";
+			echo "Query: " . $sql . "\n";
+			echo "Errno: " . $mysqli->errno . "\n";
+			echo "Error: " . $mysqli->error . "\n";
+						
+			exit;
+		} else {
+			//$idT = mysqli_insert_id($mysqli);
+			echo 'EXITO';
+		}
+	}
+
+	function ListarUnidad(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM unidad ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>CENTRO COSTOS</td><td>NOMBRE</td>';
+		$tabla = $tabla . '<td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			$centro = $this->NombreCentroCostos($row['centro_costos']);
+			$tabla = $tabla . '<tr><td>'.$centro.'</td><td>'.$row['descripcion'].'</td>';
+			$tabla = $tabla . '<td><img onclick="EditarUnidad('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table></div>';
+    	return $tabla;
+	}
+
+	function ListarUnidad2($id){
+		include('conexion.php');
+
+		$query = "SELECT * FROM unidad WHERE id='$id' ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		while ($row = $result->fetch_array()){
+			$tabla = $tabla . ''.$row['descripcion'].'#';
+			
+		}
+    	return $tabla;
+	}
+
+	function SelectUnidad(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM centro_costos ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		$tabla = $tabla.'<select id="select_centro_costos"><option value="0">Seleccionar</option>';
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . '<option value="'.$row['id'].'">'.$row['descripcion'].'</option>';
+		}
+		$tabla = $tabla.'</select>';
+    	return $tabla;
+	}
+
+	function GuardaUnidad($centro,$nombre){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+		
+		$sql = "INSERT INTO unidad (CENTRO_COSTOS,DESCRIPCION) 
+		VALUES ('$centro','$nombre')";
+					
+		if (!$resultado = $mysqli->query($sql)) {
+						
+			echo "Lo sentimos, este sitio web está experimentando problemas.";
+			echo "Error: La ejecución de la consulta falló debido a: \n";
+			echo "Query: " . $sql . "\n";
+			echo "Errno: " . $mysqli->errno . "\n";
+			echo "Error: " . $mysqli->error . "\n";
+						
+			exit;
+		} else {
+			$idT = mysqli_insert_id($mysqli);
+			echo 'EXITO';
+		}
+	}
+
+	function EditaUnidad($id,$centro,$nombre){
+		include('conexion.php');
+		
+		$nombre = utf8_decode($nombre);
+		
+		$sql = "UPDATE unidad SET centro_costos='$centro', descripcion='$nombre' WHERE id='$id' ";
+					
+		if (!$resultado = $mysqli->query($sql)) {
+						
+			echo "Lo sentimos, este sitio web está experimentando problemas.";
+			echo "Error: La ejecución de la consulta falló debido a: \n";
+			echo "Query: " . $sql . "\n";
+			echo "Errno: " . $mysqli->errno . "\n";
+			echo "Error: " . $mysqli->error . "\n";
+						
+			exit;
+		} else {
+			//$idT = mysqli_insert_id($mysqli);
+			echo 'EXITO';
+		}
+	}
+
+
+	function SelectCentroCostosUser(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM centro_costos ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		$tabla = $tabla.'<select id="ucentro"><option value="0">Seleccionar</option>';
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . '<option value="'.$row['id'].'">'.$row['descripcion'].'</option>';
+		}
+		$tabla = $tabla.'</select>';
     	return $tabla;
 	}
 

@@ -15,6 +15,13 @@ $(document).ready(function () {
 		$senal = '1';
 		$("#cuerpoUsuarios2").show();
 		$("#cuerpoUsuarios").hide();
+
+		$.post("../controler/usuario.php", {
+			accion: "84",
+			empresa: "1"
+		}, function(htmlexterno){
+			$("#userCentro").html(htmlexterno);
+		});
 	});	
 	
 });
@@ -59,6 +66,10 @@ function Ocultar(){
 	$("#campoDocumentos").hide();
 
 	$("#campoAsistenciaAdm").hide();
+
+	$("#campoEmpresas").hide();
+	$("#campoCentroCostos").hide();
+	$("#campoUnidad").hide();
 
 	console.log("ocultar");
 }
@@ -546,12 +557,146 @@ function GuardaControlEpp(){
 			ControlEpp();
 		});
 	}
-	
-
-	
-
 }
 
+function GuardaAsistenciaAdm(){
+	var x = document.getElementById("asistenciaAdmTipo").selectedIndex;
+    var y = document.getElementById("asistenciaAdmTipo").options;
+	var tipo = y[x].value;
+
+	var x = document.getElementById("asistenciaAdmEstado").selectedIndex;
+    var y = document.getElementById("asistenciaAdmEstado").options;
+	var estado = y[x].value;
+	
+	if($senal=="1"){
+		$.post("../controler/usuario.php", {
+			accion: "67",
+			tipo: tipo,
+			evento: $("#asistenciaAdmEvento").val(),
+			detalle: $("#asistenciaAdmDetalle").val(),
+			lugar: $("#asistenciaAdmLugar").val(),
+			direccion: $("#asistenciaAdmDireccion").val(),
+			fecha: $("#asistenciaAdmFecha").val(),
+			hora: $("#asistenciaAdmHora").val(),
+			estado: estado
+			
+		}, function(htmlexterno){
+			AsistenciaAdm();
+		});
+	} else {
+		$.post("../controler/usuario.php", {
+			accion: "69",
+			id: $mid,
+			tipo: tipo,
+			evento: $("#asistenciaAdmEvento").val(),
+			detalle: $("#asistenciaAdmDetalle").val(),
+			lugar: $("#asistenciaAdmLugar").val(),
+			direccion: $("#asistenciaAdmDireccion").val(),
+			fecha: $("#asistenciaAdmFecha").val(),
+			hora: $("#asistenciaAdmHora").val(),
+			estado: estado
+			
+		}, function(htmlexterno){
+			AsistenciaAdm();
+		});
+	}
+	
+}
+
+
+function GuardaEmpresas(){
+	var x = document.getElementById("empresasPais").selectedIndex;
+    var y = document.getElementById("empresasPais").options;
+	var pais = y[x].value;
+
+	if(pais!="0"){
+		if($senal=="1"){
+			$.post("../controler/usuario.php", {
+				accion: "71",
+				pais: pais,
+				nombre: $("#empresasNombre").val()
+			}, function(htmlexterno){
+				Empresas();
+			});
+		} else {
+			$.post("../controler/usuario.php", {
+				accion: "73",
+				id: $mid,
+				pais: pais,
+				nombre: $("#empresasNombre").val()
+			}, function(htmlexterno){
+				Empresas();
+			});
+		}
+	} else {
+		alert("Verifique datos ingresados");
+	}
+	
+	
+}
+
+
+function GuardaCentroCostos(){
+	var x = document.getElementById("centroCostosEmpresa").selectedIndex;
+    var y = document.getElementById("centroCostosEmpresa").options;
+	var empresa = y[x].value;
+
+	if(empresa!="0"){
+		if($senal=="1"){
+			$.post("../controler/usuario.php", {
+				accion: "76",
+				empresa: empresa,
+				nombre: $("#centroCostoNombre").val()
+			}, function(htmlexterno){
+				CentroCostos();
+			});
+		} else {
+			$.post("../controler/usuario.php", {
+				accion: "78",
+				id: $mid,
+				empresa: empresa,
+				nombre: $("#centroCostoNombre").val()
+			}, function(htmlexterno){
+				CentroCostos();
+			});
+		}
+	} else {
+		alert("Verifique datos seleccionados");
+	}
+	
+	
+}
+
+//select_centro_costos
+function GuardaUnidad(){
+	var x = document.getElementById("select_centro_costos").selectedIndex;
+    var y = document.getElementById("select_centro_costos").options;
+	var centro = y[x].value;
+
+	if(centro!="0"){
+		if($senal=="1"){
+			$.post("../controler/usuario.php", {
+				accion: "80",
+				centro: centro,
+				nombre: $("#unidadNombre").val()
+			}, function(htmlexterno){
+				Unidad();
+			});
+		} else {
+			$.post("../controler/usuario.php", {
+				accion: "82",
+				id: $mid,
+				centro: centro,
+				nombre: $("#unidadNombre").val()
+			}, function(htmlexterno){
+				Unidad();
+			});
+		}
+	} else {
+		alert("Verifique datos seleccionados");
+	}
+	
+}
 
 function EditarBeneficios($id){
 	$mid = $id;
@@ -766,6 +911,97 @@ function EditarProductos($id){
 		document.getElementById("prodmarca").value = txt[1];
 		document.getElementById("prodstock").value = txt[2];
 		$senal = '2';
+	});
+}
+
+function EditarEventos($id){
+	$mid = $id;
+	$senal = '2';
+	$.post("../controler/usuario.php", {
+		accion: "68", id:$id
+	}, function(htmlexterno){
+		$("#cuerpoAsistenciaAdm2").show();
+		$("#cuerpoAsistenciaAdm").hide();
+		console.log(htmlexterno);
+		var txt;
+		txt = htmlexterno.split("#");
+		//console.log(txt[0]+"-"+txt[1]+"-"+txt[2]+"-"+txt[3]+"-"+txt[4]+"-"+txt[5]+"-"+txt[6]);
+		document.getElementById("asistenciaAdmEvento").value = txt[0];
+		document.getElementById("asistenciaAdmDetalle").innerHTML = txt[1];
+		document.getElementById("asistenciaAdmLugar").value = txt[2];
+		document.getElementById("asistenciaAdmDireccion").value = txt[3];
+		document.getElementById("asistenciaAdmFecha").value = txt[4];
+		document.getElementById("asistenciaAdmHora").value = txt[5];
+		//document.getElementById("nfecha2").innerHTML = 'Actual: '+txt[6]+'<br><input name="datepicker" type="date" id="bfecha2" style="width:150px;" value="'+txt[6]+'" />';
+		//document.getElementById("btitulo2").innerHTML = txt[7];
+	});
+}
+
+function EditarEmpresas($id){
+	$mid = $id;
+	$senal = '2';
+	$.post("../controler/usuario.php", {
+		accion: "72", id:$id
+	}, function(htmlexterno){
+		$("#cuerpoEmpresas2").show();
+		$("#cuerpoEmpresas").hide();
+		console.log(htmlexterno);
+		var txt;
+		txt = htmlexterno.split("#");
+		//console.log(txt[0]+"-"+txt[1]+"-"+txt[2]+"-"+txt[3]+"-"+txt[4]+"-"+txt[5]+"-"+txt[6]);
+		document.getElementById("empresasNombre").value = txt[0];
+		//document.getElementById("btitulo2").innerHTML = txt[7];
+	});
+}
+
+function EditarCentroCostos($id){
+	$mid = $id;
+	$senal = '2';
+	$.post("../controler/usuario.php", {
+		accion: "77", id:$id
+	}, function(htmlexterno){
+		$("#cuerpoCentroCostos2").show();
+		$("#cuerpoCentroCostos").hide();
+		console.log(htmlexterno);
+		var txt;
+		txt = htmlexterno.split("#");
+		//console.log(txt[0]+"-"+txt[1]+"-"+txt[2]+"-"+txt[3]+"-"+txt[4]+"-"+txt[5]+"-"+txt[6]);
+		document.getElementById("centroCostoNombre").value = txt[0];
+		
+		$.post("../controler/usuario.php", {
+			accion: "74"
+		}, function(htmlexterno){
+	
+			$("#selectEmpresa").html(htmlexterno);
+			//console.log(htmlexterno+"");
+		});
+
+	});
+}
+
+
+function EditarUnidad($id){
+	$mid = $id;
+	$senal = '2';
+	$.post("../controler/usuario.php", {
+		accion: "81", id:$id
+	}, function(htmlexterno){
+		$("#cuerpoUnidad2").show();
+		$("#cuerpoUnidad").hide();
+		console.log(htmlexterno);
+		var txt;
+		txt = htmlexterno.split("#");
+		//console.log(txt[0]+"-"+txt[1]+"-"+txt[2]+"-"+txt[3]+"-"+txt[4]+"-"+txt[5]+"-"+txt[6]);
+		document.getElementById("unidadNombre").value = txt[0];
+		
+		$.post("../controler/usuario.php", {
+			accion: "83"
+		}, function(htmlexterno){
+	
+			$("#select_unidad").html(htmlexterno);
+			//console.log(htmlexterno+"");
+		});
+
 	});
 }
 
@@ -1409,6 +1645,7 @@ function Usuarios(){
 	$("#cuerpoUsuarios2").hide();
 
 	document.getElementById("usuarios").style.background = "#273156";
+	document.getElementById("usuarios2").style.background = "#273156";
 	document.getElementById("beneficios").style.background = "transparent";
 	document.getElementById("boletas").style.background = "transparent";
 	document.getElementById("convocatorias").style.background = "transparent";
@@ -1418,6 +1655,9 @@ function Usuarios(){
 	document.getElementById("notificaciones").style.background = "transparent";
 	document.getElementById("reglamentos").style.background = "transparent";
 	document.getElementById("interes").style.background = "transparent";
+	document.getElementById("centroCostos").style.background = "transparent";
+	document.getElementById("empresas").style.background = "transparent";
+	document.getElementById("unidad").style.background = "transparent";
 
 	$.post("../controler/usuario.php", {
 		accion: "21"
@@ -1934,7 +2174,7 @@ function ValidaStock(){
 
 function AsistenciaAdm(){
 	console.log("hola");
-
+	$senal = '1';
 	Ocultar();
 	
 	$("#campoAsistenciaAdm").show();
@@ -1951,10 +2191,119 @@ function AsistenciaAdm(){
 	});
 }
 
+function Empresas(){
+	console.log("hola");
+	$senal = '1';
+	Ocultar();
+
+	document.getElementById("empresas").style.background = "#273156";
+	document.getElementById("usuarios2").style.background = "transparent";
+	document.getElementById("centroCostos").style.background = "transparent";
+	document.getElementById("unidad").style.background = "transparent";
+	
+	$("#campoEmpresas").show();
+	$("#cabeceraEmpresas").show();
+	$("#cuerpoEmpresas").show();
+	$("#cuerpoEmpresas2").hide();
+	
+	$.post("../controler/usuario.php", {
+		accion: "70"
+	}, function(htmlexterno){
+
+		$("#cuerpoEmpresas").html(htmlexterno);
+		//console.log(htmlexterno+"");
+	});
+}
+
+function CentroCostos(){
+	console.log("hola");
+	$senal = '1';
+	Ocultar();
+
+	document.getElementById("centroCostos").style.background = "#273156";
+	document.getElementById("usuarios2").style.background = "transparent";
+	document.getElementById("empresas").style.background = "transparent";
+	document.getElementById("unidad").style.background = "transparent";
+	
+	$("#campoCentroCostos").show();
+	$("#cabeceraCentroCostos").show();
+	$("#cuerpoCentroCostos").show();
+	$("#cuerpoCentroCostos2").hide();
+	
+	$.post("../controler/usuario.php", {
+		accion: "75"
+	}, function(htmlexterno){
+
+		$("#cuerpoCentroCostos").html(htmlexterno);
+		//console.log(htmlexterno+"");
+	});
+}
+
+function Unidad(){
+	console.log("hola");
+	$senal = '1';
+	Ocultar();
+
+	document.getElementById("unidad").style.background = "#273156";
+	document.getElementById("usuarios2").style.background = "transparent";
+	document.getElementById("empresas").style.background = "transparent";
+	document.getElementById("centroCostos").style.background = "transparent";
+	
+	$("#campoUnidad").show();
+	$("#cabeceraUnidad").show();
+	$("#cuerpoUnidad").show();
+	$("#cuerpoUnidad2").hide();
+	
+	$.post("../controler/usuario.php", {
+		accion: "79"
+	}, function(htmlexterno){
+
+		$("#cuerpoUnidad").html(htmlexterno);
+		//console.log(htmlexterno+"");
+	});
+}
+
 function AddAsistenciaAdm(){
 	$senal = '1';
 	$("#cabeceraAsistenciaAdm").hide();
 	$("#cuerpoAsistenciaAdm2").show();
 	$("#cuerpoAsistenciaAdm").hide();
 
+}
+
+function AddEmpresas(){
+	$senal = '1';
+	$("#cabeceraEmpresas").hide();
+	$("#cuerpoEmpresas2").show();
+	$("#cuerpoEmpresas").hide();
+
+}
+
+
+function AddCentroCostos(){
+	$senal = '1';
+	$("#cabeceraCentroCostos").hide();
+	$("#cuerpoCentroCostos2").show();
+	$("#cuerpoCentroCostos").hide();
+	$.post("../controler/usuario.php", {
+		accion: "74"
+	}, function(htmlexterno){
+
+		$("#selectEmpresa").html(htmlexterno);
+		//console.log(htmlexterno+"");
+	});
+}
+
+function AddUnidad(){
+	$senal = '1';
+	$("#cabeceraUnidad").hide();
+	$("#cuerpoUnidad2").show();
+	$("#cuerpoUnidad").hide();
+	$.post("../controler/usuario.php", {
+		accion: "83"
+	}, function(htmlexterno){
+
+		$("#select_unidad").html(htmlexterno);
+		//console.log(htmlexterno+"");
+	});
 }

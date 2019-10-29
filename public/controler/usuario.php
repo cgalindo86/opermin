@@ -34,6 +34,13 @@
     $marca = $_POST['marca'];
     $stock = $_POST['stock'];
     $empleado = $_POST['empleado'];
+    //$tipo,$evento,$detalle,$lugar,$direccion,$fecha,$hora,$estado
+    $evento = $_POST['evento'];
+    $lugar = $_POST['lugar'];
+    $direccion = $_POST['direccion'];
+    $fecha = $_POST['fecha'];
+    $hora = $_POST['hora'];
+    $estado = $_POST['estado'];
 
 	include('../model/Usuario.php');
 	
@@ -171,6 +178,42 @@
         echo $miprod -> SelectEmpleados2();
     } else if($accion=="66"){
         echo $miprod -> Eventos();
+    } else if($accion=="67"){
+        echo $miprod -> GuardaEventos($tipo,$evento,$detalle,$lugar,$direccion,$fecha,$hora,$estado);
+    } else if($accion=="68"){
+        echo $miprod -> Eventos2($id);
+    } else if($accion=="69"){
+        echo $miprod -> EditaEventos($id,$tipo,$evento,$detalle,$lugar,$direccion,$fecha,$hora,$estado);
+    } else if($accion=="70"){
+        echo $miprod -> Empresas();
+    } else if($accion=="71"){
+        echo $miprod -> GuardaEmpresas($pais,$nombre);
+    } else if($accion=="72"){
+        echo $miprod -> Empresas2($id);
+    } else if($accion=="73"){
+        echo $miprod -> EditaEmpresas($id,$pais,$nombre);
+    } else if($accion=="74"){
+        echo $miprod -> SelectEmpresas();
+    } else if($accion=="75"){
+        echo $miprod -> ListarCentroCostos();
+    } else if($accion=="76"){
+        echo $miprod -> GuardaCentroCostos($empresa,$nombre);
+    } else if($accion=="77"){
+        echo $miprod -> ListarCentroCostos2($id);
+    } else if($accion=="78"){
+        echo $miprod -> EditaCentroCostos($id,$empresa,$nombre);
+    } else if($accion=="79"){
+        echo $miprod -> ListarUnidad();
+    } else if($accion=="80"){
+        echo $miprod -> GuardaUnidad($centro,$nombre);
+    } else if($accion=="81"){
+        echo $miprod -> ListarUnidad2($id);
+    } else if($accion=="82"){
+        echo $miprod -> EditaUnidad($id,$centro,$nombre);
+    } else if($accion=="83"){
+        echo $miprod -> SelectUnidad();
+    } else if($accion=="84"){
+        echo $miprod -> SelectCentroCostosUser();
     }
 
     
