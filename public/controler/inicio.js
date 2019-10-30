@@ -1008,7 +1008,7 @@ function EditarUnidad($id){
 function Asistencias(){
 	Ocultar();
 	$("#campoAsistencias").show();
-
+/*
 	document.getElementById("asistencia").style.background = "#273156";
 	document.getElementById("beneficios").style.background = "transparent";
 	document.getElementById("boletas").style.background = "transparent";
@@ -1018,7 +1018,7 @@ function Asistencias(){
 	document.getElementById("notificaciones").style.background = "transparent";
 	document.getElementById("reglamentos").style.background = "transparent";
 	document.getElementById("interes").style.background = "transparent";
-	document.getElementById("usuarios").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";*/
 
 	$.post("../controler/usuario.php", {
 		accion: "1"
@@ -1034,7 +1034,7 @@ function Beneficios(){
 	$("#campoBeneficios").show();
 	$("#cuerpoBeneficios").show();
 	$("#cuerpoBeneficios2").hide();
-	document.getElementById("beneficios").style.background = "#273156";
+	/*document.getElementById("beneficios").style.background = "#273156";
 	document.getElementById("asistencia").style.background = "transparent";
 	document.getElementById("boletas").style.background = "transparent";
 	document.getElementById("convocatorias").style.background = "transparent";
@@ -1043,7 +1043,7 @@ function Beneficios(){
 	document.getElementById("notificaciones").style.background = "transparent";
 	document.getElementById("reglamentos").style.background = "transparent";
 	document.getElementById("interes").style.background = "transparent";
-	document.getElementById("usuarios").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";*/
 
 	$.post("../controler/usuario.php", {
 		accion: "2"
@@ -1058,7 +1058,7 @@ function Boletas(){
 	Ocultar();
 	$("#campoBoletas").show();
 
-	document.getElementById("boletas").style.background = "#273156";
+	/*document.getElementById("boletas").style.background = "#273156";
 	document.getElementById("beneficios").style.background = "transparent";
 	document.getElementById("asistencia").style.background = "transparent";
 	document.getElementById("convocatorias").style.background = "transparent";
@@ -1067,7 +1067,7 @@ function Boletas(){
 	document.getElementById("notificaciones").style.background = "transparent";
 	document.getElementById("reglamentos").style.background = "transparent";
 	document.getElementById("interes").style.background = "transparent";
-	document.getElementById("usuarios").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";*/
 
 }
 
@@ -1090,7 +1090,7 @@ function Convocatorias(){
 	$("#cuerpoConvocatorias").show();
 	$("#cuerpoConvocatorias2").hide();
 
-	document.getElementById("convocatorias").style.background = "#273156";
+	/*document.getElementById("convocatorias").style.background = "#273156";
 	document.getElementById("beneficios").style.background = "transparent";
 	document.getElementById("boletas").style.background = "transparent";
 	document.getElementById("asistencia").style.background = "transparent";
@@ -1099,7 +1099,7 @@ function Convocatorias(){
 	document.getElementById("notificaciones").style.background = "transparent";
 	document.getElementById("reglamentos").style.background = "transparent";
 	document.getElementById("interes").style.background = "transparent";
-	document.getElementById("usuarios").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";*/
 
 	$.post("../controler/usuario.php", {
 		accion: "7"
@@ -1117,7 +1117,7 @@ function Descanso(){
 	$("#cuerpoDescanso").show();
 	$("#cuerpoDescanso2").hide();
 
-	document.getElementById("descanso").style.background = "#273156";
+	/*document.getElementById("descanso").style.background = "#273156";
 	document.getElementById("beneficios").style.background = "transparent";
 	document.getElementById("boletas").style.background = "transparent";
 	document.getElementById("convocatorias").style.background = "transparent";
@@ -1126,7 +1126,7 @@ function Descanso(){
 	document.getElementById("notificaciones").style.background = "transparent";
 	document.getElementById("reglamentos").style.background = "transparent";
 	document.getElementById("interes").style.background = "transparent";
-	document.getElementById("usuarios").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";*/
 
 	$.post("../controler/usuario.php", {
 		accion: "11"
@@ -1164,7 +1164,7 @@ function Frases(){
 	$("#cuerpoFrases").show();
 	$("#cuerpoFrases2").hide();
 
-	document.getElementById("frases").style.background = "#273156";
+	/*document.getElementById("frases").style.background = "#273156";
 	document.getElementById("beneficios").style.background = "transparent";
 	document.getElementById("boletas").style.background = "transparent";
 	document.getElementById("convocatorias").style.background = "transparent";
@@ -1173,7 +1173,7 @@ function Frases(){
 	document.getElementById("notificaciones").style.background = "transparent";
 	document.getElementById("reglamentos").style.background = "transparent";
 	document.getElementById("interes").style.background = "transparent";
-	document.getElementById("usuarios").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";*/
 
 	$.post("../controler/usuario.php", {
 		accion: "14"
@@ -1248,7 +1248,7 @@ function Notificaciones(){
 	$("#cuerpoNotificaciones").show();
 	$("#cuerpoNotificaciones2").hide();
 
-	document.getElementById("notificaciones").style.background = "#273156";
+	/*document.getElementById("notificaciones").style.background = "#273156";
 	document.getElementById("beneficios").style.background = "transparent";
 	document.getElementById("boletas").style.background = "transparent";
 	document.getElementById("convocatorias").style.background = "transparent";
@@ -1257,7 +1257,7 @@ function Notificaciones(){
 	document.getElementById("frases").style.background = "transparent";
 	document.getElementById("reglamentos").style.background = "transparent";
 	document.getElementById("interes").style.background = "transparent";
-	document.getElementById("usuarios").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";*/
 
 	/*$.post("../controler/usuario.php", {
 		accion: "11"
@@ -1275,7 +1275,7 @@ function Reglamentos(){
 	$("#cuerpoReglamentos").show();
 	$("#cuerpoReglamentos2").hide();
 
-	document.getElementById("reglamentos").style.background = "#273156";
+	/*document.getElementById("reglamentos").style.background = "#273156";
 	document.getElementById("beneficios").style.background = "transparent";
 	document.getElementById("boletas").style.background = "transparent";
 	document.getElementById("convocatorias").style.background = "transparent";
@@ -1284,7 +1284,7 @@ function Reglamentos(){
 	document.getElementById("frases").style.background = "transparent";
 	document.getElementById("notificaciones").style.background = "transparent";
 	document.getElementById("interes").style.background = "transparent";
-	document.getElementById("usuarios").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";*/
 
 	$.post("../controler/usuario.php", {
 		accion: "16"
@@ -1313,11 +1313,11 @@ function Procedimientos(){
 	$("#cuerpoProcedimientos").show();
 	$("#cuerpoProcedimientos2").hide();
 
-	document.getElementById("procedimientos").style.background = "#273156";
+	/*document.getElementById("procedimientos").style.background = "#273156";
 	document.getElementById("inducciones").style.background = "transparent";
 	document.getElementById("mejoras").style.background = "transparent";
 	document.getElementById("videos").style.background = "transparent";
-	document.getElementById("capacitaciones").style.background = "transparent";
+	document.getElementById("capacitaciones").style.background = "transparent";*/
 
 	$.post("../controler/usuario.php", {
 		accion: "16"
@@ -1518,7 +1518,7 @@ function Interes(){
 	$("#cuerpoInteres").show();
 	$("#cuerpoInteres2").hide();
 
-	document.getElementById("interes").style.background = "#273156";
+	/*document.getElementById("interes").style.background = "#273156";
 	document.getElementById("beneficios").style.background = "transparent";
 	document.getElementById("boletas").style.background = "transparent";
 	document.getElementById("convocatorias").style.background = "transparent";
@@ -1527,7 +1527,7 @@ function Interes(){
 	document.getElementById("frases").style.background = "transparent";
 	document.getElementById("notificaciones").style.background = "transparent";
 	document.getElementById("reglamentos").style.background = "transparent";
-	document.getElementById("usuarios").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";*/
 
 	$.post("../controler/usuario.php", {
 		accion: "20"
@@ -1644,7 +1644,7 @@ function Usuarios(){
 	$("#cuerpoUsuarios").show();
 	$("#cuerpoUsuarios2").hide();
 
-	document.getElementById("usuarios").style.background = "#273156";
+	/*document.getElementById("usuarios").style.background = "#273156";
 	document.getElementById("usuarios2").style.background = "#273156";
 	document.getElementById("beneficios").style.background = "transparent";
 	document.getElementById("boletas").style.background = "transparent";
@@ -1657,7 +1657,7 @@ function Usuarios(){
 	document.getElementById("interes").style.background = "transparent";
 	document.getElementById("centroCostos").style.background = "transparent";
 	document.getElementById("empresas").style.background = "transparent";
-	document.getElementById("unidad").style.background = "transparent";
+	document.getElementById("unidad").style.background = "transparent";*/
 
 	$.post("../controler/usuario.php", {
 		accion: "21"
@@ -1677,11 +1677,11 @@ function Capacitaciones(){
 	$("#cuerpoCapacitaciones").show();
 	$("#cuerpoCapacitaciones2").hide();
 
-	document.getElementById("capacitaciones").style.background = "#273156";
+	/*document.getElementById("capacitaciones").style.background = "#273156";
 	document.getElementById("inducciones").style.background = "transparent";
 	document.getElementById("mejoras").style.background = "transparent";
 	document.getElementById("procedimientos").style.background = "transparent";
-	document.getElementById("videos").style.background = "transparent";
+	document.getElementById("videos").style.background = "transparent";*/
 
 	$.post("../controler/usuario.php", {
 		accion: "25"
@@ -1700,11 +1700,11 @@ function Inducciones(){
 	$("#cuerpoInducciones").show();
 	$("#cuerpoInducciones2").hide();
 
-	document.getElementById("inducciones").style.background = "#273156";
+	/*document.getElementById("inducciones").style.background = "#273156";
 	document.getElementById("capacitaciones").style.background = "transparent";
 	document.getElementById("mejoras").style.background = "transparent";
 	document.getElementById("procedimientos").style.background = "transparent";
-	document.getElementById("videos").style.background = "transparent";
+	document.getElementById("videos").style.background = "transparent";*/
 
 	$.post("../controler/usuario.php", {
 		accion: "37"
@@ -1723,11 +1723,11 @@ function Mejoras(){
 	$("#cuerpoMejoras").show();
 	$("#cuerpoMejoras2").hide();
 
-	document.getElementById("mejoras").style.background = "#273156";
+	/*document.getElementById("mejoras").style.background = "#273156";
 	document.getElementById("inducciones").style.background = "transparent";
 	document.getElementById("capacitaciones").style.background = "transparent";
 	document.getElementById("procedimientos").style.background = "transparent";
-	document.getElementById("videos").style.background = "transparent";
+	document.getElementById("videos").style.background = "transparent";*/
 
 	$.post("../controler/usuario.php", {
 		accion: "41"
@@ -1785,11 +1785,11 @@ function Videos(){
 	$("#cuerpoVideos").show();
 	$("#cuerpoVideos2").hide();
 
-	document.getElementById("videos").style.background = "#273156";
+	/*document.getElementById("videos").style.background = "#273156";
 	document.getElementById("inducciones").style.background = "transparent";
 	document.getElementById("mejoras").style.background = "transparent";
 	document.getElementById("procedimientos").style.background = "transparent";
-	document.getElementById("capacitaciones").style.background = "transparent";
+	document.getElementById("capacitaciones").style.background = "transparent";*/
 
 	$.post("../controler/usuario.php", {
 		accion: "44"
@@ -1809,11 +1809,11 @@ function Almacenes(){
 	$("#cuerpoAlmacenes").show();
 	$("#cuerpoAlmacenes2").hide();
 
-	document.getElementById("almacenes").style.background = "#273156";
+	/*document.getElementById("almacenes").style.background = "#273156";
 	document.getElementById("productos").style.background = "transparent";
 	document.getElementById("categorias").style.background = "transparent";
 	document.getElementById("controlepp").style.background = "transparent";
-	document.getElementById("documentos").style.background = "transparent";
+	document.getElementById("documentos").style.background = "transparent";*/
 	
 	$.post("../controler/usuario.php", {
 		accion: "46"
@@ -1833,11 +1833,11 @@ function Productos(){
 	$("#cuerpoProductos").show();
 	$("#cuerpoProductos2").hide();
 
-	document.getElementById("productos").style.background = "#273156";
+	/*document.getElementById("productos").style.background = "#273156";
 	document.getElementById("almacenes").style.background = "transparent";
 	document.getElementById("categorias").style.background = "transparent";
 	document.getElementById("controlepp").style.background = "transparent";
-	document.getElementById("documentos").style.background = "transparent";
+	document.getElementById("documentos").style.background = "transparent";*/
 	
 	$.post("../controler/usuario.php", {
 		accion: "52"
@@ -1856,11 +1856,11 @@ function Categorias(){
 	$("#cuerpoCategorias").show();
 	$("#cuerpoCategorias2").hide();
 	
-	document.getElementById("categorias").style.background = "#273156";
+	/*document.getElementById("categorias").style.background = "#273156";
 	document.getElementById("productos").style.background = "transparent";
 	document.getElementById("almacenes").style.background = "transparent";
 	document.getElementById("controlepp").style.background = "transparent";
-	document.getElementById("documentos").style.background = "transparent";
+	document.getElementById("documentos").style.background = "transparent";*/
 
 	$.post("../controler/usuario.php", {
 		accion: "49"
@@ -1879,11 +1879,11 @@ function ControlEpp(){
 	$("#cuerpoControlEpp").show();
 	$("#cuerpoControlEpp2").hide();
 	
-	document.getElementById("controlepp").style.background = "#273156";
+	/*document.getElementById("controlepp").style.background = "#273156";
 	document.getElementById("productos").style.background = "transparent";
 	document.getElementById("almacenes").style.background = "transparent";
 	document.getElementById("categorias").style.background = "transparent";
-	document.getElementById("documentos").style.background = "transparent";
+	document.getElementById("documentos").style.background = "transparent";*/
 
 	$.post("../controler/usuario.php", {
 		accion: "63"
@@ -1902,11 +1902,11 @@ function DocumentosEpp(){
 	$("#cuerpoDocumentos").show();
 	$("#cuerpoDocumentos2").hide();
 	
-	document.getElementById("documentos").style.background = "#273156";
+	/*document.getElementById("documentos").style.background = "#273156";
 	document.getElementById("productos").style.background = "transparent";
 	document.getElementById("almacenes").style.background = "transparent";
 	document.getElementById("categorias").style.background = "transparent";
-	document.getElementById("controlepp").style.background = "transparent";
+	document.getElementById("controlepp").style.background = "transparent";*/
 
 	$.post("../controler/usuario.php", {
 		accion: "65"
@@ -2196,10 +2196,10 @@ function Empresas(){
 	$senal = '1';
 	Ocultar();
 
-	document.getElementById("empresas").style.background = "#273156";
+	/*document.getElementById("empresas").style.background = "#273156";
 	document.getElementById("usuarios2").style.background = "transparent";
 	document.getElementById("centroCostos").style.background = "transparent";
-	document.getElementById("unidad").style.background = "transparent";
+	document.getElementById("unidad").style.background = "transparent";*/
 	
 	$("#campoEmpresas").show();
 	$("#cabeceraEmpresas").show();
@@ -2220,10 +2220,10 @@ function CentroCostos(){
 	$senal = '1';
 	Ocultar();
 
-	document.getElementById("centroCostos").style.background = "#273156";
+	/*document.getElementById("centroCostos").style.background = "#273156";
 	document.getElementById("usuarios2").style.background = "transparent";
 	document.getElementById("empresas").style.background = "transparent";
-	document.getElementById("unidad").style.background = "transparent";
+	document.getElementById("unidad").style.background = "transparent";*/
 	
 	$("#campoCentroCostos").show();
 	$("#cabeceraCentroCostos").show();
@@ -2244,10 +2244,10 @@ function Unidad(){
 	$senal = '1';
 	Ocultar();
 
-	document.getElementById("unidad").style.background = "#273156";
+	/*document.getElementById("unidad").style.background = "#273156";
 	document.getElementById("usuarios2").style.background = "transparent";
 	document.getElementById("empresas").style.background = "transparent";
-	document.getElementById("centroCostos").style.background = "transparent";
+	document.getElementById("centroCostos").style.background = "transparent";*/
 	
 	$("#campoUnidad").show();
 	$("#cabeceraUnidad").show();
@@ -2306,4 +2306,76 @@ function AddUnidad(){
 		$("#select_unidad").html(htmlexterno);
 		//console.log(htmlexterno+"");
 	});
+}
+
+function NuevoRegAsistencia(){
+	var x = document.getElementById("asempleados").selectedIndex;
+    var y = document.getElementById("asempleados").options;
+	var empleado = y[x].value;
+
+	var x = document.getElementById("opAsistencia").selectedIndex;
+    var y = document.getElementById("opAsistencia").options;
+	var opAsistencia = y[x].value;
+
+	if(empleado!="0" && opAsistencia!="0"){
+		$.post("../controler/usuario.php", {
+			accion: "86",
+			empleado: empleado,
+			opcion: opAsistencia,
+			fechaI: $("#asistenciaFecha1").val(),
+			fechaF: $("#asistenciaFecha2").val()
+		}, function(htmlexterno){
+			if(opAsistencia=="1"){
+				$("#vacaciones").show();
+				$("#descansos").hide();
+				$("#nuevoAsistencia").hide();
+				$("#resumenAsistencia").hide();
+				$.post("../controler/usuario.php", {
+					accion: "87"
+				}, function(htmlexterno){
+					$("#cuerpoAsistenciasV").html(htmlexterno);
+				});
+
+			} else {
+				$("#vacaciones").hide();
+				$("#descansos").show();
+				$("#nuevoAsistencia").hide();
+				$("#resumenAsistencia").hide();
+
+				$.post("../controler/usuario.php", {
+					accion: "88"
+				}, function(htmlexterno){
+					$("#cuerpoAsistenciasD").html(htmlexterno);
+				});
+			}
+		});
+	} else {
+		alert("Verifique datos ingresados");
+	}
+	
+
+}
+
+function AsistenciaXEmpleado(){
+	var x = document.getElementById("asempleados").selectedIndex;
+    var y = document.getElementById("asempleados").options;
+	var empleado = y[x].value;
+
+	var x = document.getElementById("opAsistencia").selectedIndex;
+    var y = document.getElementById("opAsistencia").options;
+	var opAsistencia = y[x].value;
+
+	console.log(empleado);
+
+	if(empleado!="0" && opAsistencia!="0"){
+		$.post("../controler/usuario.php", {
+			accion: "87",
+			id: empleado,
+			opcion: opAsistencia
+		}, function(htmlexterno){
+			//var vv = htmlexterno.split("#");
+
+
+		});
+	}
 }

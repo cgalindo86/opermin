@@ -41,6 +41,9 @@
     $fecha = $_POST['fecha'];
     $hora = $_POST['hora'];
     $estado = $_POST['estado'];
+    $opcion = $_POST['opcion'];
+    $fechaI = $_POST['fechaI'];
+    $fechaF = $_POST['fechaF'];
 
 	include('../model/Usuario.php');
 	
@@ -214,6 +217,14 @@
         echo $miprod -> SelectUnidad();
     } else if($accion=="84"){
         echo $miprod -> SelectCentroCostosUser();
+    } else if($accion=="85"){
+        echo $miprod -> SelectEmpleados3();
+    } else if($accion=="86"){
+        echo $miprod -> NuevoRegAsistencia($empleado,$opcion,$fechaI,$fechaF);
+    } else if($accion=="87"){
+        echo $miprod -> AsistenciaVacaciones();
+    } else if($accion=="88"){
+        echo $miprod -> AsistenciaDescansos();
     }
 
     

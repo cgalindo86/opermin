@@ -32,7 +32,7 @@
     } else if($accion=="2"){
         echo Beneficios();
     } else if($accion=="3"){
-        echo GuardaBeneficios($codigo,$empresa,$detalle,$descuento_p,$descuento_m,$condiciones,$caducidad);
+        echo VerBoletas($id);
     } else if($accion=="4"){
         echo VerBoletas();
     } else if($accion=="5"){
@@ -131,12 +131,12 @@
                     $t = "2";
                     $tt = 'Temprano';
                     $tabla = $tabla . ''.$row['fecha'].'#';
-                    $tabla = $tabla . ''.$row['hora_inicio'].'#'.$row['hora_fin'].'#'.$tt.'#'.$t.'#'.$dif.'#%';
+                    $tabla = $tabla . ''.$row['hora_inicio'].'#'.$row['hora_fin'].'#'.$tt.'#'.$t.'#'.$dif.'##%';
                 } else {
                     $t = "1";
                     $tt = 'Tarde';
                     $tabla = $tabla . ''.$row['fecha'].'#';
-                    $tabla = $tabla . ''.$row['hora_inicio'].'#'.$row['hora_fin'].'#'.$tt.'#'.$t.'#'.$dif.'#%';
+                    $tabla = $tabla . ''.$row['hora_inicio'].'#'.$row['hora_fin'].'#'.$tt.'#'.$t.'#'.$dif.'##%';
                 }
                 //$tabla = $tabla . ''.$row['fecha'].'#';
                 //$tabla = $tabla . ''.$row['hora_inicio'].'#'.$row['hora_fin'].'#'.$tt.'#'.$t.'#%';
@@ -161,7 +161,7 @@
                 $tabla = $tabla . $row['titulo'].'#'.$descuento.'#';
                 $tabla = $tabla . $row['caducidad'].'#'.$row['detalle'].'#';
                 $tabla = $tabla . $row['codigo'].'#'.$row['empresa'].'#';
-                $tabla = $tabla . $row['condiciones'].'#%';
+                $tabla = $tabla . $row['condiciones'].'##%';
                 
             }
             return $tabla;
@@ -236,53 +236,24 @@
             }
         } 
     
-        function VerBoletas(){
+        function VerBoletas($id){
             include('conexion.php');
         
-            $query = "SELECT * FROM boletas ";
+            $query = "SELECT * FROM boletas WHERE dni='$id'";
             mysqli_set_charset($mysqli, 'utf8'); 
             $result = mysqli_query($mysqli, $query);
             
-            $tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
-            $tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>TIPO DOCUMENTO</td><td>DNI</td><td>APELLIDOS Y NOMBRES</td>';
-            $tabla = $tabla . '<td>CENTRO DE COSTOS</td><td>UNIDAD</td>';
-            $tabla = $tabla . '<td>CARGO</td><td>REGIMEN</td>';
-            $tabla = $tabla . '<td>FULL - PART TIME</td><td>BANCO</td>';
-            $tabla = $tabla . '<td>NRO CUENTA</td><td>SISTEMA PENSIONARIO</td>';
-            $tabla = $tabla . '<td>CUSPP</td><td>BRUTO O NETO</td>';
-            $tabla = $tabla . '<td>IMPORTE DE MOVILIDAD<BR>SUPEDITADA</td><td>REFRIGERIO SUPEDITADO</td>';
-            $tabla = $tabla . '<td>REFRIGERIO FIJO</td><td>EPS</td>';
-            $tabla = $tabla . '<td>SCTR</td><td>ASIG. FAM. (SI O NO)</td>';
-            $tabla = $tabla . '<td>REM. BASICA</td><td>DIAS LABORADOS</td>';
-            $tabla = $tabla . '<td>DESCANSO MEDICO</td><td>VACACIONES</td>';
-            $tabla = $tabla . '<td>HORAS TRABAJADAS</td><td>HABER MENSUAL</td>';
-            $tabla = $tabla . '<td>ASIGNACION FAMILIAR</td><td>VACACIONES</td>';
-            $tabla = $tabla . '<td>COMISIONES</td><td>MOVILIDAD SUPEDITADA</td>';
-            $tabla = $tabla . '<td>REFRIGERIO</td><td>BONIFICACION</td>';
-            $tabla = $tabla . '<td>CONDICION DE TRABAJO</td><td>BASE IMPONIBLE</td>';
-            $tabla = $tabla . '<td>TOTAL BRUTO</td><td>APORTE AFP</td>';
-            $tabla = $tabla . '<td>COMISIONES AFP</td><td>PRIMA AFP</td>';
-            $tabla = $tabla . '<td>ONP</td><td>RENTA 5TA</td>';
-            $tabla = $tabla . '<td>PRESTAMO</td><td>ADELANTOS</td>';
-            $tabla = $tabla . '<td>DESCUENTO</td><td>NETO</td>';
-            $tabla = $tabla . '<td>ESSALUD</td></tr></thead>';
-            $tabla = $tabla . '<tbody>';
+            $tabla='';
             while ($row = $result->fetch_array()){
                 
-                $tabla = $tabla . '<tr><td>'.$row['tipo_documento'].'</td><td>'.$row['dni'].'</td>';
-                $tabla = $tabla . '<td>'.$row['nombre'].'</td><td>'.$row['centro_costos'].'</td>';
-                $tabla = $tabla . '<td>'.$row['unidad'].'</td><td>'.$row['cargo'].'</td>';
-                $tabla = $tabla . '<td>'.$row['regimen'].'</td><td>'.$row['tipo_contrato'].'</td>';
-                $tabla = $tabla . '<td>'.$row['banco'].'</td><td>'.$row['cuenta'].'</td>';
-                $tabla = $tabla . '<td>'.$row['pensionario'].'</td><td>'.$row['cuspp'].'</td>';
-                $tabla = $tabla . '<td>'.$row['tipo_remuneracion'].'</td><td>'.$row['movilidad'].'</td>';
-                $tabla = $tabla . '<td>'.$row['refrigerio_supeditado'].'</td><td>'.$row['refrigerio_fijo'].'</td>';
-                $tabla = $tabla . '<td>'.$row['eps'].'</td><td>'.$row['sctr'].'</td>';
-                $tabla = $tabla . '<td>'.$row['asignacion_si_no'].'</td><td>'.$row['remuneracion_basica'].'</td>';
-                $tabla = $tabla . '<td>'.$row['dias_laborados'].'</td><td>'.$row['descanso_medico'].'</td>';
-                $tabla = $tabla . '<td>'.$row['vacaciones'].'</td><td>'.$row['horas_trabajadas'].'</td>';
-                $tabla = $tabla . '<td>'.$row['haber_mensual'].'</td><td>'.$row['asignacion_importe'].'</td>';
-                $tabla = $tabla . '<td>'.$row['vacaciones_importe'].'</td><td>'.$row['comisiones'].'</td>';
+                $tabla = $tabla . ''.$row['periodo'].'#'.$row['tipo_documento'].'#'.$row['dni'].'#';
+                $tabla = $tabla . ''.$row['nombre'].'#'.$row['centro_costos'].'#';
+                $tabla = $tabla . ''.$row['unidad'].'#'.$row['cargo'].'#';
+                $tabla = $tabla . ''.$row['remuneracion_basica'].'#';
+                $tabla = $tabla . ''.$row['dias_laborados'].'#'.$row['descanso_medico'].'#';
+                $tabla = $tabla . ''.$row['vacaciones'].'#'.$row['horas_trabajadas'].'#';
+                $tabla = $tabla . ''.$row['haber_mensual'].'#'.$row['asignacion_importe'].'##';
+                /*$tabla = $tabla . '<td>'.$row['vacaciones_importe'].'</td><td>'.$row['comisiones'].'</td>';
                 $tabla = $tabla . '<td>'.$row['movilidad_importe'].'</td><td>'.$row['refrigerio_importe'].'</td>';
                 $tabla = $tabla . '<td>'.$row['bonificacion'].'</td><td>'.$row['condicion'].'</td>';
                 $tabla = $tabla . '<td>'.$row['base_imponible'].'</td><td>'.$row['total_bruto'].'</td>';
@@ -291,9 +262,9 @@
                 $tabla = $tabla . '<td>'.$row['renta_5ta'].'</td><td>'.$row['prestamos'].'</td>';
                 $tabla = $tabla . '<td>'.$row['adelantos'].'</td><td>'.$row['descuentos'].'</td>';
                 $tabla = $tabla . '<td>'.$row['neto'].'</td><td>'.$row['esslud'].'</td>';
-                $tabla = $tabla . '</tr>';
+                $tabla = $tabla . '</tr>';*/
             }
-            $tabla = $tabla . '</tbody></table>';
+            //$tabla = $tabla . '</tbody></table>';
             return $tabla;
         }
     

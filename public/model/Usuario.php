@@ -2436,6 +2436,122 @@ class Usuario{
     	return $tabla;
 	}
 
+	function SelectEmpleados3(){
+		include('conexion.php');
+
+		$query = "SELECT * FROM empleados ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		$tabla = $tabla.'<select  id="asempleados"><option value="0">Seleccionar</option>';
+    	while ($row = $result->fetch_array()){
+			$tabla = $tabla . '<option value="'.$row['id'].'">'.$row['nombre'].' '.$row['apellidos'].'</option>';
+		}
+		$tabla = $tabla.'</select>';
+    	return $tabla;
+	}
+
+	function NuevoRegAsistencia($empleado,$opcion,$fechaI,$fechaF){
+		include('conexion.php');
+
+		$query = "SELECT * FROM asistencia_libre WHERE empleado='$empleado' AND opcion='$opcion' ";
+        
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		$tabla='';
+		while ($row = $result->fetch_array()){
+			$tabla = $row['id'];
+		}
+		
+		if($tabla==""){
+			$sql = "INSERT INTO ASISTENCIA_LIBRE (EMPLEADO,OPCION,FECHA_INICIO,FECHA_FIN) 
+			VALUES ('$empleado','$opcion','$fechaI','$fechaF')";
+			
+			if (!$resultado = $mysqli->query($sql)) {
+				// ¡Oh, no! La consulta falló. 
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+			
+				// De nuevo, no hacer esto en un sitio público, aunque nosotros mostraremos
+				// cómo obtener información del error
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+				
+				exit;
+			} else {
+				
+				echo "Ingresado"."\n";
+				
+			}
+		} else {
+			//$sql = "UPDATE asistencia_libre SET fecha_inicio='$fechaI', fecha_fin='$fechaF' WHERE id='$tabla'";
+			$sql = "UPDATE asistencia_libre SET fecha_inicio='$fechaI', fecha_fin='$fechaF' WHERE id='$tabla'";
+			
+			if (!$resultado = $mysqli->query($sql)) {
+				// ¡Oh, no! La consulta falló. 
+				echo "Lo sentimos, este sitio web está experimentando problemas.";
+			
+				// De nuevo, no hacer esto en un sitio público, aunque nosotros mostraremos
+				// cómo obtener información del error
+				echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Query: " . $sql . "\n";
+				echo "Errno: " . $mysqli->errno . "\n";
+				echo "Error: " . $mysqli->error . "\n";
+				
+				exit;
+			} else {
+				
+				echo "Ingresado"."\n";
+				
+			}
+		}
+		
+	}
+
+
+	function AsistenciaVacaciones(){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM asistencia_libre WHERE opcion='1' ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>EMPLEADO</td><td>FECHA INICIO</td>';
+		$tabla = $tabla . '<td>FECHA FIN</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			$nombre = $this->NombreUsuario($row['empleado']);
+			$tabla = $tabla . '<tr><td>'.$nombre.'</td>';
+			$tabla = $tabla . '<td>'.$row['fecha_inicio'].'</td><td>'.$row['fecha_fin'].'</td></tr>';
+    	}
+    	$tabla = $tabla . '</tbody></table></div>';
+    	return $tabla;
+	}
+
+	function AsistenciaDescansos(){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM asistencia_libre WHERE opcion='2' ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>EMPLEADO</td><td>FECHA INICIO</td>';
+		$tabla = $tabla . '<td>FECHA FIN</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			$nombre = $this->NombreUsuario($row['empleado']);
+			$tabla = $tabla . '<tr><td>'.$nombre.'</td>';
+			$tabla = $tabla . '<td>'.$row['fecha_inicio'].'</td><td>'.$row['fecha_fin'].'</td></tr>';
+    	}
+    	$tabla = $tabla . '</tbody></table></div>';
+    	return $tabla;
+	}
+	
+
 }
 
 ?>

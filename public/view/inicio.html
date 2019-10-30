@@ -61,6 +61,44 @@
     
 	<script type="application/javascript" src="../controler/inicio.js"></script>
 	
+	<style>
+		/* Style the tab */
+		.tab {
+		  overflow: hidden;
+		  border: 1px solid #ccc;
+		  background-color: #f1f1f1;
+		}
+		
+		/* Style the buttons inside the tab */
+		.tab button {
+		  background-color: inherit;
+		  float: left;
+		  border: none;
+		  outline: none;
+		  cursor: pointer;
+		  padding: 14px 16px;
+		  transition: 0.3s;
+		  font-size: 17px;
+		}
+		
+		/* Change background color of buttons on hover */
+		.tab button:hover {
+		  background-color: #ddd;
+		}
+		
+		/* Create an active/current tablink class */
+		.tab button.active {
+		  background-color: #ccc;
+		}
+		
+		/* Style the tab content */
+		.tabcontent {
+		  display: none;
+		  padding: 6px 12px;
+		  border: 1px solid #ccc;
+		  border-top: none;
+		}
+	</style>
 </head>
 
 <body>
@@ -445,21 +483,30 @@
 								<li class="nav-item"><div id="descanso" onclick="Descanso()" class="nav-link">DESCANSO MEDICO</div></li>
 								<li class="nav-item"><div id="frases" onclick="Frases()" class="nav-link">FRASES</div></li>
 								<li class="nav-item"><div id="notificaciones" onclick="Notificaciones()" class="nav-link">NOTIFICACIONES</div></li>
-								<li class="nav-item"><div id="reglamentos" onclick="Reglamentos()" class="nav-link">REGLAMENTOS</div></li>
 								<li class="nav-item"><div id="interes" onclick="Interes()" class="nav-link">TEMAS DE INTERES</div></li>
-								<li class="nav-item"><div id="usuarios" onclick="Usuarios()" class="nav-link">USUARIOS</div></li>
+								<!--<li class="nav-item"><div id="usuarios" onclick="Usuarios()" class="nav-link">USUARIOS</div></li>
+								-->
+								<li class="nav-item"><div id="capacitaciones" onclick="Capacitaciones()" class="nav-link">CAPACITACIONES</div></li>
+								<li class="nav-item"><div id="inducciones" onclick="Inducciones()" class="nav-link">INDUCCIONES</div></li>
 								
 							</ul>
 						</li>
 						<li class="nav-item nav-item-submenu">
-							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>PROYECTOS</span></a>
-
+							<a href="#" id="procedimientos" onclick="Procedimientos()" class="nav-link"><i class="icon-copy"></i> <span>PROCEDIMIENTOS</span></a>
+							<!--
 							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
-								<li class="nav-item"><div id="capacitaciones" onclick="Capacitaciones()" class="nav-link">CAPACITACIONES</div></li>
-								<li class="nav-item"><div id="inducciones" onclick="Inducciones()" class="nav-link">INDUCCIONES</div></li>
 								<li class="nav-item"><div id="mejoras" onclick="Mejoras()" class="nav-link">MEJORA CONTINUA</div></li>
 								<li class="nav-item"><div id="procedimientos" onclick="Procedimientos()" class="nav-link">PROCEDIMIENTOS</div></li>
 								<li class="nav-item"><div id="videos" onclick="Videos()" class="nav-link">VIDEOS CORPORATIVOS</div></li>
+								
+							</ul>-->
+						</li>
+						<li class="nav-item nav-item-submenu">
+							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>NOSOSTROS</span></a>
+							
+							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
+								<li class="nav-item"><div id="videos" onclick="Videos()" class="nav-link">VIDEOS CORPORATIVOS</div></li>
+								<li class="nav-item"><div id="reglamentos" onclick="Reglamentos()" class="nav-link">REGLAMENTOS</div></li>
 								
 							</ul>
 						</li>
@@ -547,7 +594,136 @@
 					<div id="contenidos" style="margin-left: 10%; align-content: center; width:100%; justify-items: center;">
 						<div id="contenidop"></div>
 						<div id="campoAsistencias" style="align-content: center; width:100%; justify-items: center;">
-							<div id="cuerpoAsistencias"></div>
+							
+							<div id="cuerpoAsistencias2">
+								
+								<div class="tab">
+									<button class="tablinks" onclick="openCity(event, 'descansos')">DESCANSOS</button>
+									<button class="tablinks" onclick="openCity(event, 'vacaciones')">VACACIONES</button>
+									<button class="tablinks" onclick="openCity(event, 'resumenAsistencia')">RESUMEN</button>
+									<button class="tablinks" onclick="openCity(event, 'nuevoAsistencia')">NUEVO</button>
+								  
+								</div>
+								  
+								  <div id="descansos" class="tabcontent">
+									<h3>DESCANSOS</h3>
+									<div id="cuerpoAsistenciasD"></div>
+								  </div>
+								  
+								  <div id="vacaciones" class="tabcontent">
+									<h3>VACACIONES</h3>
+									<div id="cuerpoAsistenciasV"></div>
+								  </div>
+								  
+								  <div id="resumenAsistencia" class="tabcontent">
+									<h3>RESUMEN</h3>
+									<div id="cuerpoAsistencias"></div>
+								  </div>
+
+								  <div id="nuevoAsistencia" class="tabcontent">
+									<h3>NUEVO</h3>
+									<table>
+										<tr>
+											<td style="width: 50%;">
+												EMPLEADO
+											</td>
+											<td>
+												<div id="select_empleado"></div>
+											</td>
+										</tr>
+										<tr>	
+											<td style="width: 50%;">
+												TIPO
+											</td>
+											<td>
+												<select onclick="AsistenciaXEmpleado()" id="opAsistencia">
+													<option value="0">Seleccionar</option>
+													<option value="1">Vacaciones</option>
+													<option value="2">Descanso médico</option>
+													
+												</select>
+												
+											</td>
+										</tr>
+										<tr>											
+											<td style="width: 50%;">
+												<span class="input-group-prepend">
+													<span class="input-group-text">
+														FECHA INICIO:
+														<i class="icon-calendar22"></i>
+													</span>
+												</span>
+											</td>
+											<td>
+												<div class="form-group">
+													<div class="input-group">
+														<div style="display:inline-block; margin-left:25px;"><input name="datepicker" type="date" id="asistenciaFecha1" style="width:150px;" /></div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td style="width: 50%;">
+												<span class="input-group-prepend">
+													<span class="input-group-text">
+														FECHA FIN:
+														<i class="icon-calendar22"></i>
+													</span>
+												</span>
+											</td>
+											<td>
+												<div class="form-group">
+													<div class="input-group">
+														<div style="display:inline-block; margin-left:25px;"><input name="datepicker" type="date" id="asistenciaFecha2" style="width:150px;" /></div>
+													</div>
+												</div>
+											</td>
+										</tr>
+
+									</table>
+									<button type="button" class="btn btn-danger" onclick="NuevoRegAsistencia()">GUARDAR</button>
+								  </div>
+
+								  <script>
+									function openCity(evt, cityName) {
+									  var i, tabcontent, tablinks;
+									  tabcontent = document.getElementsByClassName("tabcontent");
+									  for (i = 0; i < tabcontent.length; i++) {
+										tabcontent[i].style.display = "none";
+									  }
+									  tablinks = document.getElementsByClassName("tablinks");
+									  for (i = 0; i < tablinks.length; i++) {
+										tablinks[i].className = tablinks[i].className.replace(" active", "");
+									  }
+									  document.getElementById(cityName).style.display = "block";
+									  evt.currentTarget.className += " active";
+
+									  if(cityName=="nuevoAsistencia"){
+											$.post("../controler/usuario.php", {
+												accion: "85"
+											}, function(htmlexterno){
+
+												$("#select_empleado").html(htmlexterno);
+												//console.log(htmlexterno+"");
+											});
+									  } 
+									  if(cityName=="vacaciones"){
+											$.post("../controler/usuario.php", {
+												accion: "87"
+											}, function(htmlexterno){
+												$("#cuerpoAsistenciasV").html(htmlexterno);
+											});
+									  } 
+									  if(cityName=="vacaciones"){
+											$.post("../controler/usuario.php", {
+												accion: "88"
+											}, function(htmlexterno){
+												$("#cuerpoAsistenciasD").html(htmlexterno);
+											});
+									  }
+									} 
+								</script>
+							</div>
 						</div>
 						<div id="campoBeneficios" style="align-content: center; width:100%; justify-items: center;">
 							<div id="botones" style="margin-left:60%; margin-bottom: 2%; width: 100%;">
