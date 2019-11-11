@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Limitless - Responsive Web Application Kit by Eugene Kopyov</title>
+	<title>INTRANET OPERMIN</title>
 
 	<!-- Global stylesheets -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -520,15 +520,16 @@
 								<li class="nav-item"><div id="asistencia" onclick="Asistencias()" class="nav-link">ASISTENCIAS</div></li>
 								<li class="nav-item"><div id="beneficios" onclick="Beneficios()" class="nav-link">BENEFICIOS</div></li>
 								<li class="nav-item"><div id="boletas" onclick="Boletas()" class="nav-link">BOLETAS</div></li>
+								<li class="nav-item"><div id="capacitaciones" onclick="Capacitaciones()" class="nav-link">CAPACITACIONES</div></li>
 								<li class="nav-item"><div id="convocatorias" onclick="Convocatorias()" class="nav-link">CONVOCATORIAS</div></li>
 								<li class="nav-item"><div id="descanso" onclick="Descanso()" class="nav-link">DESCANSO MEDICO</div></li>
 								<li class="nav-item"><div id="frases" onclick="Frases()" class="nav-link">FRASES</div></li>
+								<li class="nav-item"><div id="inducciones" onclick="Inducciones()" class="nav-link">INDUCCIONES</div></li>
+								<li class="nav-item"><div id="noticias" onclick="Noticias()" class="nav-link">NOTICIAS</div></li>
 								<li class="nav-item"><div id="notificaciones" onclick="Notificaciones()" class="nav-link">NOTIFICACIONES</div></li>
 								<li class="nav-item"><div id="interes" onclick="Interes()" class="nav-link">TEMAS DE INTERES</div></li>
 								<!--<li class="nav-item"><div id="usuarios" onclick="Usuarios()" class="nav-link">USUARIOS</div></li>
 								-->
-								<li class="nav-item"><div id="capacitaciones" onclick="Capacitaciones()" class="nav-link">CAPACITACIONES</div></li>
-								<li class="nav-item"><div id="inducciones" onclick="Inducciones()" class="nav-link">INDUCCIONES</div></li>
 								
 							</ul>
 						</li>
@@ -543,7 +544,7 @@
 							</ul>-->
 						</li>
 						<li class="nav-item nav-item-submenu">
-							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>NOSOSTROS</span></a>
+							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>NOSOTROS</span></a>
 							
 							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
 								<li class="nav-item"><div id="videos" onclick="Videos()" class="nav-link">VIDEOS CORPORATIVOS</div></li>
@@ -555,8 +556,9 @@
 							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>LOGISTICA</span></a>
 
 							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
-								<li class="nav-item"><div id="almacenes" onclick="Almacenes()" class="nav-link">ALMACENES</div></li>
+								<!--<li class="nav-item"><div id="almacenes" onclick="Almacenes()" class="nav-link">ALMACENES</div></li>
 								<li class="nav-item"><div id="categorias" onclick="Categorias()" class="nav-link">CATEGORIAS</div></li>
+								-->
 								<li class="nav-item"><div id="productos" onclick="Productos()" class="nav-link">PRODUCTOS</div></li>
 								<li class="nav-item"><div id="controlepp" onclick="ControlEpp()" class="nav-link">CONTROL EPP</div></li>
 								<li class="nav-item"><div id="documentos" onclick="DocumentosEpp()" class="nav-link">ALMACEN DIGITAL EPP</div></li>
@@ -564,7 +566,7 @@
 							</ul>
 						</li>
 						<li class="nav-item nav-item-submenu">
-							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>ASISTENCIA ADM.</span></a>
+							<a href="#" class="nav-link"><i class="icon-copy"></i> <span>EVENTOS</span></a>
 							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
 								<li class="nav-item"><div id="asistenciaAdm" onclick="AsistenciaAdm()" class="nav-link">EVENTOS</div></li>
 							</ul>
@@ -637,44 +639,65 @@
 						<div id="campoAsistencias" style="align-content: center; width:100%; justify-items: center;">
 							
 							<div id="cuerpoAsistencias2">
-								
+								<div class="autocomplete" style="width:800px;">
+									<input id="empleado" style="width:400px; margin:10px;" type="text" placeholder="Empleado"><!--<button id="add">+</button>-->
+								</div>
 								<div class="tab">
-									<button class="tablinks" onclick="openCity(event, 'descansos')">DESCANSOS</button>
+									<button class="tablinks" onclick="openCity(event, 'resumenAsistencia')">ASISTENCIAS</button>
 									<button class="tablinks" onclick="openCity(event, 'vacaciones')">VACACIONES</button>
-									<button class="tablinks" onclick="openCity(event, 'resumenAsistencia')">RESUMEN</button>
+									<button class="tablinks" onclick="openCity(event, 'descansos')">DESCANSOS</button>
+									<button class="tablinks" onclick="openCity(event, 'suspension')">SUSPENSIONES</button>
+									<button class="tablinks" onclick="openCity(event, 'licenciam')">L. MATERNIDAD</button>
+									<button class="tablinks" onclick="openCity(event, 'licenciap')">L. PATERNIDAD</button>
+									<button class="tablinks" onclick="openCity(event, 'licenciaf')">L. FALLECIMIENTO</button>
 									<button class="tablinks" onclick="openCity(event, 'nuevoAsistencia')">NUEVO</button>
 								  
 								</div>
-								  
-								  <div id="descansos" class="tabcontent">
-									<h3>DESCANSOS</h3>
-									<div id="cuerpoAsistenciasD"></div>
+								  <div id="resumenAsistencia" class="tabcontent">
+									<h3>ASISTENCIAS</h3>
+									<div id="cuerpoAsistencias"></div>
 								  </div>
-								  
 								  <div id="vacaciones" class="tabcontent">
 									<h3>VACACIONES</h3>
 									<div id="cuerpoAsistenciasV"></div>
 								  </div>
-								  
-								  <div id="resumenAsistencia" class="tabcontent">
-									<h3>RESUMEN</h3>
-									<div id="cuerpoAsistencias"></div>
+								  <div id="descansos" class="tabcontent">
+									<h3>DESCANSOS</h3>
+									<div id="cuerpoAsistenciasD"></div>
 								  </div>
+								  <div id="suspension" class="tabcontent">
+									<h3>SUSPENSIONES</h3>
+									<div id="cuerpoSuspension"></div>
+								  </div>
+								  <div id="licenciam" class="tabcontent">
+									<h3>L. MATERNA</h3>
+									<div id="cuerpoLicenciaM"></div>
+								  </div>
+								  <div id="licenciap" class="tabcontent">
+									<h3>L. PATERNA</h3>
+									<div id="cuerpoLicenciaP"></div>
+								  </div>
+								  <div id="licenciaf" class="tabcontent">
+									<h3>L. FALLECIMIENTO</h3>
+									<div id="cuerpoLicenciaF"></div>
+								  </div>
+								  
+								  
+								  
+								  
 
 								  <div id="nuevoAsistencia" class="tabcontent">
 									<h3>NUEVO</h3>
 									<table>
-										<tr>
+										<!--<tr>
 											<td style="width: 50%;">
 												EMPLEADO
 											</td>
 											<td>
-												<!--<div id="select_empleado"></div>-->
-												<div class="autocomplete" style="width:800px;">
-													<input id="empleado" style="width:400px; margin:10px;" type="text" placeholder="Empleado"><!--<button id="add">+</button>-->
-												</div>
+												<div id="select_empleado"></div>
+												
 											</td>
-										</tr>
+										</tr>-->
 										<tr>	
 											<td style="width: 50%;">
 												TIPO
@@ -684,7 +707,10 @@
 													<option value="0">Seleccionar</option>
 													<option value="1">Vacaciones</option>
 													<option value="2">Descanso médico</option>
-													
+													<option value="3">Suspensión</option>
+													<option value="4">Licencia materna</option>
+													<option value="5">Licencia paterna</option>
+													<option value="6">Licencia por fallecimiento</option>
 												</select>
 												
 											</td>
@@ -694,7 +720,7 @@
 												<span class="input-group-prepend">
 													<span class="input-group-text">
 														FECHA INICIO:
-														<i class="icon-calendar22"></i>
+														
 													</span>
 												</span>
 											</td>
@@ -711,7 +737,7 @@
 												<span class="input-group-prepend">
 													<span class="input-group-text">
 														FECHA FIN:
-														<i class="icon-calendar22"></i>
+														
 													</span>
 												</span>
 											</td>
@@ -728,44 +754,8 @@
 									<button type="button" class="btn btn-danger" onclick="NuevoRegAsistencia()">GUARDAR</button>
 								  </div>
 
-								  <script>
-									function openCity(evt, cityName) {
-									  var i, tabcontent, tablinks;
-									  tabcontent = document.getElementsByClassName("tabcontent");
-									  for (i = 0; i < tabcontent.length; i++) {
-										tabcontent[i].style.display = "none";
-									  }
-									  tablinks = document.getElementsByClassName("tablinks");
-									  for (i = 0; i < tablinks.length; i++) {
-										tablinks[i].className = tablinks[i].className.replace(" active", "");
-									  }
-									  document.getElementById(cityName).style.display = "block";
-									  evt.currentTarget.className += " active";
-
-									  if(cityName=="nuevoAsistencia"){
-											$.post("../controler/usuario.php", {
-												accion: "85"
-											}, function(htmlexterno){
-
-												$("#select_empleado").html(htmlexterno);
-												//console.log(htmlexterno+"");
-											});
-									  } 
-									  if(cityName=="vacaciones"){
-											$.post("../controler/usuario.php", {
-												accion: "87"
-											}, function(htmlexterno){
-												$("#cuerpoAsistenciasV").html(htmlexterno);
-											});
-									  } 
-									  if(cityName=="vacaciones"){
-											$.post("../controler/usuario.php", {
-												accion: "88"
-											}, function(htmlexterno){
-												$("#cuerpoAsistenciasD").html(htmlexterno);
-											});
-									  }
-									} 
+								<script>
+									
 								</script>
 							</div>
 						</div>
@@ -1144,6 +1134,63 @@
 								</table>
 								<br>
 								<button class="btn bg-primary" onclick="GuardaInteres()">GUARDAR</button>
+							</div>
+						</div>
+						<div id="campoNoticias">
+							<div id="cabeceraNoticias">
+								<button type="button" class="btn bg-primary" id="addNoticias">NUEVO</button>
+							</div>
+							<br>
+							<div id="cuerpoNoticias"></div>
+							<div id="cuerpoNoticias2" style="width:100%; justify-content: center; align-items: center;">
+								<table>
+									<tr>
+										<td>
+											<label>TITULO: </label>
+										</td>
+										<td>
+											<div style="display:inline-block; margin-right:5px;"><input id="ntitulo" type="text" style="width:200px;" placeholder="TITULO"></div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>DETALLE: </label>
+										</td>
+										<td>
+											<div style="margin-right:5px;"><textarea id="ndetalle" type="text" style="width:405px;" placeholder="DETALLE"></textarea></div>
+										
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>TIPO: </label>
+										</td>
+										<td>
+											<select id="itipo" onclick="TipoNoticias()">
+												<option value="0">Seleccionar</option>
+												<option value="1">Video</option>
+												<option value="2">Enlace</option>
+												<option value="3">Infografía</option>
+												<option value="4">Documento</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>MATERIAL: </label>
+										</td>
+										<td>
+											<div id="nmaterial1">
+												<div style="display:inline-block; margin-right:5px;"><input id="ntexto" type="text" style="width:200px;" placeholder="VIDEO O ENLACE"></div>
+											</div>
+											<div id="nmaterial2">
+												<div id="archNoticias"></div>
+											</div>
+										</td>
+									</tr>
+								</table>
+								<br>
+								<button class="btn bg-primary" onclick="GuardaNoticias()">GUARDAR</button>
 							</div>
 						</div>
 						<div id="campoUsuarios">

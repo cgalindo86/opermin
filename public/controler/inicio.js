@@ -2,6 +2,7 @@ var $senal='';
 var $curso='';
 var $tipoCurso='';
 var $sesion='';
+var $empleado='';
 
 $(document).ready(function () {
 	MainApp();
@@ -9,6 +10,11 @@ $(document).ready(function () {
 	$("#addInteres").click(function(){
 		$("#cuerpoInteres2").show();
 		$("#cuerpoInteres").hide();
+	});
+
+	$("#addNoticias").click(function(){
+		$("#cuerpoNoticias2").show();
+		$("#cuerpoNoticias").hide();
 	});
 
 	$("#addUsuarios").click(function(){
@@ -66,6 +72,7 @@ function Ocultar(){
 	$("#campoFrases").hide();
 	$("#campoNotificaciones").hide();
 	$("#campoReglamentos").hide();
+	$("#campoNoticias").hide();
 	$("#campoInteres").hide();
 	$("#campoUsuarios").hide();
 
@@ -1038,13 +1045,7 @@ function Asistencias(){
 	document.getElementById("interes").style.background = "transparent";
 	document.getElementById("usuarios").style.background = "transparent";*/
 
-	$.post("../controler/usuario.php", {
-		accion: "1"
-	}, function(htmlexterno){
-		console.log("1");
-		$("#cuerpoAsistencias").html(htmlexterno);
-		console.log(htmlexterno+"");
-	});
+	
 }
 
 function Beneficios(){
@@ -1556,6 +1557,33 @@ function Interes(){
 	});
 }
 
+function Noticias(){
+	Ocultar();
+	
+	$("#campoNoticias").show();
+	$("#cuerpoNoticias").show();
+	$("#cuerpoNoticias2").hide();
+
+	/*document.getElementById("interes").style.background = "#273156";
+	document.getElementById("beneficios").style.background = "transparent";
+	document.getElementById("boletas").style.background = "transparent";
+	document.getElementById("convocatorias").style.background = "transparent";
+	document.getElementById("asistencia").style.background = "transparent";
+	document.getElementById("descanso").style.background = "transparent";
+	document.getElementById("frases").style.background = "transparent";
+	document.getElementById("notificaciones").style.background = "transparent";
+	document.getElementById("reglamentos").style.background = "transparent";
+	document.getElementById("usuarios").style.background = "transparent";*/
+
+	$.post("../controler/usuario.php", {
+		accion: "91"
+	}, function(htmlexterno){
+
+	$("#cuerpoNoticias").html(htmlexterno);
+		console.log(htmlexterno+"");
+	});
+}
+
 
 
 function TipoInteres(){
@@ -1599,6 +1627,46 @@ function TipoInteres(){
 	}
 }
 
+function TipoNoticias(){
+	var x = document.getElementById("ntipo").selectedIndex;
+    var y = document.getElementById("ntipo").options;
+	var tipo = y[x].value;
+	
+	if(tipo!="0"){
+		if(tipo=="1" || tipo=="2"){
+			$("#nmaterial1").show();
+			$("#nmaterial2").hide();
+			
+		} else {
+			$("#nmaterial1").hide();
+			$("#nmaterial2").show();
+			var v = document.getElementById("ntitulo").value;
+			var v2 = document.getElementById("ndetalle").value;
+
+			if(v != "" && v2 != ""){
+				var w = v.split(" ");
+				for(var i=0; i<w.length; i++){
+					v = v.replace(" ","_");
+				}
+
+				var w2 = v2.split(" ");
+				for(var i2=0; i2<w2.length; i2++){
+					v2 = v2.replace(" ","_");
+				}
+				//v2 = v2.replace(" ","_");
+
+				$enlace = "cargar2.php?doc="+v+"&fini="+v2+"&ffin="+tipo+"&filtro=noticias";
+				console.log("enlace",$enlace);
+				document.getElementById("archNoticias").innerHTML = '<iframe src="'+$enlace+'" style="width:400px; height:200px;"></iframe><br>';
+			} else {
+				alert("Ingrese datos de titulo y detalle");
+			}
+			
+		}
+	} else {
+
+	}
+}
 
 function TipoMaterial(){
 	var x = document.getElementById("mattipo").selectedIndex;
@@ -2327,18 +2395,15 @@ function AddUnidad(){
 }
 
 function NuevoRegAsistencia(){
-	var x = document.getElementById("asempleados").selectedIndex;
-    var y = document.getElementById("asempleados").options;
-	var empleado = y[x].value;
 
 	var x = document.getElementById("opAsistencia").selectedIndex;
     var y = document.getElementById("opAsistencia").options;
 	var opAsistencia = y[x].value;
 
-	if(empleado!="0" && opAsistencia!="0"){
+	if(opAsistencia!="0"){
 		$.post("../controler/usuario.php", {
 			accion: "86",
-			empleado: empleado,
+			empleado: $empleado,
 			opcion: opAsistencia,
 			fechaI: $("#asistenciaFecha1").val(),
 			fechaF: $("#asistenciaFecha2").val()
@@ -2375,20 +2440,16 @@ function NuevoRegAsistencia(){
 }
 
 function AsistenciaXEmpleado(){
-	var x = document.getElementById("asempleados").selectedIndex;
-    var y = document.getElementById("asempleados").options;
-	var empleado = y[x].value;
-
 	var x = document.getElementById("opAsistencia").selectedIndex;
     var y = document.getElementById("opAsistencia").options;
 	var opAsistencia = y[x].value;
 
-	console.log(empleado);
+	console.log($empleado);
 
 	if(empleado!="0" && opAsistencia!="0"){
 		$.post("../controler/usuario.php", {
 			accion: "87",
-			id: empleado,
+			id: $empleado,
 			opcion: opAsistencia
 		}, function(htmlexterno){
 			//var vv = htmlexterno.split("#");
@@ -2432,8 +2493,8 @@ function autocomplete(inp, arr) {
 				
 				inp.value = this.getElementsByTagName("input")[0].value;
 				$prod = this.getElementsByTagName("input")[0].value;
-				console.log('producto elegido: '+$prod);
-				AddProducto($prod);
+				console.log('empleado elegido: '+$prod);
+				EmpleadoElegido($prod);
 				
 				closeAllLists();
 			});
@@ -2496,3 +2557,80 @@ function autocomplete(inp, arr) {
 		closeAllLists(e.target);
 	});
 }
+
+function EmpleadoElegido($prod){
+	console.log("busca empl "+$prod );
+	$.post("../controler/usuario.php", {
+		accion: "90",
+		id: $prod
+	}, function(htmlexterno){
+		$empleado = htmlexterno;
+		console.log("id empl "+$empleado);
+	});
+}
+
+function openCity(evt, cityName) {
+	var i, tabcontent, tablinks;
+	tabcontent = document.getElementsByClassName("tabcontent");
+	for (i = 0; i < tabcontent.length; i++) {
+	  tabcontent[i].style.display = "none";
+	}
+	tablinks = document.getElementsByClassName("tablinks");
+	for (i = 0; i < tablinks.length; i++) {
+	  tablinks[i].className = tablinks[i].className.replace(" active", "");
+	}
+	document.getElementById(cityName).style.display = "block";
+	evt.currentTarget.className += " active";
+
+	if(cityName=="resumenAsistencia"){
+		$.post("../controler/usuario.php", {
+			accion: "1", empleado: $empleado
+		}, function(htmlexterno){
+			console.log("1");
+			$("#cuerpoAsistencias").html(htmlexterno);
+			console.log(htmlexterno+"");
+		});
+	} 
+	if(cityName=="vacaciones"){
+		  $.post("../controler/usuario.php", {
+			  accion: "87", empleado: $empleado, opcion: "1"
+		  }, function(htmlexterno){
+			  $("#cuerpoAsistenciasV").html(htmlexterno);
+		  });
+	} 
+	if(cityName=="descansos"){
+		  $.post("../controler/usuario.php", {
+			  accion: "87", empleado: $empleado, opcion: "2"
+		  }, function(htmlexterno){
+			  $("#cuerpoAsistenciasD").html(htmlexterno);
+		  });
+	}
+	if(cityName=="suspension"){
+		$.post("../controler/usuario.php", {
+			accion: "87", empleado: $empleado, opcion: "3"
+		}, function(htmlexterno){
+			$("#cuerpoSuspension").html(htmlexterno);
+		});
+	} 
+	if(cityName=="licenciam"){
+			$.post("../controler/usuario.php", {
+				accion: "87", empleado: $empleado, opcion: "4"
+			}, function(htmlexterno){
+				$("#cuerpoLicenciaM").html(htmlexterno);
+			});
+	}
+	if(cityName=="licenciap"){
+		$.post("../controler/usuario.php", {
+			accion: "87", empleado: $empleado, opcion: "5"
+		}, function(htmlexterno){
+			$("#cuerpoLicenciaP").html(htmlexterno);
+		});
+	}
+	if(cityName=="licenciaf"){
+		$.post("../controler/usuario.php", {
+			accion: "87", empleado: $empleado, opcion: "6"
+		}, function(htmlexterno){
+			$("#cuerpoLicenciaF").html(htmlexterno);
+		});
+	}
+  } 

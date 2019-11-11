@@ -84,21 +84,21 @@ class Usuario{
     	return $dat;
 	}
 
-	function Asistencia($fecha){
+	function Asistencia($empleado){
 		include('conexion.php');
     
-        $query = "SELECT * FROM asistencia ";
+        $query = "SELECT * FROM asistencia WHERE empleado='$empleado'";
         mysqli_set_charset($mysqli, 'utf8'); 
     	$result = mysqli_query($mysqli, $query);
 		
 		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
-		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>FECHA</td><td>EMPLEADO</td><td>HORA INGRESO</td>';
-		$tabla = $tabla . '<td>HORA SALIDA</td></tr></thead>';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>FECHA</td><td>ASISTENCIA</td>';
+		$tabla = $tabla . '<td>DETALLE</td></tr></thead>';
 		$tabla = $tabla . '<tbody>';
     	while ($row = $result->fetch_array()){
-			$nombre = $this->NombreUsuario($row['empleado']);
-			$tabla = $tabla . '<tr><td>'.$row['fecha'].'</td><td>'.$nombre.'</td>';
-			$tabla = $tabla . '<td>'.$row['hora_inicio'].'</td><td>'.$row['hora_fin'].'</td></tr>';
+			
+			$tabla = $tabla . '<tr><td>'.$row['fecha'].'</td><td></td>';
+			$tabla = $tabla . '<td></td></tr>';
     	}
     	$tabla = $tabla . '</tbody></table></div>';
     	return $tabla;
@@ -734,6 +734,90 @@ class Usuario{
                 }
 	}
 
+	function Noticias(){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM noticias ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		$tabla = '<div class="table-responsive"><table class="table table-bordered table-striped">';
+		$tabla = $tabla . '<thead><tr style="background:#ffffff;"><td>TITULO</td><td>DETALLE</td>';
+		$tabla = $tabla . '<td>MATERIAL</td><td>EDITAR</td></tr></thead>';
+		$tabla = $tabla . '<tbody>';
+    	while ($row = $result->fetch_array()){
+			$material = $this->MaterialXNoticias($row['id']);
+
+			$tabla = $tabla . '<tr><td>'.$row['titulo'].'</td><td>'.$row['detalle'].'</td><td>'.$material.'</td>';
+			$tabla = $tabla . '<td><img onclick="EditarNoticias('.$row['id'].')" src="imagenes/editar.png"></td></tr>';
+		
+		}
+    	$tabla = $tabla . '</tbody></table></div>';
+    	return $tabla;
+	}
+
+	function MaterialXNoticias($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM materialesxnoticia WHERE noticia = '$id' ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+    	$result = mysqli_query($mysqli, $query);
+		
+		$tabla = '';
+		while ($row = $result->fetch_array()){
+			if(($row['tipo']=="1") OR ($row['tipo']=="2")){
+				$direccion = '<a href="'.$row['detalle'].'"  target="_blank">'.$row['detalle'].'</a>';
+			} else {
+				$direccion = '<a href="files/'.$row['detalle'].'" target="_blank">'.$row['detalle'].'</a>';
+			}
+			
+			$tabla = $tabla . ''.$direccion.'<br>';
+			
+    	}
+		
+		return $tabla;
+	}
+
+	function GuardaNoticia($titulo,$detalle,$tipo,$material){
+		include('conexion.php');
+		
+		$titulo = utf8_decode($titulo);
+		$detalle = utf8_decode($detalle);
+
+		$sql = "INSERT INTO noticias (TITULO,DETALLE) VALUES ('$titulo','$detalle')";
+                
+                if (!$resultado = $mysqli->query($sql)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    $idT = mysqli_insert_id($mysqli);
+                    echo 'EXITO';
+                }
+            
+        $sql2 = "INSERT INTO materialesxnoticia (NOTICIA,TIPO,DETALLE) VALUES ('$idT','$tipo','$material')";
+                
+                if (!$resultado = $mysqli->query($sql2)) {
+                    
+                    echo "Lo sentimos, este sitio web está experimentando problemas.";
+                    echo "Error: La ejecución de la consulta falló debido a: \n";
+                    echo "Query: " . $sql . "\n";
+                    echo "Errno: " . $mysqli->errno . "\n";
+                    echo "Error: " . $mysqli->error . "\n";
+                    
+                    exit;
+                } else {
+                    //$id = mysqli_insert_id($mysqli);
+                    echo 'EXITO';
+                }
+	}
+
 	function Usuarios(){
 		include('conexion.php');
     
@@ -772,6 +856,25 @@ class Usuario{
 			$tabla = $tabla . ''.$row['apellidos'].' '.$row['nombre'].'#';
 		}
     	return $tabla;
+	}
+
+	function EmpleadoElegido($id){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM empleados ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		while ($row = $result->fetch_array()){
+			$dato = $row['apellidos'].' '.$row['nombre'];
+			
+			if($dato==$id){
+				$dat = $row['id'];
+			}
+			
+		}
+    	return $dat;
 	}
 
 	function Usuarios2($id){
@@ -2525,10 +2628,10 @@ class Usuario{
 	}
 
 
-	function AsistenciaVacaciones(){
+	function AsistenciaVacaciones($empleado,$opcion){
 		include('conexion.php');
     
-        $query = "SELECT * FROM asistencia_libre WHERE opcion='1' ";
+        $query = "SELECT * FROM asistencia_libre WHERE opcion='$opcion' AND empleado='$empleado' ";
         mysqli_set_charset($mysqli, 'utf8'); 
     	$result = mysqli_query($mysqli, $query);
 		
@@ -2545,10 +2648,10 @@ class Usuario{
     	return $tabla;
 	}
 
-	function AsistenciaDescansos(){
+	function AsistenciaDescansos($empleado){
 		include('conexion.php');
     
-        $query = "SELECT * FROM asistencia_libre WHERE opcion='2' ";
+        $query = "SELECT * FROM asistencia_libre WHERE opcion='2' AND empleado='$empleado' ";
         mysqli_set_charset($mysqli, 'utf8'); 
     	$result = mysqli_query($mysqli, $query);
 		

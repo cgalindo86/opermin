@@ -50,7 +50,7 @@
 	$miprod = new Usuario("");
 
     if($accion=="1"){
-        echo $miprod -> Asistencia($fecha);
+        echo $miprod -> Asistencia($empleado);
     } else if($accion=="2"){
         echo $miprod -> Beneficios();
     } else if($accion=="3"){
@@ -222,12 +222,16 @@
     } else if($accion=="86"){
         echo $miprod -> NuevoRegAsistencia($empleado,$opcion,$fechaI,$fechaF);
     } else if($accion=="87"){
-        echo $miprod -> AsistenciaVacaciones();
+        echo $miprod -> AsistenciaVacaciones($empleado,$opcion);
     } else if($accion=="88"){
-        echo $miprod -> AsistenciaDescansos();
+        echo $miprod -> AsistenciaDescansos($empleado);
     } else if($accion=="89"){
         echo $miprod -> UsuariosArray();
-    }
+    } else if($accion=="90"){
+        echo $miprod -> EmpleadoElegido($id);
+    } else if($accion=="91"){
+        echo $miprod -> Noticias();
+    } 
 
     
 ?>
