@@ -760,6 +760,20 @@ class Usuario{
     	return $tabla;
 	}
 
+	function UsuariosArray(){
+		include('conexion.php');
+    
+        $query = "SELECT * FROM empleados ";
+        mysqli_set_charset($mysqli, 'utf8'); 
+		$result = mysqli_query($mysqli, $query);
+		
+		
+		while ($row = $result->fetch_array()){
+			$tabla = $tabla . ''.$row['apellidos'].' '.$row['nombre'].'#';
+		}
+    	return $tabla;
+	}
+
 	function Usuarios2($id){
 		include('conexion.php');
     

@@ -225,6 +225,8 @@
         echo $miprod -> AsistenciaVacaciones();
     } else if($accion=="88"){
         echo $miprod -> AsistenciaDescansos();
+    } else if($accion=="89"){
+        echo $miprod -> UsuariosArray();
     }
 
     
